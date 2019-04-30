@@ -1,0 +1,13 @@
+body {
+  background-color: #fff;
+}
+.leftPictureMargin {
+  margin-right: 60px;
+}
+.rightPictureMargin {
+  margin-left: 60px;
+}
+.textForPicture {
+  width: 400px;
+  text-align: center;
+}
