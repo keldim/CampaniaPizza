@@ -1,0 +1,19 @@
+<div class="container">
+  <ul class="nav justify-content-center">
+    <li class="nav-item">
+      <a class="nav-link active" href="#" [routerLink]="['/buildyourown']">Build Your Own</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#" [routerLink]="['/specialtypizzas']">Specialty Pizzas</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Drinks</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Desserts</a>
+    </li>
+  </ul>
+</div>
+<div>
+  <router-outlet name="submenu"></router-outlet>
+</div>
