@@ -7,3 +7,7 @@
 .mainArea {
   margin-top: 101px;
 }
+
+.navbar-nav li:hover{
+  border-bottom: 5px solid red;
+}

@@ -1,0 +1,8 @@
+.linkColor {
+  color: black;
+}
+
+.justify-content-center li:hover{
+  border-bottom: 5px solid red;
+}
+
