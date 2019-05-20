@@ -1,8 +1,5 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="security"
-	uri="http://www.springframework.org/security/tags"%>
-
-<html>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 <title>chrisyoo Company Home Page</title>
@@ -17,16 +14,13 @@
 
 	<hr>
 
-	
 
-
-	<form:form action="${pageContext.request.contextPath}/logout"
+	<form action="#" th:action="@{/logout}"
 		method="POST">
 
 		<input type="submit" value="Logout" />
 
-	</form:form>
-
+		</form>
 </body>
 
 </html>
