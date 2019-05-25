@@ -11,12 +11,15 @@ import { BuildYourOwnComponent } from './menu/build_your_own.component';
 import { MenuComponent } from './menu/menu.component';
 import { MenuModule } from './menu/menu.module';
 import { AppRoutingModule } from './app-routing.module';
+import { OrderOnlineComponent } from './order-online/order-online.component';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    LocationComponent
+    LocationComponent,
+    OrderOnlineComponent
   ],
   imports: [
     BrowserModule,
@@ -24,6 +27,7 @@ import { AppRoutingModule } from './app-routing.module';
     AppRoutingModule,
     HttpClientModule
   ],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
