@@ -13,7 +13,7 @@ export class OrderOnlineComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit() {
-    this.userService.getUserById('john')
+    this.userService.getUserByUsername('john')
       .subscribe(
         (data: User) => this.selectedUser = data,
         (err: any) => console.log(err)

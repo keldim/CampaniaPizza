@@ -8,8 +8,8 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getUserById(id: string): Observable<User> {
-    return this.http.get<User>(`http://localhost:8080/users/${id}`, {
+  getUserByUsername(username: string): Observable<User> {
+    return this.http.get<User>(`http://localhost:8080/users/${username}`, {
       headers: new HttpHeaders({
         'Accept': 'application/json'
       })
