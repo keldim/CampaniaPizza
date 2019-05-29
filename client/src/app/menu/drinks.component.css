@@ -1,0 +1,51 @@
+.divForText {
+  /* margin-left: auto;
+  margin-right: auto; */
+  text-align: center;
+}
+
+.imgSizeCtrlForBw {
+  width: 350px;
+  height: 350px;
+  margin-right: 50px;
+}
+
+.textSizeCtrlForBw {
+  width: 350px;
+  margin-right: 50px;
+}
+
+.imgSizeCtrlForFd {
+  width: 350px;
+  height: 350px;
+}
+
+.imgSizeCtrlForBi {
+  width: 350px;
+  height: 350px;
+  margin-left: 50px;
+}
+
+.textSizeCtrlForBi {
+  width: 350px;
+  margin-left: 50px
+}
+
+.imgSizeCtrlForEs {
+  width: 350px;
+  height: 350px;
+}
+
+.imgSizeCtrlForFi {
+  width: 250px;
+  height: 350px;
+}
+
+.imgSizeCtrlForAq {
+  width: 350px;
+  height: 350px;
+}
+
+.textSizeCtrl {
+  width: 350px;
+}

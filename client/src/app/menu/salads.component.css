@@ -1,0 +1,45 @@
+.byoText {
+  width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.divForText {
+  /* margin-left: auto;
+  margin-right: auto; */
+  text-align: center;
+}
+
+.imgSizeCtrlForCc {
+  width: 350px;
+  height: 350px;
+  margin-right: 50px;
+}
+
+.textSizeCtrlForCc {
+  width: 350px;
+  margin-right: 50px;
+}
+
+.imgSizeCtrlForGs {
+  width: 350px;
+  height: 350px;
+  margin-left: 50px;
+}
+
+.textSizeCtrlForGs {
+  width: 350px;
+  margin-left: 50px;
+}
+
+.textSizeCtrlForByoHe {
+  width: 350px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.textSizeCtrlForByo {
+  width: 350px;
+}
+
+

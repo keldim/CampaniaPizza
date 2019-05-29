@@ -1,0 +1,27 @@
+.divForText {
+  /* margin-left: auto;
+  margin-right: auto; */
+  text-align: center;
+}
+
+.imgSizeCtrlForCk {
+  width: 350px;
+  height: 350px;
+  margin-right: 50px;
+}
+
+.textSizeCtrlForCk {
+  width: 350px;
+  margin-right: 50px;
+}
+
+.imgSizeCtrlForBr {
+  width: 350px;
+  height: 350px;
+  margin-left: 50px;
+}
+
+.textSizeCtrlForBr {
+  width: 350px;
+  margin-left: 50px;
+}
