@@ -13,13 +13,15 @@ import { MenuModule } from './menu/menu.module';
 import { AppRoutingModule } from './app-routing.module';
 import { OrderOnlineComponent } from './order-online/order-online.component';
 import { UserService } from './services/user.service';
+import { AboutUsComponent } from './about-us/about-us.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LocationComponent,
-    OrderOnlineComponent
+    OrderOnlineComponent,
+    AboutUsComponent
   ],
   imports: [
     BrowserModule,
