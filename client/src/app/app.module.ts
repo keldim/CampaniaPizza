@@ -27,7 +27,8 @@ import { AboutUsComponent } from './about-us/about-us.component';
     BrowserModule,
     MenuModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

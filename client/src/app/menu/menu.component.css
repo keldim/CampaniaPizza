@@ -2,7 +2,20 @@
   color: black;
 }
 
-.justify-content-center li:hover{
+/* .justify-content-center li {
+  padding-top: 5px;
+  border-bottom: 5px solid transparent;
+}
+
+.justify-content-center li:hover {
+  border-bottom-color: red;
+} */
+
+.clicked-link {
   border-bottom: 5px solid red;
 }
 
+.submenu-button-tweak {
+  margin-left: 10px;
+  margin-right: 10px;
+}

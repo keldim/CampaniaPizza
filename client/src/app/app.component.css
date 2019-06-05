@@ -8,6 +8,19 @@
   margin-top: 101px;
 }
 
-.navbar-nav li:hover{
+/* .navbar-nav li {
+  padding-top: 5px;
+  border-bottom: 5px solid transparent;
+}
+
+.navbar-nav li:hover {
+  border-bottom-color: red;
+} */
+
+.clicked-link {
   border-bottom: 5px solid red;
+}
+
+.menu-button-tweak {
+  margin-right: 20px;
 }
