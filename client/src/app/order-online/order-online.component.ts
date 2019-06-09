@@ -20,4 +20,9 @@ export class OrderOnlineComponent implements OnInit {
       );
   }
 
+// hide menu based on ngIf?
+
+// create a different form for each menu type? use formbuilder?
+
+
 }

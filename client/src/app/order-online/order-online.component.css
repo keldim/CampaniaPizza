@@ -1,0 +1,9 @@
+.img-for-item-bar {
+  width: 180px;
+  height: 120px;
+  float: left;
+}
+
+.item-bar {
+  width: 500px;
+}

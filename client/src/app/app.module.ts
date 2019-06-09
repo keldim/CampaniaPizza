@@ -14,6 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { OrderOnlineComponent } from './order-online/order-online.component';
 import { UserService } from './services/user.service';
 import { AboutUsComponent } from './about-us/about-us.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { AboutUsComponent } from './about-us/about-us.component';
     MenuModule,
     AppRoutingModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    ReactiveFormsModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
