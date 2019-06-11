@@ -7,3 +7,35 @@
 .item-bar {
   width: 500px;
 }
+
+.dark-modal .modal-content {
+  background-color: #292b2c;
+  color: white;
+}
+.dark-modal .close {
+  color: white;
+}
+.light-blue-backdrop {
+  background-color: #5cb3fd;
+}
+
+.empty-link {
+  cursor: pointer;
+}
+
+.empty-link:hover .empty-link-text {
+  text-decoration: underline;
+}
+
+.radio-label {
+  display: inline-block;
+   vertical-align: top;
+    margin-right: 10px;
+    margin-left: 5px;
+}
+.radio-input {
+  display: inline-block;
+   vertical-align: top;
+}
+
+

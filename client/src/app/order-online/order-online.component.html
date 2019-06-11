@@ -1,3 +1,84 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <p class="modal-title">Customize</p>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #form="ngForm">
+
+      <fieldset style="text-align: center">
+        <legend style="text-align: center">Choose Your Size</legend>
+        <ul>
+          <li style="display: inline-flex; align-items: center;">
+              <input class="radio-input" type="radio" name="size" id="inlineRadio1" value="10" [(ngModel)]="specialtyPizzaOrder.size">
+              <label class="radio-label" for="inlineRadio1">10 inch</label>
+          </li>
+          <li style="display: inline-flex; align-items: center;">
+              <input class="radio-input" type="radio" name="size" id="inlineRadio2" value="14" [(ngModel)]="specialtyPizzaOrder.size">
+              <label class="radio-label" for="inlineRadio2">14 inch</label>
+          </li>
+        </ul>
+
+
+
+      </fieldset>
+
+
+      <fieldset style="text-align: center">
+        <legend style="text-align: center">Choose Your Crust</legend>
+        <div style="margin-left: auto; margin-right: auto;">
+          <input class="radio-input" type="radio" name="crust" id="inlineRadio1" value="traditional" [(ngModel)]="specialtyPizzaOrder.crust">
+          <label class="radio-label" for="inlineRadio1">Traditional Neapolitan (our favorite)</label>
+          <input class="radio-input" type="radio" name="crust" id="inlineRadio2" value="gluten-free" [(ngModel)]="specialtyPizzaOrder.crust">
+          <label class="radio-label" for="inlineRadio2">Gluten Free</label>
+        </div>
+      </fieldset>
+
+      <fieldset style="text-align: center">
+          <legend style="text-align: center">Choose Your Finishes</legend>
+          <div>
+
+
+                <input class="radio-input" type="checkbox" id="inlineCheckbox1" value="Signature Marinara" name="finishes" ngmodel>
+                <label class="radio-label" for="inlineCheckbox1">Signature Marinara</label>
+
+                <input class="radio-input" type="checkbox" id="inlineCheckbox2" value="Spicy Sriracha Marinara" name="finishes" ngmodel>
+                <label class="radio-label" for="inlineCheckbox2">Spicy Sriracha Marinara</label>
+
+                <input class="radio-input" type="checkbox" id="inlineCheckbox3" value="Pesto Drizzle" name="finishes" ngmodel>
+                <label class="radio-label" for="inlineCheckbox3">Pesto Drizzle</label>
+
+                <input class="radio-input" type="checkbox" id="inlineCheckbox4" value="Smokey Bourbon BBQ" name="finishes" ngmodel>
+                <label class="radio-label" for="inlineCheckbox4">Smokey Bourbon BBQ</label>
+
+                <input class="radio-input" type="checkbox" id="inlineCheckbox5" value="Extra Virgin Olive Oil Drizzle" name="finishes" ngmodel>
+                <label class="radio-label" for="inlineCheckbox5">Extra Virgin Olive Oil Drizzle</label>
+
+                <input class="radio-input" type="checkbox" id="inlineCheckbox6" value="Buffalo Sauce" name="finishes" ngmodel>
+                <label class="radio-label" for="inlineCheckbox6">Buffalo Sauce</label>
+
+                <input class="radio-input" type="checkbox" id="inlineCheckbox7" value="White Sauce" name="finishes" ngmodel>
+                <label class="radio-label" for="inlineCheckbox7">White Sauce</label>
+
+                <input class="radio-input" type="checkbox" id="inlineCheckbox8" value="Ranch" name="finishes" ngmodel>
+                <label class="radio-label" for="inlineCheckbox8">Ranch</label>
+
+            </div>
+          </fieldset>
+
+
+    </form>
+
+    <h3>{{ form.value | json }}</h3>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>
+
+
 <div class="container">
   <div class="row">
     <div class="col-8">
@@ -32,14 +113,14 @@
           <ul class="nav flex-column">
             <li class="nav-item item-bar">
               <a class="nav-link active" href="#">
-                  <img src="../../assets/images/1954163.jpg" class="img-for-item-bar" />
+                <img src="../../assets/images/1954163.jpg" class="img-for-item-bar" />
                 <span>Build Your Own</span>
               </a>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active" href="#">
+              <a class="nav-link active empty-link" (click)='openLg(content)'>
                 <img src="../../assets/images/margherita.png" class="img-for-item-bar" />
-                <span>CLASSIC MARGHERITA</span>
+                <span class="empty-link-text">CLASSIC MARGHERITA</span>
               </a>
               <p>
                 Marinara, extra virgin olive oil, fresh mozzarella, fresh basil, and
@@ -47,49 +128,50 @@
               </p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active" href="#">
+              <a class="nav-link active empty-link" (click)='openLg(content)'>
                 <img src="../../assets/images/new-yorker.png" class="img-for-item-bar" />
-                <span>CLASSIC NEW YORKER</span>
+                <span class="empty-link-text">CLASSIC NEW YORKER</span>
               </a>
               <p>
                 Marinara, shredded mozzarella, and oregano.
               </p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active" href="#">
+              <a class="nav-link active empty-link" (click)='openLg(content)'>
                 <img src="../../assets/images/tony-pepperoni.png" class="img-for-item-bar" />
-                <span>TONY PEPPERONI</span>
+                <span class="empty-link-text">TONY PEPPERONI</span>
               </a>
               <p>
                 Marinara, shredded mozzarella, pepperoni, and oregano.
               </p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active" href="#"><img src="../../assets/images/johnny-the-meatball.png"
-                  class="img-for-item-bar" />
-                <span>JOHNNY THE MEATBALL</span>
+              <a class="nav-link active empty-link" (click)='openLg(content)'>
+                <img src="../../assets/images/johnny-the-meatball.png" class="img-for-item-bar" />
+                <span class="empty-link-text">JOHNNY THE MEATBALL</span>
               </a>
               <p>Marinara, shredded mozzarella, and crumbled meatballs.</p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active" href="#"><img src="../../assets/images/4-cheese.png"
-                  class="img-for-item-bar" />
-                <span>QUATTRO FORMAGGIO</span>
+              <a class="nav-link active empty-link" (click)='openLg(content)'>
+                <img src="../../assets/images/4-cheese.png" class="img-for-item-bar" />
+                <span class="empty-link-text">QUATTRO FORMAGGIO</span>
               </a>
               <p>Marinara, mozzarella, Asiago, Parmesan, ricotta, and oregano.</p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active" href="#"><img src="../../assets/images/buffalo-chicken.png"
-                  class="img-for-item-bar" /><span>BUFFALO CHICKEN</span></a>
+              <a class="nav-link active empty-link" (click)='openLg(content)'>
+                <img src="../../assets/images/buffalo-chicken.png" class="img-for-item-bar" />
+                <span class="empty-link-text">BUFFALO CHICKEN</span></a>
               <p>
                 Buffalo sauce, shredded mozzarella, blue cheese chunks, and grilled
                 chicken.
               </p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active" href="#">
+              <a class="nav-link active empty-link" (click)='openLg(content)'>
                 <img src="../../assets/images/tascan.png" class="img-for-item-bar" />
-                <span>TUSCAN CHICKEN</span>
+                <span class="empty-link-text">TUSCAN CHICKEN</span>
               </a>
               <p>
                 Shredded mozzarella, asiago, chicken, spinach, and marinated
@@ -97,9 +179,9 @@
               </p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active" href="#">
+              <a class="nav-link active empty-link" (click)='openLg(content)'>
                 <img src="../../assets/images/white-out1.png" class="img-for-item-bar" />
-                <span>THE WHITE OUT</span>
+                <span class="empty-link-text">THE WHITE OUT</span>
               </a>
               <p>
                 Extra virgin olive oil, shredded mozzarella, parmesan, fresh
@@ -107,9 +189,9 @@
               </p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active" href="#">
+              <a class="nav-link active empty-link" (click)='openLg(content)'>
                 <img src="../../assets/images/h-fire.png" class="img-for-item-bar" />
-                <span>HAWAIIAN FIRE</span>
+                <span class="empty-link-text">HAWAIIAN FIRE</span>
               </a>
               <p>
                 Spicy sriracha marinara, shredded mozzarella, Canadian bacon, banana
@@ -117,16 +199,16 @@
               </p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active" href="#">
+              <a class="nav-link active empty-link" (click)='openLg(content)'>
                 <img src="../../assets/images/the-philly.png" class="img-for-item-bar" />
-                <span>THE PHILLY</span>
+                <span class="empty-link-text">THE PHILLY</span>
               </a>
               <p>Balsamic onions, mozzarella, and thinly sliced rib-eye.</p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active" href="#">
+              <a class="nav-link active empty-link" (click)='openLg(content)'>
                 <img src="../../assets/images/smoky-pollo.png" class="img-for-item-bar" />
-                <span>SMOKEY POLLO</span>
+                <span class="empty-link-text">SMOKEY POLLO</span>
               </a>
               <p>
                 Sweet and Smokey Bourbon Barbecue Sauce, Roasted Chicken, Bacon, Red
@@ -134,9 +216,9 @@
               </p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active" href="#">
+              <a class="nav-link active empty-link" (click)='openLg(content)'>
                 <img src="../../assets/images/sausage-peppers1.png" class="img-for-item-bar" />
-                <span>SAUSAGE & PEPPERS</span>
+                <span class="empty-link-text">SAUSAGE & PEPPERS</span>
               </a>
               <p>
                 Marinara, shredded mozzarella, Italian sausage, red and green
@@ -144,9 +226,9 @@
               </p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active" href="#">
+              <a class="nav-link active empty-link" (click)='openLg(content)'>
                 <img src="../../assets/images/trenton-tomato-pie.png" class="img-for-item-bar" />
-                <span>TRENTON TOMATO PIE</span>
+                <span class="empty-link-text">TRENTON TOMATO PIE</span>
               </a>
               <p>
                 Marinara generously spread on top of shredded mozzarella, and
@@ -154,9 +236,9 @@
               </p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active" href="#">
+              <a class="nav-link active empty-link" (click)='openLg(content)'>
                 <img src="../../assets/images/meatza1.png" class="img-for-item-bar" />
-                <span>THE MEATZA</span>
+                <span class="empty-link-text">THE MEATZA</span>
               </a>
               <p>
                 Marinara, mozzarella, pepperoni, bacon, Italian sausage, and
@@ -181,9 +263,9 @@
             </li>
             <li class="nav-item item-bar">
               <a class="nav-link active" href="#">
-                  <img src="../../assets/images/images.jpeg" class="img-for-item-bar" />
-                  <span>BUILD YOUR OWN SALAD</span>
-                </a>
+                <img src="../../assets/images/images.jpeg" class="img-for-item-bar" />
+                <span>BUILD YOUR OWN SALAD</span>
+              </a>
             </li>
             <li class="nav-item item-bar">
               <a class="nav-link active" href="#">
