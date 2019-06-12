@@ -6,18 +6,18 @@
     </button>
   </div>
   <div class="modal-body">
-    <form #form="ngForm">
+    <form novalidate (ngSubmit)="save()" [formGroup]="specialtyPizzaForm">
 
       <fieldset style="text-align: center">
         <legend style="text-align: center">Choose Your Size</legend>
         <ul>
           <li style="display: inline-flex; align-items: center;">
-              <input class="radio-input" type="radio" name="size" id="inlineRadio1" value="10" [(ngModel)]="specialtyPizzaOrder.size">
-              <label class="radio-label" for="inlineRadio1">10 inch</label>
+              <input class="radio-input" type="radio" id="inlineRadio1" value="10" formControlName="size"> 10 inch
+              <!-- <label class="radio-label" for="inlineRadio1"></label> -->
           </li>
           <li style="display: inline-flex; align-items: center;">
-              <input class="radio-input" type="radio" name="size" id="inlineRadio2" value="14" [(ngModel)]="specialtyPizzaOrder.size">
-              <label class="radio-label" for="inlineRadio2">14 inch</label>
+              <input class="radio-input" type="radio" id="inlineRadio2" value="14" formControlName="size"> 14 inch
+              <!-- <label class="radio-label" for="inlineRadio2"> </label> -->
           </li>
         </ul>
 
@@ -29,41 +29,57 @@
       <fieldset style="text-align: center">
         <legend style="text-align: center">Choose Your Crust</legend>
         <div style="margin-left: auto; margin-right: auto;">
-          <input class="radio-input" type="radio" name="crust" id="inlineRadio1" value="traditional" [(ngModel)]="specialtyPizzaOrder.crust">
-          <label class="radio-label" for="inlineRadio1">Traditional Neapolitan (our favorite)</label>
-          <input class="radio-input" type="radio" name="crust" id="inlineRadio2" value="gluten-free" [(ngModel)]="specialtyPizzaOrder.crust">
-          <label class="radio-label" for="inlineRadio2">Gluten Free</label>
+          <input class="radio-input" type="radio" id="inlineRadio1" value="traditional" formControlName="crust"> Traditional Neapolitan (our favorite)
+          <!-- <label class="radio-label" for="inlineRadio1"> </label> -->
+          <input class="radio-input" type="radio" id="inlineRadio2" value="gluten-free" formControlName="crust"> Gluten Free
+          <!-- <label class="radio-label" for="inlineRadio2"></label> -->
         </div>
       </fieldset>
 
+      <!-- specialtyPizzaForm.get('ingredients') -->
+      <!-- formArrayName="ingredients" -->
+
       <fieldset style="text-align: center">
           <legend style="text-align: center">Choose Your Finishes</legend>
-          <div>
+          <div formArrayName="ingredients">
+
+            <div class="radio-input" *ngFor="let ingredient of specialtyPizzaForm.get('ingredients').controls; let i = index">
+              <input type="checkbox" formControlName="{{ i }}"> {{exampleUser.ingredients[i].name}}
+            </div>
 
 
-                <input class="radio-input" type="checkbox" id="inlineCheckbox1" value="Signature Marinara" name="finishes" ngmodel>
+
+
+            <!-- <input class="radio-input" type="checkbox" id="{{ i }}" formControlName="{{ i }}">
+              <label class="radio-label" for="{{ i }}">{{exampleUser.ingredients[i].name}}</label> -->
+
+
+             <!-- <input class="radio-input" type=”checkbox” formControlName="ingredient"/> -->
+
+
+                <!-- <input class="radio-input" type="checkbox" id="inlineCheckbox1" value="Signature Marinara" formControlName="ingredients">
                 <label class="radio-label" for="inlineCheckbox1">Signature Marinara</label>
 
-                <input class="radio-input" type="checkbox" id="inlineCheckbox2" value="Spicy Sriracha Marinara" name="finishes" ngmodel>
+                <input class="radio-input" type="checkbox" id="inlineCheckbox2" value="Spicy Sriracha Marinara" formControlName="ingredients">
                 <label class="radio-label" for="inlineCheckbox2">Spicy Sriracha Marinara</label>
 
-                <input class="radio-input" type="checkbox" id="inlineCheckbox3" value="Pesto Drizzle" name="finishes" ngmodel>
+                <input class="radio-input" type="checkbox" id="inlineCheckbox3" value="Pesto Drizzle" formControlName="ingredients">
                 <label class="radio-label" for="inlineCheckbox3">Pesto Drizzle</label>
 
-                <input class="radio-input" type="checkbox" id="inlineCheckbox4" value="Smokey Bourbon BBQ" name="finishes" ngmodel>
+                <input class="radio-input" type="checkbox" id="inlineCheckbox4" value="Smokey Bourbon BBQ" formControlName="ingredients">
                 <label class="radio-label" for="inlineCheckbox4">Smokey Bourbon BBQ</label>
 
-                <input class="radio-input" type="checkbox" id="inlineCheckbox5" value="Extra Virgin Olive Oil Drizzle" name="finishes" ngmodel>
+                <input class="radio-input" type="checkbox" id="inlineCheckbox5" value="Extra Virgin Olive Oil Drizzle" formControlName="ingredients">
                 <label class="radio-label" for="inlineCheckbox5">Extra Virgin Olive Oil Drizzle</label>
 
-                <input class="radio-input" type="checkbox" id="inlineCheckbox6" value="Buffalo Sauce" name="finishes" ngmodel>
+                <input class="radio-input" type="checkbox" id="inlineCheckbox6" value="Buffalo Sauce" formControlName="ingredients">
                 <label class="radio-label" for="inlineCheckbox6">Buffalo Sauce</label>
 
-                <input class="radio-input" type="checkbox" id="inlineCheckbox7" value="White Sauce" name="finishes" ngmodel>
+                <input class="radio-input" type="checkbox" id="inlineCheckbox7" value="White Sauce" formControlName="ingredients">
                 <label class="radio-label" for="inlineCheckbox7">White Sauce</label>
 
-                <input class="radio-input" type="checkbox" id="inlineCheckbox8" value="Ranch" name="finishes" ngmodel>
-                <label class="radio-label" for="inlineCheckbox8">Ranch</label>
+                <input class="radio-input" type="checkbox" id="inlineCheckbox8" value="Ranch" formControlName="ingredients">
+                <label class="radio-label" for="inlineCheckbox8">Ranch</label> -->
 
             </div>
           </fieldset>
@@ -71,10 +87,11 @@
 
     </form>
 
-    <h3>{{ form.value | json }}</h3>
+    <h3>{{ specialtyPizzaForm.value | json }}</h3>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Add to cart</button>
   </div>
 </ng-template>
 
