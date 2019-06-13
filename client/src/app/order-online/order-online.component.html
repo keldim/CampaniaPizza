@@ -1,4 +1,4 @@
-<ng-template #content let-modal>
+<ng-template #contentPizza let-modal>
   <div class="modal-header">
     <p class="modal-title">Customize</p>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -44,7 +44,7 @@
           <div formArrayName="ingredients">
 
             <div class="radio-input" *ngFor="let ingredient of specialtyPizzaForm.get('ingredients').controls; let i = index">
-              <input type="checkbox" formControlName="{{ i }}"> {{exampleUser.ingredients[i].name}}
+              <input type="checkbox" formControlName="{{ i }}"> {{specialtyPizzaCheckboxes.ingredients[i].name}}
             </div>
 
 
@@ -91,7 +91,25 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
-    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Add to cart</button>
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click'); createTempForm()">Add to cart</button>
+  </div>
+</ng-template>
+
+
+
+
+<ng-template #contentDrink let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Modal title</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>One fine body&hellip;</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
   </div>
 </ng-template>
 
@@ -135,7 +153,7 @@
               </a>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active empty-link" (click)='openLg(content)'>
+              <a class="nav-link active empty-link" (click)='openLg(contentPizza)'>
                 <img src="../../assets/images/margherita.png" class="img-for-item-bar" />
                 <span class="empty-link-text">CLASSIC MARGHERITA</span>
               </a>
@@ -145,7 +163,7 @@
               </p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active empty-link" (click)='openLg(content)'>
+              <a class="nav-link active empty-link" (click)='openLg(contentPizza)'>
                 <img src="../../assets/images/new-yorker.png" class="img-for-item-bar" />
                 <span class="empty-link-text">CLASSIC NEW YORKER</span>
               </a>
@@ -154,7 +172,7 @@
               </p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active empty-link" (click)='openLg(content)'>
+              <a class="nav-link active empty-link" (click)='openLg(contentPizza)'>
                 <img src="../../assets/images/tony-pepperoni.png" class="img-for-item-bar" />
                 <span class="empty-link-text">TONY PEPPERONI</span>
               </a>
@@ -163,21 +181,21 @@
               </p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active empty-link" (click)='openLg(content)'>
+              <a class="nav-link active empty-link" (click)='openLg(contentPizza)'>
                 <img src="../../assets/images/johnny-the-meatball.png" class="img-for-item-bar" />
                 <span class="empty-link-text">JOHNNY THE MEATBALL</span>
               </a>
               <p>Marinara, shredded mozzarella, and crumbled meatballs.</p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active empty-link" (click)='openLg(content)'>
+              <a class="nav-link active empty-link" (click)='openLg(contentPizza)'>
                 <img src="../../assets/images/4-cheese.png" class="img-for-item-bar" />
                 <span class="empty-link-text">QUATTRO FORMAGGIO</span>
               </a>
               <p>Marinara, mozzarella, Asiago, Parmesan, ricotta, and oregano.</p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active empty-link" (click)='openLg(content)'>
+              <a class="nav-link active empty-link" (click)='openLg(contentPizza)'>
                 <img src="../../assets/images/buffalo-chicken.png" class="img-for-item-bar" />
                 <span class="empty-link-text">BUFFALO CHICKEN</span></a>
               <p>
@@ -186,7 +204,7 @@
               </p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active empty-link" (click)='openLg(content)'>
+              <a class="nav-link active empty-link" (click)='openLg(contentPizza)'>
                 <img src="../../assets/images/tascan.png" class="img-for-item-bar" />
                 <span class="empty-link-text">TUSCAN CHICKEN</span>
               </a>
@@ -196,7 +214,7 @@
               </p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active empty-link" (click)='openLg(content)'>
+              <a class="nav-link active empty-link" (click)='openLg(contentPizza)'>
                 <img src="../../assets/images/white-out1.png" class="img-for-item-bar" />
                 <span class="empty-link-text">THE WHITE OUT</span>
               </a>
@@ -206,7 +224,7 @@
               </p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active empty-link" (click)='openLg(content)'>
+              <a class="nav-link active empty-link" (click)='openLg(contentPizza)'>
                 <img src="../../assets/images/h-fire.png" class="img-for-item-bar" />
                 <span class="empty-link-text">HAWAIIAN FIRE</span>
               </a>
@@ -216,14 +234,14 @@
               </p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active empty-link" (click)='openLg(content)'>
+              <a class="nav-link active empty-link" (click)='openLg(contentPizza)'>
                 <img src="../../assets/images/the-philly.png" class="img-for-item-bar" />
                 <span class="empty-link-text">THE PHILLY</span>
               </a>
               <p>Balsamic onions, mozzarella, and thinly sliced rib-eye.</p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active empty-link" (click)='openLg(content)'>
+              <a class="nav-link active empty-link" (click)='openLg(contentPizza)'>
                 <img src="../../assets/images/smoky-pollo.png" class="img-for-item-bar" />
                 <span class="empty-link-text">SMOKEY POLLO</span>
               </a>
@@ -233,7 +251,7 @@
               </p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active empty-link" (click)='openLg(content)'>
+              <a class="nav-link active empty-link" (click)='openLg(contentPizza)'>
                 <img src="../../assets/images/sausage-peppers1.png" class="img-for-item-bar" />
                 <span class="empty-link-text">SAUSAGE & PEPPERS</span>
               </a>
@@ -243,7 +261,7 @@
               </p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active empty-link" (click)='openLg(content)'>
+              <a class="nav-link active empty-link" (click)='openLg(contentPizza)'>
                 <img src="../../assets/images/trenton-tomato-pie.png" class="img-for-item-bar" />
                 <span class="empty-link-text">TRENTON TOMATO PIE</span>
               </a>
@@ -253,7 +271,7 @@
               </p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active empty-link" (click)='openLg(content)'>
+              <a class="nav-link active empty-link" (click)='openLg(contentPizza)'>
                 <img src="../../assets/images/meatza1.png" class="img-for-item-bar" />
                 <span class="empty-link-text">THE MEATZA</span>
               </a>
@@ -321,6 +339,11 @@
     </div>
     <div
       style="width: 258px; height: 307px; padding: 14px; border: 1px solid #ccc; background-color: #487a32; color: #fff;">
+      <div *ngIf="cartItems[0] != null">
+        <p>{{ cartItems[0].size }}</p>
+        <p>{{ cartItems[0].crust }}</p>
+        <p>{{ cartItems[0].ingredients }}</p>
+      </div>
     </div>
   </div>
 </div>
