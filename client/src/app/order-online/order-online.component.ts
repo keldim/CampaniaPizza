@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from '../models/user';
 import { UserService } from '../services/user.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -6,6 +6,7 @@ import { SpecialtyPizza } from './specialty-pizza';
 import { BYOPizza } from './byo-pizza';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { Item } from './item.entity';
+import { PizzaModalComponent } from './pizza-modal.component';
 
 @Component({
   templateUrl: './order-online.component.html',
@@ -14,51 +15,21 @@ import { Item } from './item.entity';
 export class OrderOnlineComponent implements OnInit {
   closeResult: string;
   selectedUser: User;
-  specialtyPizzaForm: FormGroup;
+
   byoPizzaOrder: BYOPizza;
-  cartItems: Object[] = [];
 
-  specialtyPizzaCheckboxes = {
-    ingredients: [
-      { name: 'Signature Marinara', selected: false },
-      { name: 'Spicy Sriracha Marinara', selected: false },
-      { name: 'Pesto Drizzle', selected: false },
-      { name: 'Smokey Bourbon BBQ', selected: false },
-      { name: 'Extra Virgin Olive Oil Drizzle', selected: false },
-      { name: 'Buffalo Sauce', selected: false },
-      { name: 'White Sauce', selected: false },
-      { name: 'Ranch', selected: false }
-    ]
-  };
+  @ViewChild(PizzaModalComponent) modalComponent;
 
 
-  constructor(private userService: UserService, private modalService: NgbModal, private fb: FormBuilder) { }
 
-  openLg(content) {
-    this.modalService.open(content, { size: 'lg' });
-  }
 
-  buildIngredients() {
-    const arr = this.specialtyPizzaCheckboxes.ingredients.map(ingredient => {
-      return this.fb.control(ingredient.selected);
-    });
-    return this.fb.array(arr);
+  constructor(private userService: UserService, private modalService: NgbModal) { }
+
+  openPizza(pizzaType) {
+    this.modalComponent.openLg(pizzaType);
   }
 
 
-  // if there is at least one newly created form in the array, display the content of the array on the cart, use ngIf
-  // create a json form ready to send to the server
-  // read the created json form in the shopping cart for display
-  // no need to convert to json form, already in json form?
-
-  // make one form for pizza, hide sections based on pizza type? same for drink, dessert...?
-  // think about how to print the orders on the cart? use Item array?
-  // for item, create variables for pizza, dessert, salad...
-
-  createTempForm() {
-      const forCart = {...this.specialtyPizzaForm.value};
-      this.cartItems.push(forCart);
-  }
 
 
   ngOnInit() {
@@ -67,11 +38,7 @@ export class OrderOnlineComponent implements OnInit {
     //     (data: User) => this.selectedUser = data,
     //     (err: any) => console.log(err)
     //   );
-    this.specialtyPizzaForm = this.fb.group({
-      size: "10",
-      crust: "traditional",
-      ingredients: this.buildIngredients()
-    });
+
 
   }
   // get ingredients(): FormArray {
@@ -81,6 +48,18 @@ export class OrderOnlineComponent implements OnInit {
   save() {
 
   }
+
+  // create order-online module?
+
+  // reset and enter default values? use setValue, patchValue?
+
+  // if there is at least one newly created form in the array, display the content of the array on the cart, use ngIf
+  // create a json form ready to send to the server
+  // read the created json form in the shopping cart for display
+  // no need to convert to json form, already in json form?
+
+  // make one form for pizza, hide sections based on pizza type? same for drink, dessert...?
+  // think about how to print the orders on the cart? use Object array?
 
   // hide menu based on ngIf?
 

@@ -13,6 +13,7 @@ import { UserService } from './services/user.service';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PizzaModalComponent } from './order-online/pizza-modal.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HomeComponent,
     LocationComponent,
     OrderOnlineComponent,
-    AboutUsComponent
+    AboutUsComponent,
+    PizzaModalComponent
   ],
   imports: [
     BrowserModule,
