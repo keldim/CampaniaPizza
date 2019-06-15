@@ -224,23 +224,60 @@
     </div>
     <div
       style="width: 258px; height: 307px; padding: 14px; border: 1px solid #ccc; background-color: #487a32; color: #fff;">
-      <div *ngIf="modalComponent.cartItems[0] != null">
-        <div *ngFor="let item of modalComponent.cartItems">
-          <div *ngIf="(item | json) != '{}'">
-              <div *ngFor="let subitem of item">
-              <p>subitem</p>
-              </div>
+      <ul *ngIf="modalComponent.cartItems[0] != null" style="list-style-type: none;">
+        <li *ngFor="let item of modalComponent.cartItems">
+          <!-- create a function for checking if the item is an array? -->
+          <!-- create a function for identifiying the type of item? -->
+          <!-- make use of pizzaType? -->
+          <!-- create a function for generating item detail and add it in one big chunk? -->
 
+          <div *ngIf="itemType(item) == 'byo'">
+              <span>Build Your Own Pizza</span>
+              <p style="display: inline; margin-left: 5px;">{{ item.size }} {{ item.crust }} {{ item.sauce }}</p>
+              <!-- <p style="display: inline; margin-left: 5px;"></p>
+              <p style="display: inline; margin-left: 5px;"></p> -->
+              <div style="display: inline; margin-left: 5px;">
+                  <div style="display: inline; margin-left: 5px;" *ngFor="let subitem of item.cheese">
+                  <p style="display: inline; margin-left: 5px;">{{ subitem }}</p>
+                  </div>
+              </div>
+              <div style="display: inline; margin-left: 5px;">
+                  <div style="display: inline; margin-left: 5px;" *ngFor="let subitem of item.veggies">
+                  <p style="display: inline; margin-left: 5px;">{{ subitem }}</p>
+                  </div>
+              </div>
+              <div style="display: inline; margin-left: 5px;">
+                  <div style="display: inline; margin-left: 5px;" *ngFor="let subitem of item.meats">
+                  <p style="display: inline; margin-left: 5px;">{{ subitem }}</p>
+                  </div>
+              </div>
+              <div style="display: inline; margin-left: 5px;">
+                  <div style="display: inline; margin-left: 5px;" *ngFor="let subitem of item.finishes">
+                  <p style="display: inline; margin-left: 5px;">{{ subitem }}</p>
+                  </div>
+              </div>
           </div>
-        </div>
-        <p>{{ modalComponent.cartItems[0].size }}</p>
+          <div *ngIf="itemType(item) == 'specialty'">
+              <p style="display: inline; margin-left: 5px;">{{ item.size }}</p>
+              <p style="display: inline; margin-left: 5px;">{{ item.crust }}</p>
+              <div style="display: inline; margin-left: 5px;" *ngIf="isArray(item.finishes)">
+                  <div style="display: inline; margin-left: 5px;" *ngFor="let subitem of item.finishes">
+                  <p style="display: inline; margin-left: 5px;">{{ subitem }}</p>
+                  </div>
+              </div>
+          </div>
+
+
+
+        </li>
+        <!-- <p>{{ modalComponent.cartItems[0].size }}</p>
         <p>{{ modalComponent.cartItems[0].crust }}</p>
         <p>{{ modalComponent.cartItems[0].sauce }}</p>
         <p>{{ modalComponent.cartItems[0].cheese }}</p>
         <p>{{ modalComponent.cartItems[0].veggies }}</p>
         <p>{{ modalComponent.cartItems[0].meats }}</p>
-        <p>{{ modalComponent.cartItems[0].finishes }}</p>
-      </div>
+        <p>{{ modalComponent.cartItems[0].finishes }}</p> -->
+        </ul>
     </div>
   </div>
 </div>

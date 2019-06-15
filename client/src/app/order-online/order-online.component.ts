@@ -29,8 +29,19 @@ export class OrderOnlineComponent implements OnInit {
     this.modalComponent.openLg(pizzaType);
   }
 
+  isArray(item) {
+    if(item instanceof Array) {
+      return true;
+    }
+    return false;
+  }
 
-
+  itemType(item) {
+    if(item.hasOwnProperty("cheese")) {
+      return "byo";
+    }
+    return "specialty";
+  }
 
   ngOnInit() {
     // this.userService.getUserByUsername('john')

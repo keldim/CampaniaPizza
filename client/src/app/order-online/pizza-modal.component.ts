@@ -1,6 +1,8 @@
 import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { OrderOnlineComponent } from './order-online.component';
+import { stringify } from '@angular/core/src/util';
 
 @Component({
   selector: 'pizza-modal',
@@ -11,8 +13,8 @@ export class PizzaModalComponent {
   closeResult: string;
   pizzaType: string;
   @ViewChild('contentPizza') modal;
-  cartItems: Object[] = [];
   pizzaForm: FormGroup;
+  cartItems: Object[] = [];
   pizzaCheckboxes = {
     cheese: [
       { name: 'Fresh Mozzarella', selected: false },
@@ -100,6 +102,18 @@ export class PizzaModalComponent {
     return this.fb.array(arr);
   }
 
+
+  buildDisplayForCart() {
+    var finalString: string = "";
+    for(let cartItem of this.cartItems) {
+      if(cartItem.hasOwnProperty("cheese")) {
+        finalString += cartItem.size;
+        finalString += cartItem.crust;
+      } else {
+        finalString += cartItem;
+      }
+    }
+  }
 
   createTempForm() {
     const forCart = { ...this.pizzaForm.value };
