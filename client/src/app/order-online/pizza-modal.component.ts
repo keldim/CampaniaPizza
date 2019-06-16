@@ -10,11 +10,10 @@ import { stringify } from '@angular/core/src/util';
   styleUrls: [`./pizza-modal.component.css`]
 })
 export class PizzaModalComponent {
-  closeResult: string;
   pizzaType: string;
   @ViewChild('contentPizza') modal;
+  pizzaItems: any[] = [];
   pizzaForm: FormGroup;
-  cartItems: Object[] = [];
   pizzaCheckboxes = {
     cheese: [
       { name: 'Fresh Mozzarella', selected: false },
@@ -102,18 +101,47 @@ export class PizzaModalComponent {
     return this.fb.array(arr);
   }
 
+// create other modals?
+// fix the error on pizza modal component? watch angular course?
 
+// find out about how to dynamically add html?
   buildDisplayForCart() {
     var finalString: string = "";
-    for(let cartItem of this.cartItems) {
-      if(cartItem.hasOwnProperty("cheese")) {
-        finalString += cartItem.size;
-        finalString += cartItem.crust;
+    for(let item of this.pizzaItems) {
+      if(item.hasOwnProperty("cheese")) {
+        finalString += "BUILD YOUR OWN PIZZA\n"
+        finalString += (item.size + ", ");
+        finalString += (item.crust + ", ");
+        finalString += (item.sauce + ", ");
+        for(let oneCheese of item.cheese) {
+          finalString += (oneCheese + ", ");
+        }
+        for(let veggie of item.veggies) {
+          finalString += (veggie + ", ");
+        }
+        for(let meat of item.meats) {
+          finalString += (meat + ", ");
+        }
+        for(let finish of item.finishes) {
+          finalString += (finish + ", ");
+        }
+        finalString = finalString.replace(/,\s*$/, "");
+        finalString += "\n";
       } else {
-        finalString += cartItem;
+        finalString += "SPECIALTY PIZZA\n"
+        finalString += (item.size + ", ");
+        finalString += (item.crust + ", ");
+        for(let finish of item.finishes) {
+          finalString += (finish + ", ");
+        }
+        finalString = finalString.replace(/,\s*$/, "");
+        finalString += "\n";
       }
     }
+    return finalString;
   }
+
+
 
   createTempForm() {
     const forCart = { ...this.pizzaForm.value };
@@ -123,7 +151,7 @@ export class PizzaModalComponent {
       delete forCart.veggies;
       delete forCart.meats;
     }
-    this.cartItems.push(forCart);
+    this.pizzaItems.push(forCart);
   }
 
   resetForm() {

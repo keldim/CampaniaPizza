@@ -25,6 +25,9 @@ export class OrderOnlineComponent implements OnInit {
 
   constructor(private userService: UserService, private modalService: NgbModal) { }
 
+
+
+
   openPizza(pizzaType) {
     this.modalComponent.openLg(pizzaType);
   }
