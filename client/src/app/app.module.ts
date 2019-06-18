@@ -14,6 +14,7 @@ import { AboutUsComponent } from './about-us/about-us.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PizzaModalComponent } from './order-online/pizza-modal.component';
+import { DessertModalComponent } from './order-online/dessert-modal.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { PizzaModalComponent } from './order-online/pizza-modal.component';
     LocationComponent,
     OrderOnlineComponent,
     AboutUsComponent,
-    PizzaModalComponent
+    PizzaModalComponent,
+    DessertModalComponent
   ],
   imports: [
     BrowserModule,

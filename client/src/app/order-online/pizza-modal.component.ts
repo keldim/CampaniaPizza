@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { OrderOnlineComponent } from './order-online.component';
 import { stringify } from '@angular/core/src/util';
 
@@ -102,7 +102,6 @@ export class PizzaModalComponent {
   }
 
 // create other modals?
-// fix the error on pizza modal component? watch angular course?
 
 // find out about how to dynamically add html?
   buildDisplayForCart() {
@@ -140,6 +139,23 @@ export class PizzaModalComponent {
     }
     return finalString;
   }
+
+  get cheese(): FormArray{
+    return <FormArray>this.pizzaForm.get('cheese');
+  }
+
+  get veggies(): FormArray{
+    return <FormArray>this.pizzaForm.get('veggies');
+  }
+
+  get meats(): FormArray{
+    return <FormArray>this.pizzaForm.get('meats');
+  }
+
+  get finishes(): FormArray{
+    return <FormArray>this.pizzaForm.get('finishes');
+  }
+
 
 
 

@@ -32,6 +32,7 @@
           <ul class="nav flex-column">
             <li class="nav-item item-bar">
               <a class="nav-link active empty-link" (click)="openPizza('byo')">
+                  <pizza-modal></pizza-modal>
                 <img src="../../assets/images/1954163.jpg" class="img-for-item-bar" />
                 <span class="empty-link-text">Build Your Own</span>
               </a>
@@ -146,7 +147,6 @@
             </li>
             <li class="nav-item item-bar">
               <a class="nav-link active empty-link" (click)="openPizza('specialty')">
-                <pizza-modal></pizza-modal>
                 <img src="../../assets/images/trenton-tomato-pie.png" class="img-for-item-bar" />
                 <span class="empty-link-text">TRENTON TOMATO PIE</span>
               </a>
@@ -207,15 +207,16 @@
               </a>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active" href="#">
+              <a class="nav-link active empty-link" (click)="openDessert('cookie')">
+                <dessert-modal></dessert-modal>
                 <img src="../../assets/images/146208lrg.jpg" class="img-for-item-bar" />
-                <span>COOKIES</span>
+                <span class="empty-link-text">COOKIES</span>
               </a>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active" href="#">
+              <a class="nav-link active empty-link" (click)="openDessert('brownie')">
                 <img src="../../assets/images/coconut-flour-brownies-2.jpg" class="img-for-item-bar" />
-                <span>BROWNIES</span>
+                <span class="empty-link-text">BROWNIES</span>
               </a>
             </li>
           </ul>
@@ -235,9 +236,12 @@
 
     <div
       style="width: 258px; height: 307px; padding: 14px; border: 1px solid #ccc; background-color: #487a32; color: #fff;">
-      <div *ngIf="modalComponent.pizzaItems[0] != null">
-        <p>{{ modalComponent.buildDisplayForCart() }}</p>
+      <div *ngIf="pizzaModalComponent.pizzaItems[0] != null">
+        <p>{{ pizzaModalComponent.buildDisplayForCart() }}</p>
       </div>
+      <div *ngIf="dessertModalComponent.dessertItems[0] != null">
+          <p>{{ dessertModalComponent.buildDisplayForCart() }}</p>
+        </div>
 
     </div>
   </div>

@@ -7,6 +7,7 @@ import { BYOPizza } from './byo-pizza';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { Item } from './item.entity';
 import { PizzaModalComponent } from './pizza-modal.component';
+import { DessertModalComponent } from './dessert-modal.component';
 
 @Component({
   templateUrl: './order-online.component.html',
@@ -18,8 +19,8 @@ export class OrderOnlineComponent implements OnInit {
 
   byoPizzaOrder: BYOPizza;
 
-  @ViewChild(PizzaModalComponent) modalComponent;
-
+  @ViewChild(PizzaModalComponent) pizzaModalComponent;
+  @ViewChild(DessertModalComponent) dessertModalComponent;
 
 
 
@@ -29,7 +30,11 @@ export class OrderOnlineComponent implements OnInit {
 
 
   openPizza(pizzaType) {
-    this.modalComponent.openLg(pizzaType);
+    this.pizzaModalComponent.openLg(pizzaType);
+  }
+
+  openDessert(dessertType) {
+    this.dessertModalComponent.openLg(dessertType);
   }
 
   isArray(item) {
