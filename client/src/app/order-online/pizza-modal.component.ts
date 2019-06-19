@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { OrderOnlineComponent } from './order-online.component';
 import { stringify } from '@angular/core/src/util';
 
@@ -10,7 +10,6 @@ import { stringify } from '@angular/core/src/util';
   styleUrls: [`./pizza-modal.component.css`]
 })
 export class PizzaModalComponent {
-  pizzaType: string;
   @ViewChild('contentPizza') modal;
   pizzaItems: any[] = [];
   pizzaForm: FormGroup;
@@ -71,7 +70,9 @@ export class PizzaModalComponent {
 
 
   openLg(pizzaType) {
-    this.pizzaType = pizzaType;
+    this.pizzaForm.patchValue({
+      type: pizzaType
+    });
     this.modalService.open(this.modal, { size: 'lg' });
   }
 
@@ -156,12 +157,15 @@ export class PizzaModalComponent {
     return <FormArray>this.pizzaForm.get('finishes');
   }
 
+  get type(): FormControl{
+    return <FormControl>this.pizzaForm.get('type');
+  }
 
 
 
   createTempForm() {
     const forCart = { ...this.pizzaForm.value };
-    if(this.pizzaType == 'specialty') {
+    if(this.pizzaForm.controls.type.value == 'specialty') {
       delete forCart.sauce;
       delete forCart.cheese;
       delete forCart.veggies;
@@ -173,19 +177,20 @@ export class PizzaModalComponent {
   resetForm() {
     this.pizzaForm.reset();
     this.pizzaForm.patchValue({
+      type: "",
       size: "10",
       crust: "traditional",
       sauce: "marinara",
-      cheese: [false, false, false, false, false, false, false, false],
-      veggies: [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-      meats: [false, false, false, false, false, false, false],
-      finishes: [false, false, false, false, false, false, false, false]
+      cheese: this.buildCheese().value,
+      veggies: this.buildVeggies().value,
+      meats: this.buildMeats().value,
+      finishes: this.buildFinishes().value
     });
-    this.pizzaType = null;
   }
 
   ngOnInit() {
     this.pizzaForm = this.fb.group({
+      type: "",
       size: "10",
       crust: "traditional",
       sauce: "marinara",

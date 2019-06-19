@@ -29,7 +29,7 @@
         </div>
       </fieldset>
 
-      <fieldset *ngIf="pizzaType=='byo'" style="text-align: center">
+      <fieldset *ngIf="type.value=='byo'" style="text-align: center">
         <legend style="text-align: center">Choose Your Sauce</legend>
         <div style="margin-left: auto; margin-right: auto;">
           <input class="radio-input" type="radio" id="inlineRadio1" value="marinara" formControlName="sauce"> Signature
@@ -42,7 +42,7 @@
         </div>
       </fieldset>
 
-      <fieldset *ngIf="pizzaType=='byo'" style="text-align: center">
+      <fieldset *ngIf="type.value=='byo'" style="text-align: center">
         <legend style="text-align: center">Choose Your Cheese</legend>
         <div formArrayName="cheese">
           <div class="radio-input" *ngFor="let oneCheese of cheese.controls; let i = index">
@@ -51,7 +51,7 @@
         </div>
       </fieldset>
 
-      <fieldset *ngIf="pizzaType=='byo'" style="text-align: center">
+      <fieldset *ngIf="type.value=='byo'" style="text-align: center">
         <legend style="text-align: center">Choose Your Veggies</legend>
         <div formArrayName="veggies">
           <div class="radio-input" *ngFor="let veggie of veggies.controls; let i = index">
@@ -60,7 +60,7 @@
         </div>
       </fieldset>
 
-      <fieldset *ngIf="pizzaType=='byo'" style="text-align: center">
+      <fieldset *ngIf="type.value=='byo'" style="text-align: center">
         <legend style="text-align: center">Choose Your Meats</legend>
         <div formArrayName="meats">
           <div class="radio-input" *ngFor="let meat of meats.controls; let i = index">

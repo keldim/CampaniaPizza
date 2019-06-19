@@ -1,11 +1,11 @@
 import { ViewChild, Component } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'salad-modal',
-  templateUrl: './pizza-modal.component.html',
-  styleUrls: [`./pizza-modal.component.css`]
+  templateUrl: './salad-modal.component.html',
+  styleUrls: [`./salad-modal.component.css`]
 })
 export class SaladModalComponent {
   @ViewChild('contentSalad') modal;
@@ -72,9 +72,15 @@ export class SaladModalComponent {
 
 
 
-  openLg(pizzaType) {
-    this.pizzaType = pizzaType;
+  openLg(saladType) {
+    this.saladForm.patchValue({
+      type: saladType
+    });
     this.modalService.open(this.modal, { size: 'lg' });
+  }
+
+  get type(): FormControl{
+    return <FormControl>this.saladForm.get('type');
   }
 
   buildGreens() {
@@ -149,7 +155,7 @@ export class SaladModalComponent {
         finalString = finalString.replace(/,\s*$/, "");
         finalString += "\n";
       } else {
-        finalString += item.type.value;
+        finalString += item.type;
         finalString += "\n";
       }
     }
@@ -185,7 +191,7 @@ export class SaladModalComponent {
 
   createTempForm() {
     const forCart = { ...this.saladForm.value };
-    if(this.saladForm.controls.type.value == ('CHICKEN CAESAR SALAD' || 'GREEK SALAD')) {
+    if(this.saladForm.controls.type.value == 'CHICKEN CAESAR SALAD' || this.saladForm.controls.type.value == 'GREEK SALAD') {
       delete forCart.greens;
       delete forCart.cheese;
       delete forCart.freshProduce;
@@ -200,12 +206,12 @@ export class SaladModalComponent {
     this.saladForm.reset();
     this.saladForm.patchValue({
       type: "",
-      greens: this.buildGreens(),
-      cheese: this.buildCheese(),
-      freshProduce: this.buildFreshProduce(),
-      meats: this.buildMeats(),
-      topItOff: this.buildTopItOff(),
-      dressings: this.buildDressings()
+      greens: this.buildGreens().value,
+      cheese: this.buildCheese().value,
+      freshProduce: this.buildFreshProduce().value,
+      meats: this.buildMeats().value,
+      topItOff: this.buildTopItOff().value,
+      dressings: this.buildDressings().value
     });
   }
 

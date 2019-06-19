@@ -32,7 +32,7 @@
           <ul class="nav flex-column">
             <li class="nav-item item-bar">
               <a class="nav-link active empty-link" (click)="openPizza('byo')">
-                  <pizza-modal></pizza-modal>
+                <pizza-modal></pizza-modal>
                 <img src="../../assets/images/1954163.jpg" class="img-for-item-bar" />
                 <span class="empty-link-text">Build Your Own</span>
               </a>
@@ -166,44 +166,46 @@
               </p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active" href="#">
+              <a class="nav-link active empty-link" (click)="openSalad('CHICKEN CAESAR SALAD')">
+                <salad-modal></salad-modal>
                 <img src="../../assets/images/Grilled-Chicken-Caesar-Salad-550x393.jpg" class="img-for-item-bar" />
-                <span>CHICKEN CAESAR SALAD</span>
+                <span class="empty-link-text">CHICKEN CAESAR SALAD</span>
               </a>
               <p class="textSizeCtrlForCc divForText">Romaine, All-Natural Chicken, Croutons, Parmesan Cheese, Caesar
                 Dressing</p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active" href="#">
+              <a class="nav-link active empty-link" (click)="openSalad('GREEK SALAD')">
                 <img src="../../assets/images/Greek-Salad-500x500.jpg" class="img-for-item-bar" />
-                <span>GREEK SALAD</span>
+                <span class="empty-link-text">GREEK SALAD</span>
               </a>
               <p class="textSizeCtrlForGs divForText">Romaine, Cucumbers, Grape Tomatoes, Red Onions, Black Olives, Feta
                 Cheese, Greek Dressing</p>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active" href="#">
+              <a class="nav-link active empty-link" (click)="openSalad('byo')">
                 <img src="../../assets/images/images.jpeg" class="img-for-item-bar" />
-                <span>BUILD YOUR OWN SALAD</span>
+                <span class="empty-link-text">BUILD YOUR OWN SALAD</span>
               </a>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active" href="#">
+              <a class="nav-link active empty-link" (click)="openDrink('FOUNTAIN DRINK')">
+                <drink-modal></drink-modal>
                 <img src="../../assets/images/fdrink-min.jpg" class="img-for-item-bar" />
-                <span>FOUNTAIN DRINKS</span>
+                <span class="empty-link-text">FOUNTAIN DRINK</span>
               </a>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active" href="#">
+              <a class="nav-link active empty-link" (click)="openDrink('IZZE GLASS BOTTLE')">
                 <img src="../../assets/images/sparkling-water-izze-juice.jpg" class="img-for-item-bar" />
-                <span>IZZE GLASS BOTTLES</span>
+                <span class="empty-link-text">IZZE GLASS BOTTLE</span>
               </a>
             </li>
             <li class="nav-item item-bar">
-              <a class="nav-link active" href="#">
+              <a class="nav-link active empty-link" (click)="openDrink('BOTTLED WATER')">
                 <img src="../../assets/images/resized-ew_1l_vert_onwhite_color_fulllabel_digital_t118.jpg"
                   class="img-for-item-bar" />
-                <span>BOTTLED WATER</span>
+                <span class="empty-link-text">BOTTLED WATER</span>
               </a>
             </li>
             <li class="nav-item item-bar">
@@ -224,14 +226,16 @@
       </div>
     </div>
 
-<!-- create a function for checking if the item is an array? -->
-          <!-- create a function for identifiying the type of item? -->
-          <!-- make use of pizzaType? -->
-          <!-- create a function for generating item detail and add it in one big chunk? -->
-          <!-- create an item object, with type and array for all the info, display that in the shopping cart -->
+    <!-- create a function for checking if the item is an array? -->
+    <!-- create a function for identifiying the type of item? -->
+    <!-- make use of pizzaType? -->
+    <!-- create a function for generating item detail and add it in one big chunk? -->
+    <!-- create an item object, with type and array for all the info, display that in the shopping cart? -->
 
-
-           <!-- <p style="display: inline; margin-left: 5px;"></p>
+    <!-- use service to store order-online menu data as seen on angular getting started? -->
+    <!-- separate module for order-online? -->
+    <!-- create validation for order-online? for byo salad? -->
+    <!-- <p style="display: inline; margin-left: 5px;"></p>
               <p style="display: inline; margin-left: 5px;"></p> -->
 
     <div
@@ -240,9 +244,14 @@
         <p>{{ pizzaModalComponent.buildDisplayForCart() }}</p>
       </div>
       <div *ngIf="dessertModalComponent.dessertItems[0] != null">
-          <p>{{ dessertModalComponent.buildDisplayForCart() }}</p>
-        </div>
-
+        <p>{{ dessertModalComponent.buildDisplayForCart() }}</p>
+      </div>
+      <div *ngIf="saladModalComponent.saladItems[0] != null">
+        <p>{{ saladModalComponent.buildDisplayForCart() }}</p>
+      </div>
+      <div *ngIf="drinkModalComponent.drinkItems[0] != null">
+        <p>{{ drinkModalComponent.buildDisplayForCart() }}</p>
+      </div>
     </div>
   </div>
 </div>

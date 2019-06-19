@@ -15,16 +15,20 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PizzaModalComponent } from './order-online/pizza-modal.component';
 import { DessertModalComponent } from './order-online/dessert-modal.component';
+import { SaladModalComponent } from './order-online/salad-modal.component';
+import { DrinkModalComponent } from './order-online/drink-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LocationComponent,
-    OrderOnlineComponent,
     AboutUsComponent,
+    OrderOnlineComponent,
     PizzaModalComponent,
-    DessertModalComponent
+    DessertModalComponent,
+    SaladModalComponent,
+    DrinkModalComponent
   ],
   imports: [
     BrowserModule,

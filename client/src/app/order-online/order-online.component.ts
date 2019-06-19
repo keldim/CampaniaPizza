@@ -8,6 +8,8 @@ import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { Item } from './item.entity';
 import { PizzaModalComponent } from './pizza-modal.component';
 import { DessertModalComponent } from './dessert-modal.component';
+import { SaladModalComponent } from './salad-modal.component';
+import { DrinkModalComponent } from './drink-modal.component';
 
 @Component({
   templateUrl: './order-online.component.html',
@@ -21,6 +23,8 @@ export class OrderOnlineComponent implements OnInit {
 
   @ViewChild(PizzaModalComponent) pizzaModalComponent;
   @ViewChild(DessertModalComponent) dessertModalComponent;
+  @ViewChild(SaladModalComponent) saladModalComponent;
+  @ViewChild(DrinkModalComponent) drinkModalComponent;
 
 
 
@@ -35,6 +39,14 @@ export class OrderOnlineComponent implements OnInit {
 
   openDessert(dessertType) {
     this.dessertModalComponent.openLg(dessertType);
+  }
+
+  openSalad(saladType) {
+    this.saladModalComponent.openLg(saladType);
+  }
+
+  openDrink(drinkType) {
+    this.drinkModalComponent.openLg(drinkType);
   }
 
   isArray(item) {
