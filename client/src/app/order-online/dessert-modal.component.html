@@ -7,7 +7,7 @@
     </div>
     <div class="modal-body">
       <form novalidate (ngSubmit)="save()" [formGroup]="dessertForm">
-        <fieldset *ngIf="type.value=='cookie'" style="text-align: center">
+        <fieldset *ngIf="type.value=='Cookies'" style="text-align: center">
           <legend style="text-align: center">Choose Your Cookie</legend>
           <ul>
             <li style="display: inline-flex; align-items: center;">
@@ -22,7 +22,7 @@
           </ul>
         </fieldset>
 
-        <fieldset *ngIf="type.value=='brownie'" style="text-align: center">
+        <fieldset *ngIf="type.value=='Brownies'" style="text-align: center">
           <legend style="text-align: center">Choose Your Brownie</legend>
           <div style="margin-left: auto; margin-right: auto;">
             <input class="radio-input" type="radio" id="inlineRadio1" value="Chocolate" formControlName="brownieChoice"> Chocolate

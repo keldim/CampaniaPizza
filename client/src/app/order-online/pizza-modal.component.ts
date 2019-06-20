@@ -102,62 +102,72 @@ export class PizzaModalComponent {
     return this.fb.array(arr);
   }
 
-// create other modals?
+  // create other modals?
 
-// find out about how to dynamically add html?
-  buildDisplayForCart() {
+  // find out about how to dynamically add html?
+  buildDisplayForCart(currentItem) {
     var finalString: string = "";
-    for(let item of this.pizzaItems) {
-      if(item.hasOwnProperty("cheese")) {
-        finalString += "BUILD YOUR OWN PIZZA\n"
-        finalString += (item.size + ", ");
-        finalString += (item.crust + ", ");
-        finalString += (item.sauce + ", ");
-        for(let oneCheese of item.cheese) {
-          finalString += (oneCheese + ", ");
+    // for(let item of this.pizzaItems) {
+    if (currentItem.hasOwnProperty("cheese")) {
+      // finalString += "BUILD YOUR OWN PIZZA\n";
+      finalString += (currentItem.size + ", ");
+      finalString += (currentItem.crust + ", ");
+      finalString += (currentItem.sauce + ", ");
+      for (let oneCheese in currentItem.cheese) {
+        if (currentItem.cheese[oneCheese] != this.pizzaCheckboxes.cheese[oneCheese].selected) {
+          finalString += (this.pizzaCheckboxes.cheese[oneCheese].name + ", ");
         }
-        for(let veggie of item.veggies) {
-          finalString += (veggie + ", ");
-        }
-        for(let meat of item.meats) {
-          finalString += (meat + ", ");
-        }
-        for(let finish of item.finishes) {
-          finalString += (finish + ", ");
-        }
-        finalString = finalString.replace(/,\s*$/, "");
-        finalString += "\n";
-      } else {
-        finalString += "SPECIALTY PIZZA\n"
-        finalString += (item.size + ", ");
-        finalString += (item.crust + ", ");
-        for(let finish of item.finishes) {
-          finalString += (finish + ", ");
-        }
-        finalString = finalString.replace(/,\s*$/, "");
-        finalString += "\n";
       }
+      for (let veggie in currentItem.veggies) {
+        if (currentItem.veggies[veggie] != this.pizzaCheckboxes.veggies[veggie].selected) {
+          finalString += (this.pizzaCheckboxes.veggies[veggie].name + ", ");
+        }
+      }
+      for (let meat in currentItem.meats) {
+        if (currentItem.meats[meat] != this.pizzaCheckboxes.meats[meat].selected) {
+        finalString += (this.pizzaCheckboxes.meats[meat].name + ", ");
+        }
+      }
+      for (let finish in currentItem.finishes) {
+        if (currentItem.finishes[finish] != this.pizzaCheckboxes.finishes[finish].selected) {
+          finalString += (this.pizzaCheckboxes.finishes[finish].name + ", ");
+        }
+      }
+      finalString = finalString.replace(/,\s*$/, "");
+      finalString += "\n";
+    } else {
+      // finalString += "SPECIALTY PIZZA\n"
+      finalString += (currentItem.size + ", ");
+      finalString += (currentItem.crust + ", ");
+      for (let finish in currentItem.finishes) {
+        if (currentItem.finishes[finish] != this.pizzaCheckboxes.finishes[finish].selected) {
+          finalString += (this.pizzaCheckboxes.finishes[finish].name + ", ");
+        }
+      }
+      finalString = finalString.replace(/,\s*$/, "");
+      finalString += "\n";
     }
+    // }
     return finalString;
   }
 
-  get cheese(): FormArray{
+  get cheese(): FormArray {
     return <FormArray>this.pizzaForm.get('cheese');
   }
 
-  get veggies(): FormArray{
+  get veggies(): FormArray {
     return <FormArray>this.pizzaForm.get('veggies');
   }
 
-  get meats(): FormArray{
+  get meats(): FormArray {
     return <FormArray>this.pizzaForm.get('meats');
   }
 
-  get finishes(): FormArray{
+  get finishes(): FormArray {
     return <FormArray>this.pizzaForm.get('finishes');
   }
 
-  get type(): FormControl{
+  get type(): FormControl {
     return <FormControl>this.pizzaForm.get('type');
   }
 
@@ -165,7 +175,7 @@ export class PizzaModalComponent {
 
   createTempForm() {
     const forCart = { ...this.pizzaForm.value };
-    if(this.pizzaForm.controls.type.value == 'specialty') {
+    if (this.pizzaForm.controls.type.value != 'Build Your Own Pizza') {
       delete forCart.sauce;
       delete forCart.cheese;
       delete forCart.veggies;

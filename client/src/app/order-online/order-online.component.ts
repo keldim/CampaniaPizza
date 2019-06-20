@@ -18,6 +18,7 @@ import { DrinkModalComponent } from './drink-modal.component';
 export class OrderOnlineComponent implements OnInit {
   closeResult: string;
   selectedUser: User;
+  clickedMenu: string = "Build Your Own Pizza";
 
   byoPizzaOrder: BYOPizza;
 
@@ -31,7 +32,9 @@ export class OrderOnlineComponent implements OnInit {
   constructor(private userService: UserService, private modalService: NgbModal) { }
 
 
-
+  clickedVerticalNavbar(clickedMenu) {
+    this.clickedMenu = clickedMenu;
+  }
 
   openPizza(pizzaType) {
     this.pizzaModalComponent.openLg(pizzaType);

@@ -79,7 +79,7 @@ export class SaladModalComponent {
     this.modalService.open(this.modal, { size: 'lg' });
   }
 
-  get type(): FormControl{
+  get type(): FormControl {
     return <FormControl>this.saladForm.get('type');
   }
 
@@ -127,62 +127,75 @@ export class SaladModalComponent {
     return this.fb.array(arr);
   }
 
-  buildDisplayForCart() {
+  buildDisplayForCart(currentItem) {
     var finalString: string = "";
-    for(let item of this.saladItems) {
-      if(item.hasOwnProperty("greens")) {
-        finalString += "BUILD YOUR OWN SALAD\n"
 
-        for(let green of item.greens) {
-          finalString += (green + ", ");
-        }
-        for(let oneCheese of item.cheese) {
-          finalString += (oneCheese + ", ");
-        }
-        for(let oneFreshProduce of item.freshProduce) {
-          finalString += (oneFreshProduce + ", ");
-        }
-        for(let meat of item.meats) {
-          finalString += (meat + ", ");
-        }
-        for(let oneTopItOff of item.topItOff) {
-          finalString += (oneTopItOff + ", ");
-        }
-        for(let dressing of item.dressings) {
-          finalString += (dressing + ", ");
-        }
+     // for(let item of this.saladItems) {
+    if (currentItem.hasOwnProperty("greens")) {
+      // finalString += "BUILD YOUR OWN SALAD\n"
 
-        finalString = finalString.replace(/,\s*$/, "");
-        finalString += "\n";
-      } else {
-        finalString += item.type;
-        finalString += "\n";
+      for (let green in currentItem.greens) {
+        if (currentItem.greens[green] != this.saladCheckboxes.greens[green].selected) {
+          finalString += (this.saladCheckboxes.greens[green].name + ", ");
+        }
       }
+      for (let oneCheese in currentItem.cheese) {
+        if (currentItem.cheese[oneCheese] != this.saladCheckboxes.cheese[oneCheese].selected) {
+          finalString += (this.saladCheckboxes.cheese[oneCheese].name + ", ");
+        }
+      }
+      for (let oneFreshProduce in currentItem.freshProduce) {
+        if (currentItem.freshProduce[oneFreshProduce] != this.saladCheckboxes.freshProduce[oneFreshProduce].selected) {
+          finalString += (this.saladCheckboxes.freshProduce[oneFreshProduce].name + ", ");
+        }
+      }
+      for (let meat in currentItem.meats) {
+        if (currentItem.meats[meat] != this.saladCheckboxes.meats[meat].selected) {
+          finalString += (this.saladCheckboxes.meats[meat].name + ", ");
+        }
+      }
+      for (let oneTopItOff in currentItem.topItOff) {
+        if (currentItem.topItOff[oneTopItOff] != this.saladCheckboxes.topItOff[oneTopItOff].selected) {
+          finalString += (this.saladCheckboxes.topItOff[oneTopItOff].name + ", ");
+        }
+      }
+      for (let dressing in currentItem.dressings) {
+        if (currentItem.dressings[dressing] != this.saladCheckboxes.dressings[dressing].selected) {
+          finalString += (this.saladCheckboxes.dressings[dressing].name + ", ");
+        }
+      }
+
+      finalString = finalString.replace(/,\s*$/, "");
+      finalString += "\n";
+    } else {
+      // finalString += item.type;
+      finalString += "\n";
     }
+    // }
     return finalString;
   }
 
-  get greens(): FormArray{
+  get greens(): FormArray {
     return <FormArray>this.saladForm.get('greens');
   }
 
-  get cheese(): FormArray{
+  get cheese(): FormArray {
     return <FormArray>this.saladForm.get('cheese');
   }
 
-  get freshProduce(): FormArray{
+  get freshProduce(): FormArray {
     return <FormArray>this.saladForm.get('freshProduce');
   }
 
-  get meats(): FormArray{
+  get meats(): FormArray {
     return <FormArray>this.saladForm.get('meats');
   }
 
-  get topItOff(): FormArray{
+  get topItOff(): FormArray {
     return <FormArray>this.saladForm.get('topItOff');
   }
 
-  get dressings(): FormArray{
+  get dressings(): FormArray {
     return <FormArray>this.saladForm.get('dressings');
   }
 
@@ -191,7 +204,7 @@ export class SaladModalComponent {
 
   createTempForm() {
     const forCart = { ...this.saladForm.value };
-    if(this.saladForm.controls.type.value == 'CHICKEN CAESAR SALAD' || this.saladForm.controls.type.value == 'GREEK SALAD') {
+    if (this.saladForm.controls.type.value == 'CHICKEN CAESAR SALAD' || this.saladForm.controls.type.value == 'GREEK SALAD') {
       delete forCart.greens;
       delete forCart.cheese;
       delete forCart.freshProduce;

@@ -7,7 +7,7 @@
   </div>
   <div class="modal-body">
     <form novalidate (ngSubmit)="save()" [formGroup]="saladForm">
-      <fieldset *ngIf="type.value=='byo'" style="text-align: center">
+      <fieldset *ngIf="type.value=='BUILD YOUR OWN SALAD'" style="text-align: center">
         <legend style="text-align: center">Choose Your Greens</legend>
         <div formArrayName="greens">
           <div class="radio-input" *ngFor="let green of greens.controls; let i = index">
@@ -16,7 +16,7 @@
         </div>
       </fieldset>
 
-      <fieldset *ngIf="type.value=='byo'" style="text-align: center">
+      <fieldset *ngIf="type.value=='BUILD YOUR OWN SALAD'" style="text-align: center">
         <legend style="text-align: center">Choose Your Cheese</legend>
         <div formArrayName="cheese">
           <div class="radio-input" *ngFor="let oneCheese of cheese.controls; let i = index">
@@ -25,7 +25,7 @@
         </div>
       </fieldset>
 
-      <fieldset *ngIf="type.value=='byo'" style="text-align: center">
+      <fieldset *ngIf="type.value=='BUILD YOUR OWN SALAD'" style="text-align: center">
         <legend style="text-align: center">Choose Your Fresh Produce</legend>
         <div formArrayName="freshProduce">
           <div class="radio-input" *ngFor="let oneFreshProduce of freshProduce.controls; let i = index">
@@ -34,7 +34,7 @@
         </div>
       </fieldset>
 
-      <fieldset *ngIf="type.value=='byo'" style="text-align: center">
+      <fieldset *ngIf="type.value=='BUILD YOUR OWN SALAD'" style="text-align: center">
         <legend style="text-align: center">Choose Your Meats</legend>
         <div formArrayName="meats">
           <div class="radio-input" *ngFor="let meat of meats.controls; let i = index">
@@ -42,7 +42,7 @@
           </div>
         </div>
       </fieldset>
-      <fieldset *ngIf="type.value=='byo'" style="text-align: center">
+      <fieldset *ngIf="type.value=='BUILD YOUR OWN SALAD'" style="text-align: center">
         <legend style="text-align: center">Top It Off</legend>
         <div formArrayName="topItOff">
           <div class="radio-input" *ngFor="let oneTopItOff of topItOff.controls; let i = index">
@@ -50,7 +50,7 @@
           </div>
         </div>
       </fieldset>
-      <fieldset *ngIf="type.value=='byo'" style="text-align: center">
+      <fieldset *ngIf="type.value=='BUILD YOUR OWN SALAD'" style="text-align: center">
         <legend style="text-align: center">Choose Your Dressings</legend>
         <div formArrayName="dressings">
           <div class="radio-input" *ngFor="let dressing of dressings.controls; let i = index">

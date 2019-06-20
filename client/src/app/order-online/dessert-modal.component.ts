@@ -29,24 +29,25 @@ export class DessertModalComponent {
 
   buildDisplayForCart() {
     var finalString: string = "";
-    for(let item of this.dessertItems) {
-      if(item.hasOwnProperty("cookieChoice")) {
-        finalString += "DESSERT\n"
-        finalString += (item.cookieChoice + "\n");
-      } else {
-        finalString += "DESSERT\n"
-        finalString += (item.brownieChoice + "\n");
-      }
-    }
+    // for(let item of this.dessertItems) {
+    //   if(item.hasOwnProperty("cookieChoice")) {
+    //     finalString += "DESSERT\n"
+    //     finalString += (item.cookieChoice + "\n");
+    //   } else {
+    //     finalString += "DESSERT\n"
+    //     finalString += (item.brownieChoice + "\n");
+    //   }
+    // }
+    finalString += "\n"
     return finalString;
   }
 
 
   createTempForm() {
     const forCart = { ...this.dessertForm.value };
-    if(this.dessertForm.controls.type.value == "cookie") {
+    if(this.dessertForm.controls.type.value == "Cookies") {
       delete forCart.brownieChoice;
-    } else if (this.dessertForm.controls.type.value == "brownie") {
+    } else if (this.dessertForm.controls.type.value == "Brownies") {
       delete forCart.cookieChoice;
     }
     this.dessertItems.push(forCart);

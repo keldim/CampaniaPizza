@@ -29,10 +29,10 @@ export class DrinkModalComponent {
 
   buildDisplayForCart() {
     var finalString: string = "";
-    for(let item of this.drinkItems) {
-      finalString += item.type;
+    // for(let item of this.drinkItems) {
+      // finalString += item.type;
         finalString += "\n";
-    }
+    // }
     return finalString;
   }
 
