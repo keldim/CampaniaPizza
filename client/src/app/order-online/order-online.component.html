@@ -259,13 +259,13 @@
     <!-- height: 307px; -->
     <div style="width: 258px; min-height: 277px; padding: 14px; border: 1px solid #ccc; background-color: #487a32; color: #fff; float: left;">
       <!-- <div *ngIf="pizzaModalComponent.pizzaItems[0] != null"> -->
-        <div *ngFor="let pizzaItem of pizzaModalComponent.pizzaItems">
+        <div *ngFor="let pizzaItem of pizzaModalComponent.pizzaItems; let i = index;">
             <span style="padding-right: 2px; font-size: 14px; font-weight: 700;">1x</span>
             <span *ngIf="pizzaItem.type=='Build Your Own Pizza'" style="width: 150px; padding-right: 2px; font-size: 14px; font-weight: 700;">{{ pizzaItem.type }}</span>
             <span *ngIf="pizzaItem.type!='Build Your Own Pizza'" style="width: 150px; padding-right: 2px; font-size: 14px; font-weight: 700;">{{ pizzaItem.type }}</span>
             <span style="margin-right: 5px; padding-right: 2px; font-size: 14px; font-weight: 700;">price</span>
             <div>
-              edit | delete
+              <a class="empty-link" (click)="pizzaModalComponent.valueBindingForEdit(i); openPizza(pizzaItem.type)"><span class="empty-link-text">edit</span></a> | <a class="empty-link"><span class="empty-link-text" (click)="pizzaModalComponent.deletePizzaItem(i)">delete</span></a>
             </div>
             <div>
               {{ pizzaModalComponent.buildDisplayForCart(pizzaItem) }}
@@ -274,13 +274,13 @@
 
       <!-- </div> -->
           <!-- <div *ngIf="saladModalComponent.saladItems[0] != null"> -->
-          <div *ngFor="let saladItem of saladModalComponent.saladItems">
+          <div *ngFor="let saladItem of saladModalComponent.saladItems; let i = index;">
               <span style="padding-right: 2px; font-size: 14px; font-weight: 700;">1x</span>
               <span *ngIf="saladItem.type=='BUILD YOUR OWN SALAD'" style="width: 150px; padding-right: 2px; font-size: 14px; font-weight: 700;">{{ saladItem.type }}</span>
               <span *ngIf="saladItem.type!='BUILD YOUR OWN SALAD'" style="width: 150px; padding-right: 2px; font-size: 14px; font-weight: 700;">{{ saladItem.type }}</span>
               <span style="margin-right: 5px; padding-right: 2px; font-size: 14px; font-weight: 700;">price</span>
               <div>
-                edit | delete
+                <a class="empty-link" (click)="saladModalComponent.valueBindingForEdit(i); openSalad(saladItem.type)"><span class="empty-link-text">edit</span></a> | <a class="empty-link"><span class="empty-link-text" (click)="saladModalComponent.deleteSaladItem(i)">delete</span></a>
               </div>
               <div>
                 {{ saladModalComponent.buildDisplayForCart(saladItem) }}
@@ -290,12 +290,12 @@
 
       <!-- </div> -->
       <!-- <div *ngIf="drinkModalComponent.drinkItems[0] != null"> -->
-        <div *ngFor="let drinkItem of drinkModalComponent.drinkItems">
+        <div *ngFor="let drinkItem of drinkModalComponent.drinkItems; let i = index;">
             <span style="padding-right: 2px; font-size: 14px; font-weight: 700;">1x</span>
             <span style="width: 150px; padding-right: 2px; font-size: 14px; font-weight: 700;">{{ drinkItem.type }}</span>
             <span style="margin-right: 5px; padding-right: 2px; font-size: 14px; font-weight: 700;">price</span>
             <div>
-              edit | delete
+              <a class="empty-link" (click)="drinkModalComponent.valueBindingForEdit(i); openDrink(drinkItem.type)"><span class="empty-link-text">edit</span></a> | <a class="empty-link"><span class="empty-link-text" (click)="drinkModalComponent.deleteDrinkItem(i)">delete</span></a>
             </div>
             <div>
                 {{ drinkModalComponent.buildDisplayForCart() }}
@@ -303,13 +303,13 @@
         </div>
  <!-- </div> -->
       <!-- <div *ngIf="dessertModalComponent.dessertItems[0] != null"> -->
-          <div *ngFor="let dessertItem of dessertModalComponent.dessertItems">
+          <div *ngFor="let dessertItem of dessertModalComponent.dessertItems; let i = index;">
               <span style="padding-right: 2px; font-size: 14px; font-weight: 700;">1x</span>
               <span *ngIf="dessertItem.type=='Cookies'" style="width: 150px; padding-right: 2px; font-size: 14px; font-weight: 700;">{{ dessertItem.cookieChoice }}</span>
               <span *ngIf="dessertItem.type=='Brownies'" style="width: 150px; padding-right: 2px; font-size: 14px; font-weight: 700;">{{ dessertItem.brownieChoice }}</span>
               <span style="margin-right: 5px; padding-right: 2px; font-size: 14px; font-weight: 700;">price</span>
               <div>
-                edit | delete
+                <a class="empty-link" (click)="dessertModalComponent.valueBindingForEdit(i); openDessert(dessertItem.type)"><span class="empty-link-text">edit</span></a> | <a class="empty-link"><span class="empty-link-text" (click)="dessertModalComponent.deleteDessertItem(i)">delete</span></a>
               </div>
               <div>
                   {{ dessertModalComponent.buildDisplayForCart() }}

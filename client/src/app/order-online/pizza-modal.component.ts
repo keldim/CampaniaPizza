@@ -3,6 +3,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { OrderOnlineComponent } from './order-online.component';
 import { stringify } from '@angular/core/src/util';
+import { Item } from './item.entity';
+
 
 @Component({
   selector: 'pizza-modal',
@@ -13,6 +15,8 @@ export class PizzaModalComponent {
   @ViewChild('contentPizza') modal;
   pizzaItems: any[] = [];
   pizzaForm: FormGroup;
+  forEdit: boolean = false;
+  indexForEdit: any = 0;
   pizzaCheckboxes = {
     cheese: [
       { name: 'Fresh Mozzarella', selected: false },
@@ -102,6 +106,62 @@ export class PizzaModalComponent {
     return this.fb.array(arr);
   }
 
+  valueBindingForEdit(index) {
+    // need to get the index for the item in the pizzaItems??
+    // distinguish between create and edit in createTempForm()?
+    // create openPizzaForEdit()? if using openPizzaForEdit(), create a diffrent button in pizza modal?
+    this.forEdit = true;
+    this.indexForEdit = index;
+    if (this.pizzaItems[index].type == "Build Your Own Pizza") {
+      this.pizzaForm.patchValue({
+        type: this.pizzaItems[index].type,
+        size: this.pizzaItems[index].size,
+        crust: this.pizzaItems[index].crust,
+        sauce: this.pizzaItems[index].sauce,
+        cheese: this.pizzaItems[index].cheese,
+        veggies: this.pizzaItems[index].veggies,
+        meats: this.pizzaItems[index].meats,
+        finishes: this.pizzaItems[index].finishes
+      });
+    } else {
+      this.pizzaForm.patchValue({
+        type: this.pizzaItems[index].type,
+        size: this.pizzaItems[index].size,
+        crust: this.pizzaItems[index].crust,
+        finishes: this.pizzaItems[index].finishes
+      });
+    }
+  }
+
+  updateTempForm() {
+    if (this.pizzaForm.controls.type.value != 'Build Your Own Pizza') {
+      this.pizzaItems[this.indexForEdit].type = this.pizzaForm.controls.type.value;
+      this.pizzaItems[this.indexForEdit].size = this.pizzaForm.controls.size.value;
+      this.pizzaItems[this.indexForEdit].crust = this.pizzaForm.controls.crust.value;
+      this.pizzaItems[this.indexForEdit].finishes = this.pizzaForm.controls.finishes.value;
+    } else {
+      this.pizzaItems[this.indexForEdit].type = this.pizzaForm.controls.type.value;
+      this.pizzaItems[this.indexForEdit].size = this.pizzaForm.controls.size.value;
+      this.pizzaItems[this.indexForEdit].crust = this.pizzaForm.controls.crust.value;
+      this.pizzaItems[this.indexForEdit].sauce = this.pizzaForm.controls.sauce.value;
+      this.pizzaItems[this.indexForEdit].cheese = this.pizzaForm.controls.cheese.value;
+      this.pizzaItems[this.indexForEdit].veggies = this.pizzaForm.controls.veggies.value;
+      this.pizzaItems[this.indexForEdit].meats = this.pizzaForm.controls.meats.value;
+      this.pizzaItems[this.indexForEdit].finishes = this.pizzaForm.controls.finishes.value;
+    }
+    this.forEdit = false;
+    this.indexForEdit = 0;
+  }
+
+  resetEdit() {
+    this.forEdit = false;
+    this.indexForEdit = 0;
+  }
+
+  deletePizzaItem(index) {
+    this.pizzaItems.splice(index, 1);
+  }
+
   // create other modals?
 
   // find out about how to dynamically add html?
@@ -125,7 +185,7 @@ export class PizzaModalComponent {
       }
       for (let meat in currentItem.meats) {
         if (currentItem.meats[meat] != this.pizzaCheckboxes.meats[meat].selected) {
-        finalString += (this.pizzaCheckboxes.meats[meat].name + ", ");
+          finalString += (this.pizzaCheckboxes.meats[meat].name + ", ");
         }
       }
       for (let finish in currentItem.finishes) {

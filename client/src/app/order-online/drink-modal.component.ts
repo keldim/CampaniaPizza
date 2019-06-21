@@ -11,7 +11,8 @@ export class DrinkModalComponent {
   @ViewChild('contentDrink') modal;
   drinkItems: any[] = [];
   drinkForm: FormGroup;
-
+  forEdit: boolean = false;
+  indexForEdit: any = 0;
 
   constructor(private modalService: NgbModal, private fb: FormBuilder) { }
 
@@ -35,6 +36,29 @@ export class DrinkModalComponent {
     // }
     return finalString;
   }
+
+  valueBindingForEdit(index) {
+    // need to get the index for the item in the pizzaItems??
+    // distinguish between create and edit in createTempForm()?
+    // create openPizzaForEdit()? if using openPizzaForEdit(), create a diffrent button in pizza modal?
+    this.forEdit = true;
+    this.indexForEdit = index;
+  }
+
+  updateTempForm() {
+    this.forEdit = false;
+    this.indexForEdit = 0;
+  }
+
+  resetEdit() {
+    this.forEdit = false;
+    this.indexForEdit = 0;
+  }
+
+  deleteDrinkItem(index) {
+    this.drinkItems.splice(index, 1);
+  }
+
 
 
   createTempForm() {

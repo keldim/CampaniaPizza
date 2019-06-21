@@ -11,6 +11,8 @@ export class DessertModalComponent {
   @ViewChild('contentDessert') modal;
   dessertItems: any[] = [];
   dessertForm: FormGroup;
+  forEdit: boolean = false;
+  indexForEdit: any = 0;
 
 
   constructor(private modalService: NgbModal, private fb: FormBuilder) { }
@@ -40,6 +42,47 @@ export class DessertModalComponent {
     // }
     finalString += "\n"
     return finalString;
+  }
+
+
+  valueBindingForEdit(index) {
+    // need to get the index for the item in the pizzaItems??
+    // distinguish between create and edit in createTempForm()?
+    // create openPizzaForEdit()? if using openPizzaForEdit(), create a diffrent button in pizza modal?
+    this.forEdit = true;
+    this.indexForEdit = index;
+    if (this.dessertItems[index].type == "Cookies") {
+      this.dessertForm.patchValue({
+        type: this.dessertItems[index].type,
+        cookieChoice: this.dessertItems[index].cookieChoice
+      });
+    } else {
+      this.dessertForm.patchValue({
+        type: this.dessertItems[index].type,
+        brownieChoice: this.dessertItems[index].brownieChoice
+      });
+    }
+  }
+
+  updateTempForm() {
+    if (this.dessertForm.controls.type.value == 'Cookies') {
+      this.dessertItems[this.indexForEdit].type = this.dessertForm.controls.type.value;
+      this.dessertItems[this.indexForEdit].cookieChoice = this.dessertForm.controls.cookieChoice.value;
+    } else {
+      this.dessertItems[this.indexForEdit].type = this.dessertForm.controls.type.value;
+      this.dessertItems[this.indexForEdit].brownieChoice = this.dessertForm.controls.brownieChoice.value;
+    }
+    this.forEdit = false;
+    this.indexForEdit = 0;
+  }
+
+  resetEdit() {
+    this.forEdit = false;
+    this.indexForEdit = 0;
+  }
+
+  deleteDessertItem(index) {
+    this.dessertItems.splice(index, 1);
   }
 
 

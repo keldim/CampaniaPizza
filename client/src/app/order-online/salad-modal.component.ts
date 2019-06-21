@@ -11,6 +11,8 @@ export class SaladModalComponent {
   @ViewChild('contentSalad') modal;
   saladItems: any[] = [];
   saladForm: FormGroup;
+  forEdit: boolean = false;
+  indexForEdit: any = 0;
   saladCheckboxes = {
     greens: [
       { name: 'Romaine Hearts', selected: false },
@@ -127,10 +129,54 @@ export class SaladModalComponent {
     return this.fb.array(arr);
   }
 
+  valueBindingForEdit(index) {
+    // need to get the index for the item in the pizzaItems??
+    // distinguish between create and edit in createTempForm()?
+    // create openPizzaForEdit()? if using openPizzaForEdit(), create a diffrent button in pizza modal?
+    this.forEdit = true;
+    this.indexForEdit = index;
+    if (this.saladItems[index].type == "BUILD YOUR OWN SALAD") {
+      this.saladForm.patchValue({
+        type: this.saladItems[index].type,
+        greens: this.saladItems[index].greens,
+        cheese: this.saladItems[index].cheese,
+        freshProduce: this.saladItems[index].freshProduce,
+        meats: this.saladItems[index].meats,
+        topItOff: this.saladItems[index].topItOff,
+        dressings: this.saladItems[index].dressings
+      });
+    }
+  }
+
+  updateTempForm() {
+    if (this.saladForm.controls.type.value == "BUILD YOUR OWN SALAD") {
+      this.saladItems[this.indexForEdit].type = this.saladForm.controls.type.value;
+      this.saladItems[this.indexForEdit].greens = this.saladForm.controls.greens.value;
+      this.saladItems[this.indexForEdit].cheese = this.saladForm.controls.cheese.value;
+      this.saladItems[this.indexForEdit].freshProduce = this.saladForm.controls.freshProduce.value;
+      this.saladItems[this.indexForEdit].meats = this.saladForm.controls.meats.value;
+      this.saladItems[this.indexForEdit].topItOff = this.saladForm.controls.topItOff.value;
+      this.saladItems[this.indexForEdit].dressings = this.saladForm.controls.dressings.value;
+    }
+    this.forEdit = false;
+    this.indexForEdit = 0;
+  }
+
+  resetEdit() {
+    this.forEdit = false;
+    this.indexForEdit = 0;
+  }
+
+  deleteSaladItem(index) {
+    this.saladItems.splice(index, 1);
+  }
+
+
+
   buildDisplayForCart(currentItem) {
     var finalString: string = "";
 
-     // for(let item of this.saladItems) {
+    // for(let item of this.saladItems) {
     if (currentItem.hasOwnProperty("greens")) {
       // finalString += "BUILD YOUR OWN SALAD\n"
 

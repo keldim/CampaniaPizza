@@ -1,7 +1,7 @@
 <ng-template #contentDrink let-modal>
     <div class="modal-header">
       <p class="modal-title">Customize</p>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click'); resetForm()">
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click'); resetEdit(); resetForm()">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -22,8 +22,9 @@
       <h3>{{ drinkForm.value | json }}</h3>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-light" (click)="modal.close('Close click'); resetForm()">Close</button>
-      <button type="button" class="btn btn-light" (click)="modal.close('Close click'); createTempForm(); resetForm()">Add
+      <button type="button" class="btn btn-light" (click)="modal.close('Close click'); resetEdit(); resetForm()">Close</button>
+      <button *ngIf="!forEdit" type="button" class="btn btn-light" (click)="modal.close('Close click'); createTempForm(); resetForm()">Add
         to cart</button>
+        <button *ngIf="forEdit" type="button" class="btn btn-light" (click)="modal.close('Close click'); updateTempForm(); resetForm()">Update</button>
     </div>
   </ng-template>
