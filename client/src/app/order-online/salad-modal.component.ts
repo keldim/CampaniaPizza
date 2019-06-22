@@ -70,10 +70,6 @@ export class SaladModalComponent {
   constructor(private modalService: NgbModal, private fb: FormBuilder) { }
 
 
-
-
-
-
   openLg(saladType) {
     this.saladForm.patchValue({
       type: saladType
@@ -145,6 +141,11 @@ export class SaladModalComponent {
         topItOff: this.saladItems[index].topItOff,
         dressings: this.saladItems[index].dressings
       });
+    } else {
+      this.saladForm.patchValue({
+        type: this.saladItems[index].type,
+        size: this.saladItems[index].size,
+      });
     }
   }
 
@@ -157,6 +158,14 @@ export class SaladModalComponent {
       this.saladItems[this.indexForEdit].meats = this.saladForm.controls.meats.value;
       this.saladItems[this.indexForEdit].topItOff = this.saladForm.controls.topItOff.value;
       this.saladItems[this.indexForEdit].dressings = this.saladForm.controls.dressings.value;
+    } else {
+      this.saladItems[this.indexForEdit].type = this.saladForm.controls.type.value;
+      this.saladItems[this.indexForEdit].size = this.saladForm.controls.size.value;
+      if(this.saladForm.controls.size.value == "entree") {
+        this.saladItems[this.indexForEdit].price = 6.95;
+      } else {
+        this.saladItems[this.indexForEdit].price = 3.95;
+      }
     }
     this.forEdit = false;
     this.indexForEdit = 0;
@@ -214,7 +223,11 @@ export class SaladModalComponent {
       finalString = finalString.replace(/,\s*$/, "");
       finalString += "\n";
     } else {
-      // finalString += item.type;
+      if(currentItem.size == "entree") {
+        finalString += "entree"
+      } else {
+        finalString += "side"
+      }
       finalString += "\n";
     }
     // }
@@ -249,6 +262,7 @@ export class SaladModalComponent {
 
 
   createTempForm() {
+    // set pricing here?
     const forCart = { ...this.saladForm.value };
     if (this.saladForm.controls.type.value == 'CHICKEN CAESAR SALAD' || this.saladForm.controls.type.value == 'GREEK SALAD') {
       delete forCart.greens;
@@ -257,6 +271,14 @@ export class SaladModalComponent {
       delete forCart.meats;
       delete forCart.topItOff;
       delete forCart.dressings;
+      if(forCart.size == "entree") {
+        forCart.price = 6.95;
+      } else {
+        forCart.price = 3.95;
+      }
+    } else {
+      delete forCart.size;
+      forCart.price = 8.65;
     }
     this.saladItems.push(forCart);
   }
@@ -270,7 +292,9 @@ export class SaladModalComponent {
       freshProduce: this.buildFreshProduce().value,
       meats: this.buildMeats().value,
       topItOff: this.buildTopItOff().value,
-      dressings: this.buildDressings().value
+      dressings: this.buildDressings().value,
+      size: "side",
+      price: 0
     });
   }
 
@@ -282,7 +306,9 @@ export class SaladModalComponent {
       freshProduce: this.buildFreshProduce(),
       meats: this.buildMeats(),
       topItOff: this.buildTopItOff(),
-      dressings: this.buildDressings()
+      dressings: this.buildDressings(),
+      size: "side",
+      price: 0
     });
   }
 

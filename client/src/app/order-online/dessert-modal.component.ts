@@ -101,7 +101,8 @@ export class DessertModalComponent {
     this.dessertForm.patchValue({
       type: "",
       cookieChoice: "Chocolate Chip",
-      brownieChoice: "Chocolate"
+      brownieChoice: "Chocolate",
+      price: 1.99
     });
   }
 
@@ -109,7 +110,8 @@ export class DessertModalComponent {
     this.dessertForm = this.fb.group({
       type: "",
       cookieChoice: "Chocolate Chip",
-      brownieChoice: "Chocolate"
+      brownieChoice: "Chocolate",
+      price: 1.99
     });
   }
 

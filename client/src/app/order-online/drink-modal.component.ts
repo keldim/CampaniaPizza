@@ -69,13 +69,15 @@ export class DrinkModalComponent {
   resetForm() {
     this.drinkForm.reset();
     this.drinkForm.patchValue({
-      type: ""
+      type: "",
+      price: 1.85
     });
   }
 
   ngOnInit() {
     this.drinkForm = this.fb.group({
-      type: ""
+      type: "",
+      price: 1.85
     });
   }
 

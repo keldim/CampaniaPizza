@@ -1,9 +1,7 @@
 import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
-import { OrderOnlineComponent } from './order-online.component';
-import { stringify } from '@angular/core/src/util';
-import { Item } from './item.entity';
+
 
 
 @Component({
@@ -254,7 +252,8 @@ export class PizzaModalComponent {
       cheese: this.buildCheese().value,
       veggies: this.buildVeggies().value,
       meats: this.buildMeats().value,
-      finishes: this.buildFinishes().value
+      finishes: this.buildFinishes().value,
+      price: 8.65
     });
   }
 
@@ -267,7 +266,8 @@ export class PizzaModalComponent {
       cheese: this.buildCheese(),
       veggies: this.buildVeggies(),
       meats: this.buildMeats(),
-      finishes: this.buildFinishes()
+      finishes: this.buildFinishes(),
+      price: 8.65
     });
   }
 

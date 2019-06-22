@@ -58,11 +58,16 @@
           </div>
         </div>
       </fieldset>
-      <fieldset *ngIf="type.value=='CHICKEN CAESAR SALAD'" style="text-align: center">
-          <legend style="text-align: center">CHICKEN CAESAR SALAD</legend>
-        </fieldset>
-        <fieldset *ngIf="type.value=='GREEK SALAD'" style="text-align: center">
-          <legend style="text-align: center">GREEK SALAD</legend>
+      <fieldset *ngIf="type.value!='BUILD YOUR OWN SALAD'" style="text-align: center">
+          <legend style="text-align: center">Choose Side or Entree</legend>
+          <ul>
+            <li style="display: inline-flex; align-items: center;">
+              <input class="radio-input" type="radio" id="inlineRadio1" value="side" formControlName="size"> Side
+            </li>
+            <li style="display: inline-flex; align-items: center;">
+              <input class="radio-input" type="radio" id="inlineRadio2" value="entree" formControlName="size"> Entree
+            </li>
+          </ul>
         </fieldset>
     </form>
     <h3>{{ saladForm.value | json }}</h3>
