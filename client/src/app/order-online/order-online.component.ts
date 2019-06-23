@@ -130,13 +130,20 @@ export class OrderOnlineComponent implements OnInit {
 
   // fix the radio button values and checkbox values?
 
+  // add warning pop up for delete?
+
+  // add prices to item rows?
+
+  // make the checkbox and radio button bigger
+
   // add quantity box to each modal?
 
-  //  use service to store order-online menu data as seen on angular getting started?
+  // use service to store order-online menu data as seen on angular getting started?
 
-  //  create validation for order-online? for byo salad?
+  // create validation for order-online? for byo salad? for quantity?
 
-  //  make a strucutre for the items in the shopping cart? no need to use \n?
+  // make a strucutre for the items in the shopping cart? no need to use \n?
 
+  // cart item saved, does not change on page refresh, internet cookies? internet sessions?
 
 }

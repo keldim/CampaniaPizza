@@ -161,7 +161,7 @@ export class SaladModalComponent {
     } else {
       this.saladItems[this.indexForEdit].type = this.saladForm.controls.type.value;
       this.saladItems[this.indexForEdit].size = this.saladForm.controls.size.value;
-      if(this.saladForm.controls.size.value == "entree") {
+      if(this.saladForm.controls.size.value == "Entree") {
         this.saladItems[this.indexForEdit].price = 6.95;
       } else {
         this.saladItems[this.indexForEdit].price = 3.95;
@@ -223,10 +223,10 @@ export class SaladModalComponent {
       finalString = finalString.replace(/,\s*$/, "");
       finalString += "\n";
     } else {
-      if(currentItem.size == "entree") {
-        finalString += "entree"
+      if(currentItem.size == "Entree") {
+        finalString += "Entree"
       } else {
-        finalString += "side"
+        finalString += "Side"
       }
       finalString += "\n";
     }
@@ -271,7 +271,7 @@ export class SaladModalComponent {
       delete forCart.meats;
       delete forCart.topItOff;
       delete forCart.dressings;
-      if(forCart.size == "entree") {
+      if(forCart.size == "Entree") {
         forCart.price = 6.95;
       } else {
         forCart.price = 3.95;
@@ -293,7 +293,7 @@ export class SaladModalComponent {
       meats: this.buildMeats().value,
       topItOff: this.buildTopItOff().value,
       dressings: this.buildDressings().value,
-      size: "side",
+      size: "Side",
       price: 0
     });
   }
@@ -307,7 +307,7 @@ export class SaladModalComponent {
       meats: this.buildMeats(),
       topItOff: this.buildTopItOff(),
       dressings: this.buildDressings(),
-      size: "side",
+      size: "Side",
       price: 0
     });
   }

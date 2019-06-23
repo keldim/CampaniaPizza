@@ -100,8 +100,8 @@ export class DessertModalComponent {
     this.dessertForm.reset();
     this.dessertForm.patchValue({
       type: "",
-      cookieChoice: "Chocolate Chip",
-      brownieChoice: "Chocolate",
+      cookieChoice: "Chocolate Chip Cookie",
+      brownieChoice: "Chocolate Brownie",
       price: 1.99
     });
   }
@@ -109,8 +109,8 @@ export class DessertModalComponent {
   ngOnInit() {
     this.dessertForm = this.fb.group({
       type: "",
-      cookieChoice: "Chocolate Chip",
-      brownieChoice: "Chocolate",
+      cookieChoice: "Chocolate Chip Cookie",
+      brownieChoice: "Chocolate Brownie",
       price: 1.99
     });
   }

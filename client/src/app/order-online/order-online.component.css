@@ -71,15 +71,12 @@
 
 .cart-item-name {
   width: 150px;
-  padding-right: 2px;
   font-size: 14px;
   font-weight: 700;
   float: left;
 }
 
 .cart-item-price {
-  margin-right: 5px;
-  padding-right: 2px;
   font-size: 14px;
   font-weight: 700;
   float: right;
@@ -87,6 +84,7 @@
 
 .edit-delete {
   clear: both;
+  font-size: 12px;
 }
 
 .order-contents {
@@ -94,12 +92,15 @@
 }
 
 .order-contents-text {
-  font-size: 17px;
+  font-size: 21px;
 }
 
 .calculate-total-section {
   clear: both;
   border-top: 1px solid #ccc;
+  font-weight: 700;
+  font-size: 14px;
+  padding-top: 7px;
 }
 
 .calculate-total-subsection {
@@ -108,4 +109,8 @@
 
 .total-number {
   float: right;
+}
+
+.options-display {
+  font-size: 10px;
 }

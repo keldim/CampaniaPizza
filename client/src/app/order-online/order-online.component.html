@@ -7,33 +7,33 @@
     </div>
     <div class="menu-area">
 
-        <ul class="nav flex-column category-list">
-          <li class="nav-item">
-            <a class="nav-link active empty-link" (click)="clickedVerticalNavbar('Build Your Own Pizza')">
-              <span class="empty-link-text">Build Your Own</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active empty-link" (click)="clickedVerticalNavbar('Specialty Pizzas')">
-              <span class="empty-link-text">Specialty Pizzas</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active empty-link" (click)="clickedVerticalNavbar('Salads')">
-              <span class="empty-link-text">Salads</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active empty-link" (click)="clickedVerticalNavbar('Drinks')">
-              <span class="empty-link-text">Drinks</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active empty-link" (click)="clickedVerticalNavbar('Desserts')">
-              <span class="empty-link-text">Desserts</span>
-            </a>
-          </li>
-        </ul>
+      <ul class="nav flex-column category-list">
+        <li class="nav-item">
+          <a class="nav-link active empty-link" (click)="clickedVerticalNavbar('Build Your Own Pizza')">
+            <span class="empty-link-text">Build Your Own</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active empty-link" (click)="clickedVerticalNavbar('Specialty Pizzas')">
+            <span class="empty-link-text">Specialty Pizzas</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active empty-link" (click)="clickedVerticalNavbar('Salads')">
+            <span class="empty-link-text">Salads</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active empty-link" (click)="clickedVerticalNavbar('Drinks')">
+            <span class="empty-link-text">Drinks</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active empty-link" (click)="clickedVerticalNavbar('Desserts')">
+            <span class="empty-link-text">Desserts</span>
+          </a>
+        </li>
+      </ul>
 
 
       <pizza-modal></pizza-modal>
@@ -44,9 +44,9 @@
       <div class="product-list">
         <ul class="nav flex-column">
           <li *ngIf="clickedMenu=='Build Your Own Pizza'" class="nav-item item-bar">
-            <a class="nav-link active empty-link" (click)="openPizza('Build Your Own Pizza')">
+            <a class="nav-link active empty-link" (click)="openPizza('BUILD YOUR OWN PIZZA')">
               <img src="../../assets/images/1954163.jpg" class="img-for-item-bar" />
-              <span class="empty-link-text">Build Your Own Pizza</span>
+              <span class="empty-link-text">BUILD YOUR OWN PIZZA</span>
             </a>
           </li>
           <li *ngIf="clickedMenu=='Specialty Pizzas'" class="nav-item item-bar">
@@ -242,15 +242,17 @@
     </div>
     <div *ngFor="let pizzaItem of pizzaModalComponent.pizzaItems; let i = index;" class="cart-item">
       <span class="quantity">1x</span>
-      <span *ngIf="pizzaItem.type=='Build Your Own Pizza'" class="cart-item-name">{{ pizzaItem.type }}</span>
-      <span *ngIf="pizzaItem.type!='Build Your Own Pizza'" class="cart-item-name">{{ pizzaItem.type }}</span>
+      <span *ngIf="pizzaItem.type=='BUILD YOUR OWN PIZZA'" class="cart-item-name">{{ pizzaItem.type }}</span>
+      <span *ngIf="pizzaItem.type!='BUILD YOUR OWN PIZZA'" class="cart-item-name">{{ pizzaItem.type }}</span>
       <span class="cart-item-price">${{ pizzaItem.price }}</span>
       <div class="edit-delete">
+        <span>[ </span>
         <a class="empty-link" (click)="pizzaModalComponent.valueBindingForEdit(i); openPizza(pizzaItem.type)"><span
             class="empty-link-text">edit</span></a> | <a class="empty-link"><span class="empty-link-text"
             (click)="pizzaModalComponent.deletePizzaItem(i)">delete</span></a>
+        <span> ]</span>
       </div>
-      <div>
+      <div class="options-display">
         {{ pizzaModalComponent.buildDisplayForCart(pizzaItem) }}
       </div>
     </div>
@@ -265,11 +267,13 @@
       <span class="cart-item-name" *ngIf="saladItem.type!='BUILD YOUR OWN SALAD'">{{ saladItem.type }}</span>
       <span class="cart-item-price">${{ saladItem.price }}</span>
       <div class="edit-delete">
+        <span>[ </span>
         <a class="empty-link" (click)="saladModalComponent.valueBindingForEdit(i); openSalad(saladItem.type)"><span
             class="empty-link-text">edit</span></a> | <a class="empty-link"><span class="empty-link-text"
             (click)="saladModalComponent.deleteSaladItem(i)">delete</span></a>
+        <span> ]</span>
       </div>
-      <div>
+      <div class="options-display">
         {{ saladModalComponent.buildDisplayForCart(saladItem) }}
       </div>
     </div>
@@ -283,11 +287,13 @@
       <span class="cart-item-name">{{ drinkItem.type }}</span>
       <span class="cart-item-price">${{ drinkItem.price }}</span>
       <div class="edit-delete">
+        <span>[ </span>
         <a class="empty-link" (click)="drinkModalComponent.valueBindingForEdit(i); openDrink(drinkItem.type)"><span
             class="empty-link-text">edit</span></a> | <a class="empty-link"><span class="empty-link-text"
             (click)="drinkModalComponent.deleteDrinkItem(i)">delete</span></a>
+        <span> ]</span>
       </div>
-      <div>
+      <div class="options-display">
         {{ drinkModalComponent.buildDisplayForCart() }}
       </div>
     </div>
@@ -301,12 +307,14 @@
       <span *ngIf="dessertItem.type=='Brownies'" class="cart-item-name">{{ dessertItem.brownieChoice }}</span>
       <span class="cart-item-price">${{ dessertItem.price }}</span>
       <div class="edit-delete">
+        <span>[ </span>
         <a class="empty-link"
           (click)="dessertModalComponent.valueBindingForEdit(i); openDessert(dessertItem.type)"><span
             class="empty-link-text">edit</span></a> | <a class="empty-link"><span class="empty-link-text"
             (click)="dessertModalComponent.deleteDessertItem(i)">delete</span></a>
+        <span> ]</span>
       </div>
-      <div>
+      <div class="options-display">
         {{ dessertModalComponent.buildDisplayForCart() }}
       </div>
     </div>

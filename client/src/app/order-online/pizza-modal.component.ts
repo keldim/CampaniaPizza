@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 
@@ -53,14 +53,14 @@ export class PizzaModalComponent {
       { name: 'Steak', selected: false }
     ],
     finishes: [
-      { name: 'Signature Marinara', selected: false },
-      { name: 'Spicy Sriracha Marinara', selected: false },
-      { name: 'Pesto Drizzle', selected: false },
-      { name: 'Smokey Bourbon BBQ', selected: false },
-      { name: 'Extra Virgin Olive Oil Drizzle', selected: false },
-      { name: 'Buffalo Sauce', selected: false },
-      { name: 'White Sauce', selected: false },
-      { name: 'Ranch', selected: false }
+      { name: 'Finish - Signature Marinara', selected: false },
+      { name: 'Finish - Spicy Sriracha Marinara', selected: false },
+      { name: 'Finish - Pesto Drizzle', selected: false },
+      { name: 'Finish - Smokey Bourbon BBQ', selected: false },
+      { name: 'Finish - Extra Virgin Olive Oil Drizzle', selected: false },
+      { name: 'Finish - Buffalo Sauce', selected: false },
+      { name: 'Finish - White Sauce', selected: false },
+      { name: 'Finish - Ranch', selected: false }
     ]
   };
 
@@ -110,7 +110,7 @@ export class PizzaModalComponent {
     // create openPizzaForEdit()? if using openPizzaForEdit(), create a diffrent button in pizza modal?
     this.forEdit = true;
     this.indexForEdit = index;
-    if (this.pizzaItems[index].type == "Build Your Own Pizza") {
+    if (this.pizzaItems[index].type == "BUILD YOUR OWN PIZZA") {
       this.pizzaForm.patchValue({
         type: this.pizzaItems[index].type,
         size: this.pizzaItems[index].size,
@@ -132,7 +132,7 @@ export class PizzaModalComponent {
   }
 
   updateTempForm() {
-    if (this.pizzaForm.controls.type.value != 'Build Your Own Pizza') {
+    if (this.pizzaForm.controls.type.value != 'BUILD YOUR OWN PIZZA') {
       this.pizzaItems[this.indexForEdit].type = this.pizzaForm.controls.type.value;
       this.pizzaItems[this.indexForEdit].size = this.pizzaForm.controls.size.value;
       this.pizzaItems[this.indexForEdit].crust = this.pizzaForm.controls.crust.value;
@@ -230,10 +230,73 @@ export class PizzaModalComponent {
   }
 
 
+  oneCheeseBoxClicking(index) {
+    if(this.pizzaForm.controls.cheese.value[index]) {
+      var replacement: any[] = [...this.pizzaForm.controls.cheese.value];
+      replacement[index] = false;
+      this.pizzaForm.patchValue({
+        cheese: replacement
+      });
+    } else {
+      var replacement: any[] = [...this.pizzaForm.controls.cheese.value];
+      replacement[index] = true;
+      this.pizzaForm.patchValue({
+        cheese: replacement
+      });
+    }
+  }
+
+  veggieBoxClicking(index) {
+    if(this.pizzaForm.controls.veggies.value[index]) {
+      var replacement: any[] = [...this.pizzaForm.controls.veggies.value];
+      replacement[index] = false;
+      this.pizzaForm.patchValue({
+        veggies: replacement
+      });
+    } else {
+      var replacement: any[] = [...this.pizzaForm.controls.veggies.value];
+      replacement[index] = true;
+      this.pizzaForm.patchValue({
+        veggies: replacement
+      });
+    }
+  }
+
+  meatBoxClicking(index) {
+    if(this.pizzaForm.controls.meats.value[index]) {
+      var replacement: any[] = [...this.pizzaForm.controls.meats.value];
+      replacement[index] = false;
+      this.pizzaForm.patchValue({
+        meats: replacement
+      });
+    } else {
+      var replacement: any[] = [...this.pizzaForm.controls.meats.value];
+      replacement[index] = true;
+      this.pizzaForm.patchValue({
+        meats: replacement
+      });
+    }
+  }
+
+  finishBoxClicking(index) {
+    if(this.pizzaForm.controls.finishes.value[index]) {
+      var replacement: any[] = [...this.pizzaForm.controls.finishes.value];
+      replacement[index] = false;
+      this.pizzaForm.patchValue({
+        finishes: replacement
+      });
+    } else {
+      var replacement: any[] = [...this.pizzaForm.controls.finishes.value];
+      replacement[index] = true;
+      this.pizzaForm.patchValue({
+        finishes: replacement
+      });
+    }
+  }
 
   createTempForm() {
     const forCart = { ...this.pizzaForm.value };
-    if (this.pizzaForm.controls.type.value != 'Build Your Own Pizza') {
+    if (this.pizzaForm.controls.type.value != 'BUILD YOUR OWN PIZZA') {
       delete forCart.sauce;
       delete forCart.cheese;
       delete forCart.veggies;
@@ -246,9 +309,9 @@ export class PizzaModalComponent {
     this.pizzaForm.reset();
     this.pizzaForm.patchValue({
       type: "",
-      size: "10",
-      crust: "traditional",
-      sauce: "marinara",
+      size: "10 Inch",
+      crust: "Traditional Crust",
+      sauce: "Signature Marinara",
       cheese: this.buildCheese().value,
       veggies: this.buildVeggies().value,
       meats: this.buildMeats().value,
@@ -260,9 +323,9 @@ export class PizzaModalComponent {
   ngOnInit() {
     this.pizzaForm = this.fb.group({
       type: "",
-      size: "10",
-      crust: "traditional",
-      sauce: "marinara",
+      size: "10 Inch",
+      crust: "Traditional Crust",
+      sauce: "Signature Marinara",
       cheese: this.buildCheese(),
       veggies: this.buildVeggies(),
       meats: this.buildMeats(),

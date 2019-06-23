@@ -1,7 +1,8 @@
 <ng-template #contentPizza let-modal>
   <div class="modal-header">
     <p class="modal-title">Customize</p>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click'); resetEdit(); resetForm()">
+    <button type="button" class="close" aria-label="Close"
+      (click)="modal.dismiss('Cross click'); resetEdit(); resetForm()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -11,10 +12,10 @@
         <legend style="text-align: center">Choose Your Size</legend>
         <ul>
           <li style="display: inline-flex; align-items: center;">
-            <input class="radio-input" type="radio" id="inlineRadio1" value="10" formControlName="size"> 10 inch
+            <input class="radio-input" type="radio" id="inlineRadio1" value="10 Inch" formControlName="size"> 10 Inch
           </li>
           <li style="display: inline-flex; align-items: center;">
-            <input class="radio-input" type="radio" id="inlineRadio2" value="14" formControlName="size"> 14 inch
+            <input class="radio-input" type="radio" id="inlineRadio2" value="14 Inch" formControlName="size"> 14 Inch
           </li>
         </ul>
       </fieldset>
@@ -22,68 +23,116 @@
       <fieldset style="text-align: center">
         <legend style="text-align: center">Choose Your Crust</legend>
         <div style="margin-left: auto; margin-right: auto;">
-          <input class="radio-input" type="radio" id="inlineRadio1" value="traditional" formControlName="crust">
+          <input class="radio-input" type="radio" id="inlineRadio1" value="Traditional Crust" formControlName="crust">
           Traditional Neapolitan (our favorite)
-          <input class="radio-input" type="radio" id="inlineRadio2" value="gluten-free" formControlName="crust"> Gluten
+          <input class="radio-input" type="radio" id="inlineRadio2" value="Gluten Free Crust" formControlName="crust">
+          Gluten
           Free
         </div>
       </fieldset>
 
-      <fieldset *ngIf="type.value=='Build Your Own Pizza'" style="text-align: center">
+      <fieldset *ngIf="type.value=='BUILD YOUR OWN PIZZA'" style="text-align: center">
         <legend style="text-align: center">Choose Your Sauce</legend>
         <div style="margin-left: auto; margin-right: auto;">
-          <input class="radio-input" type="radio" id="inlineRadio1" value="marinara" formControlName="sauce"> Signature
+          <input class="radio-input" type="radio" id="inlineRadio1" value="Signature Marinara" formControlName="sauce">
+          Signature
           Marinara
-          <input class="radio-input" type="radio" id="inlineRadio2" value="spicy-marinara" formControlName="sauce">
+          <input class="radio-input" type="radio" id="inlineRadio2" value="Spicy Sriracha Marinara"
+            formControlName="sauce">
           Spicy Sriracha Marinara
-          <input class="radio-input" type="radio" id="inlineRadio2" value="buffalo" formControlName="sauce"> Buffalo
+          <input class="radio-input" type="radio" id="inlineRadio2" value="Buffalo Sauce" formControlName="sauce">
+          Buffalo
           Sauce
-          <input class="radio-input" type="radio" id="inlineRadio2" value="white" formControlName="sauce"> White Sauce
+          <input class="radio-input" type="radio" id="inlineRadio2" value="White Sauce" formControlName="sauce"> White
+          Sauce
         </div>
       </fieldset>
 
-      <fieldset *ngIf="type.value=='Build Your Own Pizza'" style="text-align: center">
+      <fieldset *ngIf="type.value=='BUILD YOUR OWN PIZZA'" style="text-align: center">
         <legend style="text-align: center">Choose Your Cheese</legend>
-        <div formArrayName="cheese">
+        <!-- <div formArrayName="cheese">
           <div class="radio-input" *ngFor="let oneCheese of cheese.controls; let i = index">
             <input type="checkbox" formControlName="{{ i }}"> {{pizzaCheckboxes.cheese[i].name}}
           </div>
-        </div>
+        </div> -->
+        <ul class="ul-for-choice" formArrayName="cheese">
+          <li class="li-for-choice" *ngFor="let oneCheese of cheese.controls; let i = index" (click)="oneCheeseBoxClicking(i)">
+            <input type="checkbox" id="ch{{ i }}" formControlName="{{ i }}">
+            <label class="label-for-choice" for="ch{{ i }}" (click)="oneCheeseBoxClicking(i)">
+              <span>
+                {{pizzaCheckboxes.cheese[i].name}}
+              </span>
+            </label>
+          </li>
+        </ul>
       </fieldset>
 
-      <fieldset *ngIf="type.value=='Build Your Own Pizza'" style="text-align: center">
+      <fieldset *ngIf="type.value=='BUILD YOUR OWN PIZZA'" style="text-align: center">
         <legend style="text-align: center">Choose Your Veggies</legend>
-        <div formArrayName="veggies">
+        <!-- <div formArrayName="veggies">
           <div class="radio-input" *ngFor="let veggie of veggies.controls; let i = index">
             <input type="checkbox" formControlName="{{ i }}"> {{pizzaCheckboxes.veggies[i].name}}
           </div>
-        </div>
+        </div> -->
+        <ul class="ul-for-choice" formArrayName="veggies">
+            <li class="li-for-choice" *ngFor="let veggie of veggies.controls; let i = index" (click)="veggieBoxClicking(i)">
+              <input type="checkbox" id="ve{{ i }}" formControlName="{{ i }}">
+              <label class="label-for-choice" for="ve{{ i }}" (click)="veggieBoxClicking(i)">
+                <span>
+                    {{pizzaCheckboxes.veggies[i].name}}
+                </span>
+              </label>
+            </li>
+          </ul>
       </fieldset>
 
-      <fieldset *ngIf="type.value=='Build Your Own Pizza'" style="text-align: center">
+      <fieldset *ngIf="type.value=='BUILD YOUR OWN PIZZA'" style="text-align: center">
         <legend style="text-align: center">Choose Your Meats</legend>
-        <div formArrayName="meats">
+        <!-- <div formArrayName="meats">
           <div class="radio-input" *ngFor="let meat of meats.controls; let i = index">
             <input type="checkbox" formControlName="{{ i }}"> {{pizzaCheckboxes.meats[i].name}}
           </div>
-        </div>
+        </div> -->
+        <ul class="ul-for-choice" formArrayName="meats">
+            <li class="li-for-choice" *ngFor="let meat of meats.controls; let i = index" (click)="meatBoxClicking(i)">
+              <input type="checkbox" id="me{{ i }}" formControlName="{{ i }}">
+              <label class="label-for-choice" for="me{{ i }}" (click)="meatBoxClicking(i)">
+                <span>
+                    {{pizzaCheckboxes.meats[i].name}}
+                </span>
+              </label>
+            </li>
+          </ul>
       </fieldset>
 
       <fieldset style="text-align: center">
         <legend style="text-align: center">Choose Your Finishes</legend>
-        <div formArrayName="finishes">
+        <!-- <div formArrayName="finishes">
           <div class="radio-input" *ngFor="let finish of finishes.controls; let i = index">
             <input type="checkbox" formControlName="{{ i }}"> {{pizzaCheckboxes.finishes[i].name}}
           </div>
-        </div>
+        </div> -->
+        <ul class="ul-for-choice" formArrayName="finishes">
+            <li class="li-for-choice" *ngFor="let finish of finishes.controls; let i = index" (click)="finishBoxClicking(i)">
+              <input type="checkbox" id="fi{{ i }}" formControlName="{{ i }}">
+              <label class="label-for-choice" for="fi{{ i }}" (click)="finishBoxClicking(i)">
+                <span>
+                    {{pizzaCheckboxes.finishes[i].name}}
+                </span>
+              </label>
+            </li>
+          </ul>
       </fieldset>
     </form>
     <h3>{{ pizzaForm.value | json }}</h3>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-light" (click)="modal.close('Close click'); resetEdit(); resetForm()">Close</button>
-    <button *ngIf="!forEdit" type="button" class="btn btn-light" (click)="modal.close('Close click'); createTempForm(); resetForm()">Add
+    <button type="button" class="btn btn-light"
+      (click)="modal.close('Close click'); resetEdit(); resetForm()">Close</button>
+    <button *ngIf="!forEdit" type="button" class="btn btn-light"
+      (click)="modal.close('Close click'); createTempForm(); resetForm()">Add
       to cart</button>
-      <button *ngIf="forEdit" type="button" class="btn btn-light" (click)="modal.close('Close click'); updateTempForm(); resetForm()">Update</button>
+    <button *ngIf="forEdit" type="button" class="btn btn-light"
+      (click)="modal.close('Close click'); updateTempForm(); resetForm()">Update</button>
   </div>
 </ng-template>
