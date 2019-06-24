@@ -1,9 +1,27 @@
 <div class="container">
   <div class="location-menu">
     <div>
-      <p>Location: Choose one</p>
-      <p>Pickup Hours: Open today 11am - 2pm</p>
-      <p>Accepted Cards: Mastercard, Visa, American Express, Discover</p>
+      <dl style="margin: 0; width: 680px;">Location: Choose one</dl>
+      <dl style="margin: 0; width: 680px;">
+          <ng-template #popContent>
+              Monday: 11am-1am<br>
+              Tuesday: 11am-1am<br>
+              Wednesday: 11am-1am<br>
+              Thursday: 11am-1am<br>
+              Friday: 11am-1am<br>
+              Saturday: 11am-1am<br>
+              Sunday: 11am-1am
+          </ng-template>
+
+          <a data-html="true" [ngbPopover]="popContent"
+          triggers="mouseenter:mouseleave" popoverTitle="Pop title" >Pickup Hours: 11am - 1am</a>
+      </dl>
+      <dl style="margin: 0; width: 680px;">Delivery Hours: 11am - 1am</dl>
+      <dl style="margin: 0; width: 680px;">
+        <dt>Delivery Minimum:</dt>
+        <dd>$15.00</dd>
+      </dl>
+      <dl style="margin: 0; width: 680px;">Accepted Cards: Mastercard, Visa, American Express, Discover</dl>
     </div>
     <div class="menu-area">
 
@@ -48,13 +66,15 @@
               <img src="../../assets/images/1954163.jpg" class="img-for-item-bar" />
               <span class="empty-link-text">BUILD YOUR OWN PIZZA</span>
             </a>
+            <p class="item-bar-text">$8.65</p>
           </li>
           <li *ngIf="clickedMenu=='Specialty Pizzas'" class="nav-item item-bar">
             <a class="nav-link active empty-link" (click)="openPizza('CLASSIC MARGHERITA')">
               <img src="../../assets/images/margherita.png" class="img-for-item-bar" />
               <span class="empty-link-text">CLASSIC MARGHERITA</span>
             </a>
-            <p>
+            <p class="item-bar-text">
+              $8.65<br>
               Marinara, extra virgin olive oil, fresh mozzarella, fresh basil, and
               oregano.
             </p>
@@ -64,7 +84,8 @@
               <img src="../../assets/images/new-yorker.png" class="img-for-item-bar" />
               <span class="empty-link-text">CLASSIC NEW YORKER</span>
             </a>
-            <p>
+            <p class="item-bar-text">
+              $8.65<br>
               Marinara, shredded mozzarella, and oregano.
             </p>
           </li>
@@ -73,7 +94,8 @@
               <img src="../../assets/images/tony-pepperoni.png" class="img-for-item-bar" />
               <span class="empty-link-text">TONY PEPPERONI</span>
             </a>
-            <p>
+            <p class="item-bar-text">
+              $8.65<br>
               Marinara, shredded mozzarella, pepperoni, and oregano.
             </p>
           </li>
@@ -82,20 +104,27 @@
               <img src="../../assets/images/johnny-the-meatball.png" class="img-for-item-bar" />
               <span class="empty-link-text">JOHNNY THE MEATBALL</span>
             </a>
-            <p>Marinara, shredded mozzarella, and crumbled meatballs.</p>
+            <p class="item-bar-text">
+              $8.65<br>
+              Marinara, shredded mozzarella, and crumbled meatballs.
+            </p>
           </li>
           <li *ngIf="clickedMenu=='Specialty Pizzas'" class="nav-item item-bar">
             <a class="nav-link active empty-link" (click)="openPizza('QUATTRO FORMAGGIO')">
               <img src="../../assets/images/4-cheese.png" class="img-for-item-bar" />
               <span class="empty-link-text">QUATTRO FORMAGGIO</span>
             </a>
-            <p>Marinara, mozzarella, Asiago, Parmesan, ricotta, and oregano.</p>
+            <p class="item-bar-text">
+              $8.65<br>
+              Marinara, mozzarella, Asiago, Parmesan, ricotta, and oregano.
+            </p>
           </li>
           <li *ngIf="clickedMenu=='Specialty Pizzas'" class="nav-item item-bar">
             <a class="nav-link active empty-link" (click)="openPizza('BUFFALO CHICKEN')">
               <img src="../../assets/images/buffalo-chicken.png" class="img-for-item-bar" />
               <span class="empty-link-text">BUFFALO CHICKEN</span></a>
-            <p>
+            <p class="item-bar-text">
+              $8.65<br>
               Buffalo sauce, shredded mozzarella, blue cheese chunks, and grilled
               chicken.
             </p>
@@ -105,7 +134,8 @@
               <img src="../../assets/images/tascan.png" class="img-for-item-bar" />
               <span class="empty-link-text">TUSCAN CHICKEN</span>
             </a>
-            <p>
+            <p class="item-bar-text">
+              $8.65<br>
               Shredded mozzarella, asiago, chicken, spinach, and marinated
               balsamic sun dried tomatoes.
             </p>
@@ -115,7 +145,8 @@
               <img src="../../assets/images/white-out1.png" class="img-for-item-bar" />
               <span class="empty-link-text">THE WHITE OUT</span>
             </a>
-            <p>
+            <p class="item-bar-text">
+              $8.65<br>
               Extra virgin olive oil, shredded mozzarella, parmesan, fresh
               mushrooms, and garlic.
             </p>
@@ -125,7 +156,8 @@
               <img src="../../assets/images/h-fire.png" class="img-for-item-bar" />
               <span class="empty-link-text">HAWAIIAN FIRE</span>
             </a>
-            <p>
+            <p class="item-bar-text">
+              $8.65<br>
               Spicy sriracha marinara, shredded mozzarella, Canadian bacon, banana
               peppers, and pineapple.
             </p>
@@ -135,14 +167,18 @@
               <img src="../../assets/images/the-philly.png" class="img-for-item-bar" />
               <span class="empty-link-text">THE PHILLY</span>
             </a>
-            <p>Balsamic onions, mozzarella, and thinly sliced rib-eye.</p>
+            <p class="item-bar-text">
+              $8.65<br>
+              Balsamic onions, mozzarella, and thinly sliced rib-eye.
+            </p>
           </li>
           <li *ngIf="clickedMenu=='Specialty Pizzas'" class="nav-item item-bar">
             <a class="nav-link active empty-link" (click)="openPizza('SMOKEY POLLO')">
               <img src="../../assets/images/smoky-pollo.png" class="img-for-item-bar" />
               <span class="empty-link-text">SMOKEY POLLO</span>
             </a>
-            <p>
+            <p class="item-bar-text">
+              $8.65<br>
               Sweet and Smokey Bourbon Barbecue Sauce, Roasted Chicken, Bacon, Red
               Onion, Red Peppers, Pineapple, Shredded Mozzarella & Blue cheese.
             </p>
@@ -152,7 +188,8 @@
               <img src="../../assets/images/sausage-peppers1.png" class="img-for-item-bar" />
               <span class="empty-link-text">SAUSAGE & PEPPERS</span>
             </a>
-            <p>
+            <p class="item-bar-text">
+              $8.65<br>
               Marinara, shredded mozzarella, Italian sausage, red and green
               peppers, and red onions.
             </p>
@@ -162,7 +199,8 @@
               <img src="../../assets/images/trenton-tomato-pie.png" class="img-for-item-bar" />
               <span class="empty-link-text">TRENTON TOMATO PIE</span>
             </a>
-            <p>
+            <p class="item-bar-text">
+              $8.65<br>
               Marinara generously spread on top of shredded mozzarella, and
               oregano.
             </p>
@@ -172,7 +210,8 @@
               <img src="../../assets/images/meatza1.png" class="img-for-item-bar" />
               <span class="empty-link-text">THE MEATZA</span>
             </a>
-            <p>
+            <p class="item-bar-text">
+              $8.65<br>
               Marinara, mozzarella, pepperoni, bacon, Italian sausage, and
               crumbled meatballs.
             </p>
@@ -182,7 +221,9 @@
               <img src="../../assets/images/Grilled-Chicken-Caesar-Salad-550x393.jpg" class="img-for-item-bar" />
               <span class="empty-link-text">CHICKEN CAESAR SALAD</span>
             </a>
-            <p class="textSizeCtrlForCc divForText">Romaine, All-Natural Chicken, Croutons, Parmesan Cheese, Caesar
+            <p class="item-bar-text">
+              Side = $3.95, Entree = $6.95<br>
+              Romaine, All-Natural Chicken, Croutons, Parmesan Cheese, Caesar
               Dressing</p>
           </li>
           <li *ngIf="clickedMenu=='Salads'" class="nav-item item-bar">
@@ -190,13 +231,18 @@
               <img src="../../assets/images/Greek-Salad-500x500.jpg" class="img-for-item-bar" />
               <span class="empty-link-text">GREEK SALAD</span>
             </a>
-            <p class="textSizeCtrlForGs divForText">Romaine, Cucumbers, Grape Tomatoes, Red Onions, Black Olives, Feta
+            <p class="item-bar-text">
+              Side = $3.95, Entree = $6.95<br>
+              Romaine, Cucumbers, Grape Tomatoes, Red Onions, Black Olives, Feta
               Cheese, Greek Dressing</p>
           </li>
           <li *ngIf="clickedMenu=='Salads'" class="nav-item item-bar">
             <a class="nav-link active empty-link" (click)="openSalad('BUILD YOUR OWN SALAD')">
               <img src="../../assets/images/images.jpeg" class="img-for-item-bar" />
               <span class="empty-link-text">BUILD YOUR OWN SALAD</span>
+              <p class="item-bar-text">
+                $8.65
+              </p>
             </a>
           </li>
           <li *ngIf="clickedMenu=='Drinks'" class="nav-item item-bar">
@@ -204,12 +250,18 @@
               <img src="../../assets/images/fdrink-min.jpg" class="img-for-item-bar" />
               <span class="empty-link-text">FOUNTAIN DRINK</span>
             </a>
+            <p class="item-bar-text">
+              $1.85
+            </p>
           </li>
           <li *ngIf="clickedMenu=='Drinks'" class="nav-item item-bar">
             <a class="nav-link active empty-link" (click)="openDrink('IZZE GLASS BOTTLE')">
               <img src="../../assets/images/sparkling-water-izze-juice.jpg" class="img-for-item-bar" />
               <span class="empty-link-text">IZZE GLASS BOTTLE</span>
             </a>
+            <p class="item-bar-text">
+              $1.85
+            </p>
           </li>
           <li *ngIf="clickedMenu=='Drinks'" class="nav-item item-bar">
             <a class="nav-link active empty-link" (click)="openDrink('BOTTLED WATER')">
@@ -217,18 +269,27 @@
                 class="img-for-item-bar" />
               <span class="empty-link-text">BOTTLED WATER</span>
             </a>
+            <p class="item-bar-text">
+              $1.85
+            </p>
           </li>
           <li *ngIf="clickedMenu=='Desserts'" class="nav-item item-bar">
             <a class="nav-link active empty-link" (click)="openDessert('Cookies')">
               <img src="../../assets/images/146208lrg.jpg" class="img-for-item-bar" />
               <span class="empty-link-text">COOKIES</span>
             </a>
+            <p class="item-bar-text">
+              $1.99
+            </p>
           </li>
           <li *ngIf="clickedMenu=='Desserts'" class="nav-item item-bar">
             <a class="nav-link active empty-link" (click)="openDessert('Brownies')">
               <img src="../../assets/images/coconut-flour-brownies-2.jpg" class="img-for-item-bar" />
               <span class="empty-link-text">BROWNIES</span>
             </a>
+            <p class="item-bar-text">
+              $1.99
+            </p>
           </li>
         </ul>
       </div>

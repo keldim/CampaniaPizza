@@ -85,6 +85,17 @@ export class DessertModalComponent {
     this.dessertItems.splice(index, 1);
   }
 
+  cookieRadioClicking(selectedValue) {
+    this.dessertForm.patchValue({
+      cookieChoice: selectedValue
+    });
+  }
+
+  brownieRadioClicking(selectedValue) {
+    this.dessertForm.patchValue({
+      brownieChoice: selectedValue
+    });
+  }
 
   createTempForm() {
     const forCart = { ...this.dessertForm.value };

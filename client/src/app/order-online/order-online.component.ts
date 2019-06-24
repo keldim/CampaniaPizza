@@ -126,13 +126,9 @@ export class OrderOnlineComponent implements OnInit {
 
   // no need to remove mobile compatibility from the order-online page, looks good with it
 
-  // fix the look of each modal?
-
-  // fix the radio button values and checkbox values?
-
   // add warning pop up for delete?
 
-  // add prices to item rows?
+  // finish location bar on order-online?
 
   // make the checkbox and radio button bigger
 

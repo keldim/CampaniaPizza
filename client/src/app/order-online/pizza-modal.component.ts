@@ -229,6 +229,23 @@ export class PizzaModalComponent {
     return <FormControl>this.pizzaForm.get('type');
   }
 
+  sizeRadioClicking(selectedValue) {
+      this.pizzaForm.patchValue({
+        size: selectedValue
+      });
+  }
+
+  crustRadioClicking(selectedValue) {
+    this.pizzaForm.patchValue({
+      crust: selectedValue
+    });
+  }
+
+  sauceRadioClicking(selectedValue) {
+    this.pizzaForm.patchValue({
+      sauce: selectedValue
+    });
+  }
 
   oneCheeseBoxClicking(index) {
     if(this.pizzaForm.controls.cheese.value[index]) {

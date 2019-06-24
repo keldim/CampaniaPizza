@@ -259,6 +259,107 @@ export class SaladModalComponent {
   }
 
 
+  greenBoxClicking(index) {
+    if(this.saladForm.controls.greens.value[index]) {
+      var replacement: any[] = [...this.saladForm.controls.greens.value];
+      replacement[index] = false;
+      this.saladForm.patchValue({
+        greens: replacement
+      });
+    } else {
+      var replacement: any[] = [...this.saladForm.controls.greens.value];
+      replacement[index] = true;
+      this.saladForm.patchValue({
+        greens: replacement
+      });
+    }
+  }
+
+  oneCheeseBoxClicking(index) {
+    if(this.saladForm.controls.cheese.value[index]) {
+      var replacement: any[] = [...this.saladForm.controls.cheese.value];
+      replacement[index] = false;
+      this.saladForm.patchValue({
+        cheese: replacement
+      });
+    } else {
+      var replacement: any[] = [...this.saladForm.controls.cheese.value];
+      replacement[index] = true;
+      this.saladForm.patchValue({
+        cheese: replacement
+      });
+    }
+  }
+
+  oneFreshProduceBoxClicking(index) {
+    if(this.saladForm.controls.freshProduce.value[index]) {
+      var replacement: any[] = [...this.saladForm.controls.freshProduce.value];
+      replacement[index] = false;
+      this.saladForm.patchValue({
+        freshProduce: replacement
+      });
+    } else {
+      var replacement: any[] = [...this.saladForm.controls.freshProduce.value];
+      replacement[index] = true;
+      this.saladForm.patchValue({
+        freshProduce: replacement
+      });
+    }
+  }
+
+  meatBoxClicking(index) {
+    if(this.saladForm.controls.meats.value[index]) {
+      var replacement: any[] = [...this.saladForm.controls.meats.value];
+      replacement[index] = false;
+      this.saladForm.patchValue({
+        meats: replacement
+      });
+    } else {
+      var replacement: any[] = [...this.saladForm.controls.meats.value];
+      replacement[index] = true;
+      this.saladForm.patchValue({
+        meats: replacement
+      });
+    }
+  }
+
+  oneTopItOffBoxClicking(index) {
+    if(this.saladForm.controls.topItOff.value[index]) {
+      var replacement: any[] = [...this.saladForm.controls.topItOff.value];
+      replacement[index] = false;
+      this.saladForm.patchValue({
+        topItOff: replacement
+      });
+    } else {
+      var replacement: any[] = [...this.saladForm.controls.topItOff.value];
+      replacement[index] = true;
+      this.saladForm.patchValue({
+        topItOff: replacement
+      });
+    }
+  }
+
+  dressingBoxClicking(index) {
+    if(this.saladForm.controls.dressings.value[index]) {
+      var replacement: any[] = [...this.saladForm.controls.dressings.value];
+      replacement[index] = false;
+      this.saladForm.patchValue({
+        dressings: replacement
+      });
+    } else {
+      var replacement: any[] = [...this.saladForm.controls.dressings.value];
+      replacement[index] = true;
+      this.saladForm.patchValue({
+        dressings: replacement
+      });
+    }
+  }
+
+  sizeRadioClicking(selectedValue) {
+    this.saladForm.patchValue({
+      size: selectedValue
+    });
+}
 
 
   createTempForm() {

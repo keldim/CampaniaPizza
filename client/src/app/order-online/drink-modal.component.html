@@ -7,16 +7,16 @@
     </div>
     <div class="modal-body">
       <form novalidate (ngSubmit)="save()" [formGroup]="drinkForm">
-        <fieldset *ngIf="type.value=='FOUNTAIN DRINK'" style="text-align: center">
-          <legend style="text-align: center">FOUNTAIN DRINK</legend>
+        <fieldset class="fieldset" *ngIf="type.value=='FOUNTAIN DRINK'">
+          <legend>FOUNTAIN DRINK</legend>
         </fieldset>
 
-        <fieldset *ngIf="type.value=='IZZE GLASS BOTTLE'" style="text-align: center">
-          <legend style="text-align: center">IZZE GLASS BOTTLE</legend>
+        <fieldset class="fieldset" *ngIf="type.value=='IZZE GLASS BOTTLE'">
+          <legend>IZZE GLASS BOTTLE</legend>
         </fieldset>
 
-        <fieldset *ngIf="type.value=='BOTTLED WATER'" style="text-align: center">
-          <legend style="text-align: center">BOTTLED WATER</legend>
+        <fieldset class="fieldset" *ngIf="type.value=='BOTTLED WATER'">
+          <legend>BOTTLED WATER</legend>
         </fieldset>
       </form>
       <h3>{{ drinkForm.value | json }}</h3>

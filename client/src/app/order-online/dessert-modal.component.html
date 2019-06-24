@@ -7,27 +7,56 @@
     </div>
     <div class="modal-body">
       <form novalidate (ngSubmit)="save()" [formGroup]="dessertForm">
-        <fieldset *ngIf="type.value=='Cookies'" style="text-align: center">
-          <legend style="text-align: center">Choose Your Cookie</legend>
-          <ul>
-            <li style="display: inline-flex; align-items: center;">
-              <input class="radio-input" type="radio" id="inlineRadio1" value="Chocolate Chip Cookie" formControlName="cookieChoice"> Chocolate Chip Cookie
-            </li>
-            <li style="display: inline-flex; align-items: center;">
-              <input class="radio-input" type="radio" id="inlineRadio2" value="Double Chocolate Chip Cookie" formControlName="cookieChoice"> Double Chocolate Chip Cookie
-            </li>
-            <li style="display: inline-flex; align-items: center;">
-                <input class="radio-input" type="radio" id="inlineRadio2" value="White Macadamia Cookie" formControlName="cookieChoice"> White Macadamia Cookie
+        <fieldset class="fieldset" *ngIf="type.value=='Cookies'">
+          <legend>Choose Your Cookie</legend>
+          <ul class="ul-for-choice">
+              <li class="li-for-choice" (click)="cookieRadioClicking('Chocolate Chip Cookie')">
+                <input type="radio" id="cookieChoice-radio-1" value="Chocolate Chip Cookie" formControlName="cookieChoice">
+                <label class="label-for-choice" for="cookieChoice-radio-1">
+                  <span>
+                      Chocolate Chip Cookie
+                  </span>
+                </label>
               </li>
-          </ul>
+              <li class="li-for-choice" (click)="cookieRadioClicking('Double Chocolate Chip Cookie')">
+                <input type="radio" id="cookieChoice-radio-2" value="Double Chocolate Chip Cookie" formControlName="cookieChoice">
+                <label class="label-for-choice" for="cookieChoice-radio-2">
+                  <span>
+                      Double Chocolate Chip Cookie
+                  </span>
+                </label>
+              </li>
+              <li class="li-for-choice" (click)="cookieRadioClicking('White Macadamia Cookie')">
+                  <input type="radio" id="cookieChoice-radio-3" value="White Macadamia Cookie" formControlName="cookieChoice">
+                  <label class="label-for-choice" for="cookieChoice-radio-3">
+                    <span>
+                        White Macadamia Cookie
+                    </span>
+                  </label>
+                </li>
+            </ul>
         </fieldset>
 
-        <fieldset *ngIf="type.value=='Brownies'" style="text-align: center">
-          <legend style="text-align: center">Choose Your Brownie</legend>
-          <div style="margin-left: auto; margin-right: auto;">
-            <input class="radio-input" type="radio" id="inlineRadio1" value="Chocolate Brownie" formControlName="brownieChoice"> Chocolate Brownie
-            <input class="radio-input" type="radio" id="inlineRadio2" value="Blonde Brownie" formControlName="brownieChoice"> Blonde Brownie
-          </div>
+        <fieldset class="fieldset" *ngIf="type.value=='Brownies'">
+          <legend>Choose Your Brownie</legend>
+          <ul class="ul-for-choice">
+              <li class="li-for-choice" (click)="brownieRadioClicking('Chocolate Brownie')">
+                <input type="radio" id="brownieChoice-radio-1" value="Chocolate Brownie" formControlName="brownieChoice">
+                <label class="label-for-choice" for="brownieChoice-radio-1">
+                  <span>
+                      Chocolate Brownie
+                  </span>
+                </label>
+              </li>
+              <li class="li-for-choice" (click)="brownieRadioClicking('Blonde Brownie')">
+                <input type="radio" id="brownieChoice-radio-2" value="Blonde Brownie" formControlName="brownieChoice">
+                <label class="label-for-choice" for="brownieChoice-radio-2">
+                  <span>
+                      Blonde Brownie
+                  </span>
+                </label>
+              </li>
+            </ul>
         </fieldset>
 
       </form>

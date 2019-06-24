@@ -7,67 +7,115 @@
   </div>
   <div class="modal-body">
     <form novalidate (ngSubmit)="save()" [formGroup]="saladForm">
-      <fieldset *ngIf="type.value=='BUILD YOUR OWN SALAD'" style="text-align: center">
-        <legend style="text-align: center">Choose Your Greens</legend>
-        <div formArrayName="greens">
-          <div class="radio-input" *ngFor="let green of greens.controls; let i = index">
-            <input type="checkbox" formControlName="{{ i }}"> {{saladCheckboxes.greens[i].name}}
-          </div>
-        </div>
-      </fieldset>
-
-      <fieldset *ngIf="type.value=='BUILD YOUR OWN SALAD'" style="text-align: center">
-        <legend style="text-align: center">Choose Your Cheese</legend>
-        <div formArrayName="cheese">
-          <div class="radio-input" *ngFor="let oneCheese of cheese.controls; let i = index">
-            <input type="checkbox" formControlName="{{ i }}"> {{saladCheckboxes.cheese[i].name}}
-          </div>
-        </div>
-      </fieldset>
-
-      <fieldset *ngIf="type.value=='BUILD YOUR OWN SALAD'" style="text-align: center">
-        <legend style="text-align: center">Choose Your Fresh Produce</legend>
-        <div formArrayName="freshProduce">
-          <div class="radio-input" *ngFor="let oneFreshProduce of freshProduce.controls; let i = index">
-            <input type="checkbox" formControlName="{{ i }}"> {{saladCheckboxes.freshProduce[i].name}}
-          </div>
-        </div>
-      </fieldset>
-
-      <fieldset *ngIf="type.value=='BUILD YOUR OWN SALAD'" style="text-align: center">
-        <legend style="text-align: center">Choose Your Meats</legend>
-        <div formArrayName="meats">
-          <div class="radio-input" *ngFor="let meat of meats.controls; let i = index">
-            <input type="checkbox" formControlName="{{ i }}"> {{saladCheckboxes.meats[i].name}}
-          </div>
-        </div>
-      </fieldset>
-      <fieldset *ngIf="type.value=='BUILD YOUR OWN SALAD'" style="text-align: center">
-        <legend style="text-align: center">Top It Off</legend>
-        <div formArrayName="topItOff">
-          <div class="radio-input" *ngFor="let oneTopItOff of topItOff.controls; let i = index">
-            <input type="checkbox" formControlName="{{ i }}"> {{saladCheckboxes.topItOff[i].name}}
-          </div>
-        </div>
-      </fieldset>
-      <fieldset *ngIf="type.value=='BUILD YOUR OWN SALAD'" style="text-align: center">
-        <legend style="text-align: center">Choose Your Dressings</legend>
-        <div formArrayName="dressings">
-          <div class="radio-input" *ngFor="let dressing of dressings.controls; let i = index">
-            <input type="checkbox" formControlName="{{ i }}"> {{saladCheckboxes.dressings[i].name}}
-          </div>
-        </div>
-      </fieldset>
-      <fieldset *ngIf="type.value!='BUILD YOUR OWN SALAD'" style="text-align: center">
-          <legend style="text-align: center">Choose Side or Entree</legend>
-          <ul>
-            <li style="display: inline-flex; align-items: center;">
-              <input class="radio-input" type="radio" id="inlineRadio1" value="Side" formControlName="size"> Side
-            </li>
-            <li style="display: inline-flex; align-items: center;">
-              <input class="radio-input" type="radio" id="inlineRadio2" value="Entree" formControlName="size"> Entree
+      <fieldset class="fieldset" *ngIf="type.value=='BUILD YOUR OWN SALAD'">
+        <legend>Choose Your Greens</legend>
+        <ul class="ul-for-choice" formArrayName="greens">
+            <li class="li-for-choice" *ngFor="let green of greens.controls; let i = index"
+              (click)="greenBoxClicking(i)">
+              <input type="checkbox" id="gr{{ i }}" formControlName="{{ i }}">
+              <label class="label-for-choice" for="gr{{ i }}" (click)="greenBoxClicking(i)">
+                <span>
+                    {{saladCheckboxes.greens[i].name}}
+                </span>
+              </label>
             </li>
           </ul>
+      </fieldset>
+
+      <fieldset class="fieldset" *ngIf="type.value=='BUILD YOUR OWN SALAD'">
+        <legend>Choose Your Cheese</legend>
+        <ul class="ul-for-choice" formArrayName="cheese">
+            <li class="li-for-choice" *ngFor="let oneCheese of cheese.controls; let i = index"
+              (click)="oneCheeseBoxClicking(i)">
+              <input type="checkbox" id="ch{{ i }}" formControlName="{{ i }}">
+              <label class="label-for-choice" for="ch{{ i }}" (click)="oneCheeseBoxClicking(i)">
+                <span>
+                    {{saladCheckboxes.cheese[i].name}}
+                </span>
+              </label>
+            </li>
+          </ul>
+
+
+      </fieldset>
+
+      <fieldset class="fieldset" *ngIf="type.value=='BUILD YOUR OWN SALAD'">
+        <legend>Choose Your Fresh Produce</legend>
+        <ul class="ul-for-choice" formArrayName="freshProduce">
+            <li class="li-for-choice" *ngFor="let oneFreshProduce of freshProduce.controls; let i = index"
+              (click)="oneFreshProduceBoxClicking(i)">
+              <input type="checkbox" id="fr{{ i }}" formControlName="{{ i }}">
+              <label class="label-for-choice" for="fr{{ i }}" (click)="oneFreshProduceBoxClicking(i)">
+                <span>
+                    {{saladCheckboxes.freshProduce[i].name}}
+                </span>
+              </label>
+            </li>
+          </ul>
+      </fieldset>
+
+      <fieldset class="fieldset" *ngIf="type.value=='BUILD YOUR OWN SALAD'">
+        <legend>Choose Your Meats</legend>
+          <ul class="ul-for-choice" formArrayName="meats">
+              <li class="li-for-choice" *ngFor="let meat of meats.controls; let i = index"
+                (click)="meatBoxClicking(i)">
+                <input type="checkbox" id="me{{ i }}" formControlName="{{ i }}">
+                <label class="label-for-choice" for="me{{ i }}" (click)="meatBoxClicking(i)">
+                  <span>
+                      {{saladCheckboxes.meats[i].name}}
+                  </span>
+                </label>
+              </li>
+            </ul>
+      </fieldset>
+      <fieldset class="fieldset" *ngIf="type.value=='BUILD YOUR OWN SALAD'">
+        <legend>Top It Off</legend>
+        <ul class="ul-for-choice" formArrayName="topItOff">
+            <li class="li-for-choice" *ngFor="let oneTopItOff of topItOff.controls; let i = index"
+              (click)="oneTopItOffBoxClicking(i)">
+              <input type="checkbox" id="to{{ i }}" formControlName="{{ i }}">
+              <label class="label-for-choice" for="to{{ i }}" (click)="oneTopItOffBoxClicking(i)">
+                <span>
+                    {{saladCheckboxes.topItOff[i].name}}
+                </span>
+              </label>
+            </li>
+          </ul>
+      </fieldset>
+      <fieldset class="fieldset" *ngIf="type.value=='BUILD YOUR OWN SALAD'">
+        <legend>Choose Your Dressings</legend>
+        <ul class="ul-for-choice" formArrayName="dressings">
+            <li class="li-for-choice" *ngFor="let dressing of dressings.controls; let i = index"
+              (click)="dressingBoxClicking(i)">
+              <input type="checkbox" id="dr{{ i }}" formControlName="{{ i }}">
+              <label class="label-for-choice" for="dr{{ i }}" (click)="dressingBoxClicking(i)">
+                <span>
+                    {{saladCheckboxes.dressings[i].name}}
+                </span>
+              </label>
+            </li>
+          </ul>
+      </fieldset>
+      <fieldset class="fieldset" *ngIf="type.value!='BUILD YOUR OWN SALAD'">
+          <legend>Choose Side or Entree</legend>
+          <ul class="ul-for-choice">
+              <li class="li-for-choice" (click)="sizeRadioClicking('Side')">
+                <input type="radio" id="size-radio-1" value="Side" formControlName="size">
+                <label class="label-for-choice" for="size-radio-1">
+                  <span>
+                      Side
+                  </span>
+                </label>
+              </li>
+              <li class="li-for-choice" (click)="sizeRadioClicking('Entree')">
+                <input type="radio" id="size-radio-2" value="Entree" formControlName="size">
+                <label class="label-for-choice" for="size-radio-2">
+                  <span>
+                      Entree
+                  </span>
+                </label>
+              </li>
+            </ul>
         </fieldset>
     </form>
     <h3>{{ saladForm.value | json }}</h3>
