@@ -1,30 +1,96 @@
 <div class="container">
   <div class="location-menu">
-    <div>
-      <dl style="margin: 0; width: 680px;">Location: Choose one</dl>
-      <dl style="margin: 0; width: 680px;">
-          <ng-template #popContent>
-              Monday: 11am-1am<br>
-              Tuesday: 11am-1am<br>
-              Wednesday: 11am-1am<br>
-              Thursday: 11am-1am<br>
-              Friday: 11am-1am<br>
-              Saturday: 11am-1am<br>
-              Sunday: 11am-1am
-          </ng-template>
-
-          <a data-html="true" [ngbPopover]="popContent"
-          triggers="mouseenter:mouseleave" popoverTitle="Pop title" >Pickup Hours: 11am - 1am</a>
+    <div class="location-bar">
+      <dl class="dl-for-location-bar">
+        <form novalidate (ngSubmit)="save()" [formGroup]="orderOnlineForm">
+          <dt class="dt-for-location-bar">Location:</dt>
+          <dd class="dd-for-location-bar">
+            <select formControlName="location">
+              <option value="">Choose...</option>
+              <option value="Midtown">Midtown</option>
+              <option value="Chelsea">Chelsea</option>
+              <option value="East Village">East Village</option>
+            </select>
+          </dd>
+          <span *ngIf="location.value=='Midtown'">
+            <dt class="dt-for-location-bar"></dt>
+            <dd class="dd-for-location-bar">
+              Campania Pizza, Midtown<br>
+              31 W 46th St<br>
+              New York, NY 10036
+            </dd>
+          </span>
+          <span *ngIf="location.value=='Chelsea'">
+            <dt class="dt-for-location-bar"></dt>
+            <dd class="dd-for-location-bar">
+              Campania Pizza, Chelsea<br>
+              601 6th Ave<br>
+              New York, NY 10011
+            </dd>
+          </span>
+          <span *ngIf="location.value=='East Village'">
+            <dt class="dt-for-location-bar"></dt>
+            <dd class="dd-for-location-bar">
+              Campania Pizza, East Village<br>
+              32 St Marks Pl<br>
+              New York, NY 10003
+            </dd>
+          </span>
+        </form>
       </dl>
-      <dl style="margin: 0; width: 680px;">Delivery Hours: 11am - 1am</dl>
-      <dl style="margin: 0; width: 680px;">
-        <dt>Delivery Minimum:</dt>
-        <dd>$15.00</dd>
+      <dl class="dl-for-location-bar">
+        <ng-template #popContent>
+          <span class="business-hours-text">
+            <div class="business-hours-heading">
+              <span>
+                <strong>Business Hours<br>
+                </strong>
+              </span>
+            </div>
+            <dl class="dl-for-location-bar">
+                <dt class="dt-for-location-bar">Monday:</dt>
+                <dd class="dd-for-location-bar">11am-1am</dd>
+            </dl>
+            <dl class="dl-for-location-bar">
+                <dt class="dt-for-location-bar">Tuesday:</dt>
+                <dd class="dd-for-location-bar">11am-1am</dd>
+            </dl>
+            <dl class="dl-for-location-bar">
+                <dt class="dt-for-location-bar">Wednesday:</dt>
+                <dd class="dd-for-location-bar">11am-1am</dd>
+            </dl>
+            <dl class="dl-for-location-bar">
+                <dt class="dt-for-location-bar">Thursday:</dt>
+                <dd class="dd-for-location-bar">11am-1am</dd>
+            </dl>
+            <dl class="dl-for-location-bar">
+                <dt class="dt-for-location-bar">Friday:</dt>
+                <dd class="dd-for-location-bar">11am-1am</dd>
+            </dl>
+            <dl class="dl-for-location-bar">
+                <dt class="dt-for-location-bar">Saturday:</dt>
+                <dd class="dd-for-location-bar">11am-1am</dd>
+            </dl>
+            <dl class="dl-for-location-bar">
+                <dt class="dt-for-location-bar">Sunday:</dt>
+                <dd class="dd-for-location-bar">11am-1am</dd>
+            </dl>
+          </span>
+        </ng-template>
+        <dt class="dt-for-location-bar">Pickup And Delivery Hours:</dt>
+        <dd class="dd-for-location-bar"><a [ngbPopover]="popContent" triggers="mouseenter:mouseleave"
+            data-placement="bottom"><span class="link-for-hours">Open Today 11am - 1am</span></a></dd>
       </dl>
-      <dl style="margin: 0; width: 680px;">Accepted Cards: Mastercard, Visa, American Express, Discover</dl>
+      <dl class="dl-for-location-bar">
+        <dt class="dt-for-location-bar">Delivery Fee:</dt>
+        <dd class="dd-for-location-bar">$1.99 (Free Delivery For Orders Over $15)<br></dd>
+      </dl>
+      <dl class="dl-for-location-bar">
+        <dt class="dt-for-location-bar">Accepted Cards:</dt>
+        <dd class="dd-for-location-bar">Mastercard, Visa, American Express, Discover</dd>
+      </dl>
     </div>
     <div class="menu-area">
-
       <ul class="nav flex-column category-list">
         <li class="nav-item">
           <a class="nav-link active empty-link" (click)="clickedVerticalNavbar('Build Your Own Pizza')">
@@ -307,6 +373,7 @@
       <span *ngIf="pizzaItem.type!='BUILD YOUR OWN PIZZA'" class="cart-item-name">{{ pizzaItem.type }}</span>
       <span class="cart-item-price">${{ pizzaItem.price }}</span>
       <div class="edit-delete">
+        <!-- add the modal html code here? for delete? -->
         <span>[ </span>
         <a class="empty-link" (click)="pizzaModalComponent.valueBindingForEdit(i); openPizza(pizzaItem.type)"><span
             class="empty-link-text">edit</span></a> | <a class="empty-link"><span class="empty-link-text"
@@ -319,9 +386,7 @@
     </div>
 
 
-    <!-- quantity style="padding-right: 2px; font-size: 14px; font-weight: 700; float: left;" -->
-    <!-- cart-item-name style="width: 150px; padding-right: 2px; font-size: 14px; font-weight: 700; float: left;" -->
-    <!-- cart-item-price style="margin-right: 5px; padding-right: 2px; font-size: 14px; font-weight: 700; float: right;" -->
+
     <div *ngFor="let saladItem of saladModalComponent.saladItems; let i = index;" class="cart-item">
       <span class="quantity">1x</span>
       <span class="cart-item-name" *ngIf="saladItem.type=='BUILD YOUR OWN SALAD'">{{ saladItem.type }}</span>
@@ -340,9 +405,7 @@
     </div>
 
 
-    <!-- quantity style="padding-right: 2px; font-size: 14px; font-weight: 700; float: left;" -->
-    <!-- cart-item-name style="width: 150px; padding-right: 2px; font-size: 14px; font-weight: 700; float: left;" -->
-    <!-- cart-item-price style="margin-right: 5px; padding-right: 2px; font-size: 14px; font-weight: 700; float: right;" -->
+
     <div *ngFor="let drinkItem of drinkModalComponent.drinkItems; let i = index;" class="cart-item">
       <span class="quantity">1x</span>
       <span class="cart-item-name">{{ drinkItem.type }}</span>
@@ -359,9 +422,7 @@
       </div>
     </div>
 
-    <!-- quantity style="padding-right: 2px; font-size: 14px; font-weight: 700; float: left;" -->
-    <!-- cart-item-name style="width: 150px; padding-right: 2px; font-size: 14px; font-weight: 700; float: left;" -->
-    <!-- cart-item-price style="margin-right: 5px; padding-right: 2px; font-size: 14px; font-weight: 700; float: right;" -->
+
     <div *ngFor="let dessertItem of dessertModalComponent.dessertItems; let i = index;" class="cart-item">
       <span class="quantity">1x</span>
       <span *ngIf="dessertItem.type=='Cookies'" class="cart-item-name">{{ dessertItem.cookieChoice }}</span>

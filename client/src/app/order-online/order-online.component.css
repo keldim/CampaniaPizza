@@ -5,6 +5,7 @@
 
 .menu-area {
   clear: left;
+  padding-top: 10px;
 }
 
 .category-list {
@@ -37,6 +38,48 @@
 
 .empty-link:hover .empty-link-text {
   text-decoration: underline;
+}
+
+.link-for-hours {
+  cursor: pointer;
+  color: #487a32;
+}
+
+.link-for-hours:hover {
+  text-decoration: underline;
+}
+
+.dl-for-location-bar {
+  margin: 0;
+  width: 680px;
+}
+
+.dt-for-location-bar {
+  float: left;
+  margin-right: 2.35765%;
+  width: 23.23176%;
+  clear: both;
+  margin-bottom: 3px;
+  font-weight: 400;
+}
+
+.dd-for-location-bar {
+  float: left;
+  margin-right: 2.35765%;
+  width: 65.88078%;
+  margin-bottom: 3px;
+}
+
+.location-bar{
+  padding-bottom: 10px;
+}
+
+.business-hours-text {
+  font-size: 12px;
+}
+
+.business-hours-heading {
+  text-align: center;
 }
 
 .shopping-cart {

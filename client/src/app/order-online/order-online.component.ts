@@ -6,6 +6,7 @@ import { PizzaModalComponent } from './pizza-modal.component';
 import { DessertModalComponent } from './dessert-modal.component';
 import { SaladModalComponent } from './salad-modal.component';
 import { DrinkModalComponent } from './drink-modal.component';
+import { FormGroup, FormBuilder, FormControl} from '@angular/forms';
 
 @Component({
   templateUrl: './order-online.component.html',
@@ -15,14 +16,14 @@ export class OrderOnlineComponent implements OnInit {
   closeResult: string;
   selectedUser: User;
   clickedMenu: string = "Build Your Own Pizza";
-
+  orderOnlineForm: FormGroup;
 
   @ViewChild(PizzaModalComponent) pizzaModalComponent;
   @ViewChild(DessertModalComponent) dessertModalComponent;
   @ViewChild(SaladModalComponent) saladModalComponent;
   @ViewChild(DrinkModalComponent) drinkModalComponent;
 
-  constructor(private userService: UserService, private modalService: NgbModal) { }
+  constructor(private userService: UserService, private modalService: NgbModal, private fb: FormBuilder) { }
 
   clickedVerticalNavbar(clickedMenu) {
     this.clickedMenu = clickedMenu;
@@ -95,12 +96,21 @@ export class OrderOnlineComponent implements OnInit {
     return this.calculateTotal().toFixed(2);
   }
 
+  get location(): FormControl {
+    return <FormControl>this.orderOnlineForm.get('location');
+  }
+
   ngOnInit() {
     // this.userService.getUserByUsername('john')
     //   .subscribe(
     //     (data: User) => this.selectedUser = data,
     //     (err: any) => console.log(err)
     //   );
+
+
+    this.orderOnlineForm = this.fb.group({
+      location: ""
+    });
 
 
   }
@@ -128,7 +138,7 @@ export class OrderOnlineComponent implements OnInit {
 
   // add warning pop up for delete?
 
-  // finish location bar on order-online?
+  // for business hours popover, connect with daily time to indicate the day? visit the ngboostrap website for more info?
 
   // make the checkbox and radio button bigger
 
