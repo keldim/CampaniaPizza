@@ -17,8 +17,12 @@ export class DessertModalComponent {
 
   constructor(private modalService: NgbModal, private fb: FormBuilder) { }
 
-  get type(): FormControl{
+  get type(): FormControl {
     return <FormControl>this.dessertForm.get('type');
+  }
+
+  get quantity(): FormControl {
+    return <FormControl>this.dessertForm.get('quantity');
   }
 
   openLg(dessertType) {
@@ -31,16 +35,6 @@ export class DessertModalComponent {
 
   buildDisplayForCart() {
     var finalString: string = "";
-    // for(let item of this.dessertItems) {
-    //   if(item.hasOwnProperty("cookieChoice")) {
-    //     finalString += "DESSERT\n"
-    //     finalString += (item.cookieChoice + "\n");
-    //   } else {
-    //     finalString += "DESSERT\n"
-    //     finalString += (item.brownieChoice + "\n");
-    //   }
-    // }
-    finalString += "\n"
     return finalString;
   }
 
@@ -54,12 +48,14 @@ export class DessertModalComponent {
     if (this.dessertItems[index].type == "Cookies") {
       this.dessertForm.patchValue({
         type: this.dessertItems[index].type,
-        cookieChoice: this.dessertItems[index].cookieChoice
+        cookieChoice: this.dessertItems[index].cookieChoice,
+        quantity: this.dessertItems[index].quantity
       });
     } else {
       this.dessertForm.patchValue({
         type: this.dessertItems[index].type,
-        brownieChoice: this.dessertItems[index].brownieChoice
+        brownieChoice: this.dessertItems[index].brownieChoice,
+        quantity: this.dessertItems[index].quantity
       });
     }
   }
@@ -68,9 +64,15 @@ export class DessertModalComponent {
     if (this.dessertForm.controls.type.value == 'Cookies') {
       this.dessertItems[this.indexForEdit].type = this.dessertForm.controls.type.value;
       this.dessertItems[this.indexForEdit].cookieChoice = this.dessertForm.controls.cookieChoice.value;
+
+      const noLeadingZero = parseInt(this.dessertForm.controls.quantity.value, 10);
+      this.dessertItems[this.indexForEdit].quantity = noLeadingZero;
     } else {
       this.dessertItems[this.indexForEdit].type = this.dessertForm.controls.type.value;
       this.dessertItems[this.indexForEdit].brownieChoice = this.dessertForm.controls.brownieChoice.value;
+
+      const noLeadingZero = parseInt(this.dessertForm.controls.quantity.value, 10);
+      this.dessertItems[this.indexForEdit].quantity = noLeadingZero;
     }
     this.forEdit = false;
     this.indexForEdit = 0;
@@ -98,8 +100,12 @@ export class DessertModalComponent {
   }
 
   createTempForm() {
+    const noLeadingZero = parseInt(this.dessertForm.controls.quantity.value, 10);
+    this.dessertForm.patchValue({
+      quantity: noLeadingZero
+    });
     const forCart = { ...this.dessertForm.value };
-    if(this.dessertForm.controls.type.value == "Cookies") {
+    if (this.dessertForm.controls.type.value == "Cookies") {
       delete forCart.brownieChoice;
     } else if (this.dessertForm.controls.type.value == "Brownies") {
       delete forCart.cookieChoice;
@@ -113,7 +119,8 @@ export class DessertModalComponent {
       type: "",
       cookieChoice: "Chocolate Chip Cookie",
       brownieChoice: "Chocolate Brownie",
-      price: 1.99
+      price: 1.99,
+      quantity: 1
     });
   }
 
@@ -122,7 +129,8 @@ export class DessertModalComponent {
       type: "",
       cookieChoice: "Chocolate Chip Cookie",
       brownieChoice: "Chocolate Brownie",
-      price: 1.99
+      price: 1.99,
+      quantity: 1
     });
   }
 

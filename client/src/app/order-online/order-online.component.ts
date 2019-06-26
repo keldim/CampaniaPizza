@@ -59,10 +59,14 @@ export class OrderOnlineComponent implements OnInit {
     return "specialty";
   }
 
+  priceTimesQuantity(quantity, price) {
+    return (quantity * price).toFixed(2);
+  }
+
   calculateSubtotal() {
     let subtotal = 0;
     for(let pizzaItem of this.pizzaModalComponent.pizzaItems) {
-      subtotal += pizzaItem.price;
+      subtotal += pizzaItem.quantity * pizzaItem.price;
     }
     for(let saladItem of this.saladModalComponent.saladItems) {
       subtotal += saladItem.price;
@@ -140,15 +144,9 @@ export class OrderOnlineComponent implements OnInit {
 
   // for business hours popover, connect with daily time to indicate the day? visit the ngboostrap website for more info?
 
-  // make the checkbox and radio button bigger
-
-  // add quantity box to each modal?
-
   // use service to store order-online menu data as seen on angular getting started?
 
   // create validation for order-online? for byo salad? for quantity?
-
-  // make a strucutre for the items in the shopping cart? no need to use \n?
 
   // cart item saved, does not change on page refresh, internet cookies? internet sessions?
 

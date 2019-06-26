@@ -119,14 +119,16 @@ export class PizzaModalComponent {
         cheese: this.pizzaItems[index].cheese,
         veggies: this.pizzaItems[index].veggies,
         meats: this.pizzaItems[index].meats,
-        finishes: this.pizzaItems[index].finishes
+        finishes: this.pizzaItems[index].finishes,
+        quantity: this.pizzaItems[index].quantity
       });
     } else {
       this.pizzaForm.patchValue({
         type: this.pizzaItems[index].type,
         size: this.pizzaItems[index].size,
         crust: this.pizzaItems[index].crust,
-        finishes: this.pizzaItems[index].finishes
+        finishes: this.pizzaItems[index].finishes,
+        quantity: this.pizzaItems[index].quantity
       });
     }
   }
@@ -137,6 +139,9 @@ export class PizzaModalComponent {
       this.pizzaItems[this.indexForEdit].size = this.pizzaForm.controls.size.value;
       this.pizzaItems[this.indexForEdit].crust = this.pizzaForm.controls.crust.value;
       this.pizzaItems[this.indexForEdit].finishes = this.pizzaForm.controls.finishes.value;
+
+      const noLeadingZero = parseInt(this.pizzaForm.controls.quantity.value, 10);
+      this.pizzaItems[this.indexForEdit].quantity = noLeadingZero;
     } else {
       this.pizzaItems[this.indexForEdit].type = this.pizzaForm.controls.type.value;
       this.pizzaItems[this.indexForEdit].size = this.pizzaForm.controls.size.value;
@@ -146,6 +151,10 @@ export class PizzaModalComponent {
       this.pizzaItems[this.indexForEdit].veggies = this.pizzaForm.controls.veggies.value;
       this.pizzaItems[this.indexForEdit].meats = this.pizzaForm.controls.meats.value;
       this.pizzaItems[this.indexForEdit].finishes = this.pizzaForm.controls.finishes.value;
+      this.pizzaItems[this.indexForEdit].quantity = this.pizzaForm.controls.quantity.value;
+
+      const noLeadingZero = parseInt(this.pizzaForm.controls.quantity.value, 10);
+      this.pizzaItems[this.indexForEdit].quantity = noLeadingZero;
     }
     this.forEdit = false;
     this.indexForEdit = 0;
@@ -192,7 +201,6 @@ export class PizzaModalComponent {
         }
       }
       finalString = finalString.replace(/,\s*$/, "");
-      finalString += "\n";
     } else {
       // finalString += "SPECIALTY PIZZA\n"
       finalString += (currentItem.size + ", ");
@@ -203,7 +211,6 @@ export class PizzaModalComponent {
         }
       }
       finalString = finalString.replace(/,\s*$/, "");
-      finalString += "\n";
     }
     // }
     return finalString;
@@ -227,6 +234,10 @@ export class PizzaModalComponent {
 
   get type(): FormControl {
     return <FormControl>this.pizzaForm.get('type');
+  }
+
+  get quantity(): FormControl {
+    return <FormControl>this.pizzaForm.get('quantity');
   }
 
   sizeRadioClicking(selectedValue) {
@@ -312,6 +323,10 @@ export class PizzaModalComponent {
   }
 
   createTempForm() {
+    const noLeadingZero = parseInt(this.pizzaForm.controls.quantity.value, 10);
+    this.pizzaForm.patchValue({
+      quantity: noLeadingZero
+    });
     const forCart = { ...this.pizzaForm.value };
     if (this.pizzaForm.controls.type.value != 'BUILD YOUR OWN PIZZA') {
       delete forCart.sauce;
@@ -333,7 +348,8 @@ export class PizzaModalComponent {
       veggies: this.buildVeggies().value,
       meats: this.buildMeats().value,
       finishes: this.buildFinishes().value,
-      price: 8.65
+      price: 8.65,
+      quantity: 1
     });
   }
 
@@ -347,7 +363,8 @@ export class PizzaModalComponent {
       veggies: this.buildVeggies(),
       meats: this.buildMeats(),
       finishes: this.buildFinishes(),
-      price: 8.65
+      price: 8.65,
+      quantity: 1
     });
   }
 

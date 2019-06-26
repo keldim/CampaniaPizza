@@ -144,6 +144,11 @@
           </li>
         </ul>
       </fieldset>
+
+      <div class="quantity-box">
+        <label for="qty">Quantity:</label>
+        <input class="quantity-input" type="text" id="qty" maxlength=3 formControlName="quantity">
+      </div>
     </form>
     <h3>{{ pizzaForm.value | json }}</h3>
   </div>

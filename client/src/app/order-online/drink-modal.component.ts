@@ -20,6 +20,10 @@ export class DrinkModalComponent {
     return <FormControl>this.drinkForm.get('type');
   }
 
+  get quantity(): FormControl {
+    return <FormControl>this.drinkForm.get('quantity');
+  }
+
   openLg(drinkType) {
     this.drinkForm.patchValue({
       type: drinkType
@@ -30,10 +34,6 @@ export class DrinkModalComponent {
 
   buildDisplayForCart() {
     var finalString: string = "";
-    // for(let item of this.drinkItems) {
-      // finalString += item.type;
-        finalString += "\n";
-    // }
     return finalString;
   }
 
@@ -43,9 +43,15 @@ export class DrinkModalComponent {
     // create openPizzaForEdit()? if using openPizzaForEdit(), create a diffrent button in pizza modal?
     this.forEdit = true;
     this.indexForEdit = index;
+    this.drinkForm.patchValue({
+      quantity: this.drinkItems[index].quantity
+    });
   }
 
   updateTempForm() {
+    const noLeadingZero = parseInt(this.drinkForm.controls.quantity.value, 10);
+    this.drinkItems[this.indexForEdit].quantity = noLeadingZero;
+
     this.forEdit = false;
     this.indexForEdit = 0;
   }
@@ -62,6 +68,10 @@ export class DrinkModalComponent {
 
 
   createTempForm() {
+    const noLeadingZero = parseInt(this.drinkForm.controls.quantity.value, 10);
+    this.drinkForm.patchValue({
+      quantity: noLeadingZero
+    });
     const forCart = { ...this.drinkForm.value };
     this.drinkItems.push(forCart);
   }
@@ -70,14 +80,16 @@ export class DrinkModalComponent {
     this.drinkForm.reset();
     this.drinkForm.patchValue({
       type: "",
-      price: 1.85
+      price: 1.85,
+      quantity: 1
     });
   }
 
   ngOnInit() {
     this.drinkForm = this.fb.group({
       type: "",
-      price: 1.85
+      price: 1.85,
+      quantity: 1
     });
   }
 

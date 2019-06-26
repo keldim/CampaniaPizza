@@ -139,12 +139,14 @@ export class SaladModalComponent {
         freshProduce: this.saladItems[index].freshProduce,
         meats: this.saladItems[index].meats,
         topItOff: this.saladItems[index].topItOff,
-        dressings: this.saladItems[index].dressings
+        dressings: this.saladItems[index].dressings,
+        quantity: this.saladItems[index].quantity
       });
     } else {
       this.saladForm.patchValue({
         type: this.saladItems[index].type,
         size: this.saladItems[index].size,
+        quantity: this.saladItems[index].quantity
       });
     }
   }
@@ -158,6 +160,9 @@ export class SaladModalComponent {
       this.saladItems[this.indexForEdit].meats = this.saladForm.controls.meats.value;
       this.saladItems[this.indexForEdit].topItOff = this.saladForm.controls.topItOff.value;
       this.saladItems[this.indexForEdit].dressings = this.saladForm.controls.dressings.value;
+
+      const noLeadingZero = parseInt(this.saladForm.controls.quantity.value, 10);
+      this.saladItems[this.indexForEdit].quantity = noLeadingZero;
     } else {
       this.saladItems[this.indexForEdit].type = this.saladForm.controls.type.value;
       this.saladItems[this.indexForEdit].size = this.saladForm.controls.size.value;
@@ -166,6 +171,8 @@ export class SaladModalComponent {
       } else {
         this.saladItems[this.indexForEdit].price = 3.95;
       }
+      const noLeadingZero = parseInt(this.saladForm.controls.quantity.value, 10);
+      this.saladItems[this.indexForEdit].quantity = noLeadingZero;
     }
     this.forEdit = false;
     this.indexForEdit = 0;
@@ -219,16 +226,13 @@ export class SaladModalComponent {
           finalString += (this.saladCheckboxes.dressings[dressing].name + ", ");
         }
       }
-
       finalString = finalString.replace(/,\s*$/, "");
-      finalString += "\n";
     } else {
       if(currentItem.size == "Entree") {
         finalString += "Entree"
       } else {
         finalString += "Side"
       }
-      finalString += "\n";
     }
     // }
     return finalString;
@@ -258,6 +262,9 @@ export class SaladModalComponent {
     return <FormArray>this.saladForm.get('dressings');
   }
 
+  get quantity(): FormControl {
+    return <FormControl>this.saladForm.get('quantity');
+  }
 
   greenBoxClicking(index) {
     if(this.saladForm.controls.greens.value[index]) {
@@ -364,6 +371,11 @@ export class SaladModalComponent {
 
   createTempForm() {
     // set pricing here?
+    const noLeadingZero = parseInt(this.saladForm.controls.quantity.value, 10);
+    this.saladForm.patchValue({
+      quantity: noLeadingZero
+    });
+
     const forCart = { ...this.saladForm.value };
     if (this.saladForm.controls.type.value == 'CHICKEN CAESAR SALAD' || this.saladForm.controls.type.value == 'GREEK SALAD') {
       delete forCart.greens;
@@ -395,7 +407,8 @@ export class SaladModalComponent {
       topItOff: this.buildTopItOff().value,
       dressings: this.buildDressings().value,
       size: "Side",
-      price: 0
+      price: 0,
+      quantity: 1
     });
   }
 
@@ -409,7 +422,8 @@ export class SaladModalComponent {
       topItOff: this.buildTopItOff(),
       dressings: this.buildDressings(),
       size: "Side",
-      price: 0
+      price: 0,
+      quantity: 1
     });
   }
 

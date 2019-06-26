@@ -368,10 +368,10 @@
       <h2 class="order-contents-text">Order Contents</h2>
     </div>
     <div *ngFor="let pizzaItem of pizzaModalComponent.pizzaItems; let i = index;" class="cart-item">
-      <span class="quantity">1x</span>
+      <span class="quantity">{{ pizzaItem.quantity }}x</span>
       <span *ngIf="pizzaItem.type=='BUILD YOUR OWN PIZZA'" class="cart-item-name">{{ pizzaItem.type }}</span>
       <span *ngIf="pizzaItem.type!='BUILD YOUR OWN PIZZA'" class="cart-item-name">{{ pizzaItem.type }}</span>
-      <span class="cart-item-price">${{ pizzaItem.price }}</span>
+      <span class="cart-item-price">${{ priceTimesQuantity(pizzaItem.quantity, pizzaItem.price) }}</span>
       <div class="edit-delete">
         <!-- add the modal html code here? for delete? -->
         <span>[ </span>
@@ -388,10 +388,10 @@
 
 
     <div *ngFor="let saladItem of saladModalComponent.saladItems; let i = index;" class="cart-item">
-      <span class="quantity">1x</span>
+      <span class="quantity">{{ saladItem.quantity }}x</span>
       <span class="cart-item-name" *ngIf="saladItem.type=='BUILD YOUR OWN SALAD'">{{ saladItem.type }}</span>
       <span class="cart-item-name" *ngIf="saladItem.type!='BUILD YOUR OWN SALAD'">{{ saladItem.type }}</span>
-      <span class="cart-item-price">${{ saladItem.price }}</span>
+      <span class="cart-item-price">${{ priceTimesQuantity(saladItem.quantity, saladItem.price) }}</span>
       <div class="edit-delete">
         <span>[ </span>
         <a class="empty-link" (click)="saladModalComponent.valueBindingForEdit(i); openSalad(saladItem.type)"><span
@@ -407,9 +407,9 @@
 
 
     <div *ngFor="let drinkItem of drinkModalComponent.drinkItems; let i = index;" class="cart-item">
-      <span class="quantity">1x</span>
+      <span class="quantity">{{ drinkItem.quantity }}x</span>
       <span class="cart-item-name">{{ drinkItem.type }}</span>
-      <span class="cart-item-price">${{ drinkItem.price }}</span>
+      <span class="cart-item-price">${{ priceTimesQuantity(drinkItem.quantity, drinkItem.price) }}</span>
       <div class="edit-delete">
         <span>[ </span>
         <a class="empty-link" (click)="drinkModalComponent.valueBindingForEdit(i); openDrink(drinkItem.type)"><span
@@ -424,10 +424,10 @@
 
 
     <div *ngFor="let dessertItem of dessertModalComponent.dessertItems; let i = index;" class="cart-item">
-      <span class="quantity">1x</span>
+      <span class="quantity">{{ dessertItem.quantity }}x</span>
       <span *ngIf="dessertItem.type=='Cookies'" class="cart-item-name">{{ dessertItem.cookieChoice }}</span>
       <span *ngIf="dessertItem.type=='Brownies'" class="cart-item-name">{{ dessertItem.brownieChoice }}</span>
-      <span class="cart-item-price">${{ dessertItem.price }}</span>
+      <span class="cart-item-price">${{ priceTimesQuantity(dessertItem.quantity, dessertItem.price) }}</span>
       <div class="edit-delete">
         <span>[ </span>
         <a class="empty-link"

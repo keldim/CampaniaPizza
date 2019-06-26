@@ -30,3 +30,11 @@
   margin-bottom: 0;
   cursor: pointer;
 }
+
+.quantity-box {
+  text-align: right;
+}
+
+.quantity-input {
+  width: 50px
+}
