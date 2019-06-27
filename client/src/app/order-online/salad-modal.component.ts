@@ -1,6 +1,42 @@
 import { ViewChild, Component } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, FormControl, AbstractControl, Validators, Form } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+
+function oneCheckbox(c: AbstractControl): { [key: string]: boolean } | null {
+  console.log(c);
+  console.log(c.value.value);
+  console.log(c.value.value.includes(true))
+  // if (c.value != null) {
+  //   var trueCount = 0;
+  //   for (let single of c.value) {
+  //     if (single.value == true) {
+  //       trueCount += 1;
+  //     }
+  //   }
+  //   if(trueCount == 0) {
+  //     return { 'oneCheckbox': true };
+  //   }
+  // }
+  if(!c.value.value.includes(true)) {
+    return { 'oneBox': true };
+  }
+
+
+  // c.value.greens != null && c.value.greens.includes(true) == false
+
+  // if (c.value.controls.greens.value != null && c.value.controls.greens.value.includes(true) == false) {
+  //   return { 'oneBox': true };
+  // }
+
+  // let Form = JSON.stringify(c);
+  // if (Form.value != null && exampleArray.value.includes(true) == false) {
+  //      return { 'oneBox': true };
+  //    }
+
+  return null;
+}
+
 
 @Component({
   selector: 'salad-modal',
@@ -166,7 +202,7 @@ export class SaladModalComponent {
     } else {
       this.saladItems[this.indexForEdit].type = this.saladForm.controls.type.value;
       this.saladItems[this.indexForEdit].size = this.saladForm.controls.size.value;
-      if(this.saladForm.controls.size.value == "Entree") {
+      if (this.saladForm.controls.size.value == "Entree") {
         this.saladItems[this.indexForEdit].price = 6.95;
       } else {
         this.saladItems[this.indexForEdit].price = 3.95;
@@ -228,7 +264,7 @@ export class SaladModalComponent {
       }
       finalString = finalString.replace(/,\s*$/, "");
     } else {
-      if(currentItem.size == "Entree") {
+      if (currentItem.size == "Entree") {
         finalString += "Entree"
       } else {
         finalString += "Side"
@@ -267,7 +303,7 @@ export class SaladModalComponent {
   }
 
   greenBoxClicking(index) {
-    if(this.saladForm.controls.greens.value[index]) {
+    if (this.saladForm.controls.greens.value[index]) {
       var replacement: any[] = [...this.saladForm.controls.greens.value];
       replacement[index] = false;
       this.saladForm.patchValue({
@@ -283,7 +319,7 @@ export class SaladModalComponent {
   }
 
   oneCheeseBoxClicking(index) {
-    if(this.saladForm.controls.cheese.value[index]) {
+    if (this.saladForm.controls.cheese.value[index]) {
       var replacement: any[] = [...this.saladForm.controls.cheese.value];
       replacement[index] = false;
       this.saladForm.patchValue({
@@ -299,7 +335,7 @@ export class SaladModalComponent {
   }
 
   oneFreshProduceBoxClicking(index) {
-    if(this.saladForm.controls.freshProduce.value[index]) {
+    if (this.saladForm.controls.freshProduce.value[index]) {
       var replacement: any[] = [...this.saladForm.controls.freshProduce.value];
       replacement[index] = false;
       this.saladForm.patchValue({
@@ -315,7 +351,7 @@ export class SaladModalComponent {
   }
 
   meatBoxClicking(index) {
-    if(this.saladForm.controls.meats.value[index]) {
+    if (this.saladForm.controls.meats.value[index]) {
       var replacement: any[] = [...this.saladForm.controls.meats.value];
       replacement[index] = false;
       this.saladForm.patchValue({
@@ -331,7 +367,7 @@ export class SaladModalComponent {
   }
 
   oneTopItOffBoxClicking(index) {
-    if(this.saladForm.controls.topItOff.value[index]) {
+    if (this.saladForm.controls.topItOff.value[index]) {
       var replacement: any[] = [...this.saladForm.controls.topItOff.value];
       replacement[index] = false;
       this.saladForm.patchValue({
@@ -347,7 +383,7 @@ export class SaladModalComponent {
   }
 
   dressingBoxClicking(index) {
-    if(this.saladForm.controls.dressings.value[index]) {
+    if (this.saladForm.controls.dressings.value[index]) {
       var replacement: any[] = [...this.saladForm.controls.dressings.value];
       replacement[index] = false;
       this.saladForm.patchValue({
@@ -366,7 +402,7 @@ export class SaladModalComponent {
     this.saladForm.patchValue({
       size: selectedValue
     });
-}
+  }
 
 
   createTempForm() {
@@ -384,7 +420,7 @@ export class SaladModalComponent {
       delete forCart.meats;
       delete forCart.topItOff;
       delete forCart.dressings;
-      if(forCart.size == "Entree") {
+      if (forCart.size == "Entree") {
         forCart.price = 6.95;
       } else {
         forCart.price = 3.95;
@@ -412,18 +448,20 @@ export class SaladModalComponent {
     });
   }
 
+  // [this.buildGreens(), oneCheckbox],
+  // [this.buildFreshProduce(), oneCheckbox],
   ngOnInit() {
     this.saladForm = this.fb.group({
       type: "",
-      greens: this.buildGreens(),
+      greens: [this.buildGreens(), oneCheckbox],
       cheese: this.buildCheese(),
-      freshProduce: this.buildFreshProduce(),
+      freshProduce: [this.buildFreshProduce(), oneCheckbox],
       meats: this.buildMeats(),
       topItOff: this.buildTopItOff(),
       dressings: this.buildDressings(),
       size: "Side",
       price: 0,
-      quantity: 1
+      quantity: [1, [Validators.required, Validators.min(1), Validators.max(99)]]
     });
   }
 

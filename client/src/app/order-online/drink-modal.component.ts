@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -89,7 +89,7 @@ export class DrinkModalComponent {
     this.drinkForm = this.fb.group({
       type: "",
       price: 1.85,
-      quantity: 1
+      quantity: [1, [Validators.required, Validators.min(1), Validators.max(99)]]
     });
   }
 

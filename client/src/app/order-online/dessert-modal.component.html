@@ -59,6 +59,9 @@
             </ul>
         </fieldset>
         <div class="quantity-box">
+            <div *ngIf="quantity.hasError('min') || quantity.hasError('max') || quantity.hasError('required')">
+                <span style="font-size: 12px; color: #b80000">Please enter a valid quantity between 1 and 99 for this product.</span>
+            </div>
           <label for="qty">Quantity:</label>
           <input class="quantity-input" type="text" id="qty" maxlength=3 formControlName="quantity">
         </div>
@@ -66,9 +69,9 @@
       <h3>{{ dessertForm.value | json }}</h3>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-light" (click)="modal.close('Close click'); resetEdit(); resetForm()">Close</button>
-      <button *ngIf="!forEdit" type="button" class="btn btn-light" (click)="modal.close('Close click'); createTempForm(); resetForm()">Add
+      <button type="button" class="btn btn-secondary" (click)="modal.close('Close click'); resetEdit(); resetForm()">Close</button>
+      <button *ngIf="!forEdit" type="button" class="btn btn-primary" (click)="modal.close('Close click'); createTempForm(); resetForm()" [disabled]="!dessertForm.valid">Add
         to cart</button>
-        <button *ngIf="forEdit" type="button" class="btn btn-light" (click)="modal.close('Close click'); updateTempForm(); resetForm()">Update</button>
+        <button *ngIf="forEdit" type="button" class="btn btn-primary" (click)="modal.close('Close click'); updateTempForm(); resetForm()" [disabled]="!dessertForm.valid">Update</button>
     </div>
   </ng-template>

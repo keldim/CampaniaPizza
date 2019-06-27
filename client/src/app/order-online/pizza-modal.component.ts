@@ -1,8 +1,6 @@
 import { Component, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
-
-
+import { FormGroup, FormBuilder, FormArray, FormControl, Validators, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'pizza-modal',
@@ -241,9 +239,9 @@ export class PizzaModalComponent {
   }
 
   sizeRadioClicking(selectedValue) {
-      this.pizzaForm.patchValue({
-        size: selectedValue
-      });
+    this.pizzaForm.patchValue({
+      size: selectedValue
+    });
   }
 
   crustRadioClicking(selectedValue) {
@@ -259,7 +257,7 @@ export class PizzaModalComponent {
   }
 
   oneCheeseBoxClicking(index) {
-    if(this.pizzaForm.controls.cheese.value[index]) {
+    if (this.pizzaForm.controls.cheese.value[index]) {
       var replacement: any[] = [...this.pizzaForm.controls.cheese.value];
       replacement[index] = false;
       this.pizzaForm.patchValue({
@@ -275,7 +273,7 @@ export class PizzaModalComponent {
   }
 
   veggieBoxClicking(index) {
-    if(this.pizzaForm.controls.veggies.value[index]) {
+    if (this.pizzaForm.controls.veggies.value[index]) {
       var replacement: any[] = [...this.pizzaForm.controls.veggies.value];
       replacement[index] = false;
       this.pizzaForm.patchValue({
@@ -291,7 +289,7 @@ export class PizzaModalComponent {
   }
 
   meatBoxClicking(index) {
-    if(this.pizzaForm.controls.meats.value[index]) {
+    if (this.pizzaForm.controls.meats.value[index]) {
       var replacement: any[] = [...this.pizzaForm.controls.meats.value];
       replacement[index] = false;
       this.pizzaForm.patchValue({
@@ -307,7 +305,7 @@ export class PizzaModalComponent {
   }
 
   finishBoxClicking(index) {
-    if(this.pizzaForm.controls.finishes.value[index]) {
+    if (this.pizzaForm.controls.finishes.value[index]) {
       var replacement: any[] = [...this.pizzaForm.controls.finishes.value];
       replacement[index] = false;
       this.pizzaForm.patchValue({
@@ -337,39 +335,39 @@ export class PizzaModalComponent {
     this.pizzaItems.push(forCart);
   }
 
-  resetForm() {
-    this.pizzaForm.reset();
-    this.pizzaForm.patchValue({
-      type: "",
-      size: "10 Inch",
-      crust: "Traditional Crust",
-      sauce: "Signature Marinara",
-      cheese: this.buildCheese().value,
-      veggies: this.buildVeggies().value,
-      meats: this.buildMeats().value,
-      finishes: this.buildFinishes().value,
-      price: 8.65,
-      quantity: 1
-    });
-  }
+resetForm() {
+  this.pizzaForm.reset();
+  this.pizzaForm.patchValue({
+    type: "",
+    size: "10 Inch",
+    crust: "Traditional Crust",
+    sauce: "Signature Marinara",
+    cheese: this.buildCheese().value,
+    veggies: this.buildVeggies().value,
+    meats: this.buildMeats().value,
+    finishes: this.buildFinishes().value,
+    price: 8.65,
+    quantity: 1
+  });
+}
 
-  ngOnInit() {
-    this.pizzaForm = this.fb.group({
-      type: "",
-      size: "10 Inch",
-      crust: "Traditional Crust",
-      sauce: "Signature Marinara",
-      cheese: this.buildCheese(),
-      veggies: this.buildVeggies(),
-      meats: this.buildMeats(),
-      finishes: this.buildFinishes(),
-      price: 8.65,
-      quantity: 1
-    });
-  }
+ngOnInit() {
+  this.pizzaForm = this.fb.group({
+    type: "",
+    size: "10 Inch",
+    crust: "Traditional Crust",
+    sauce: "Signature Marinara",
+    cheese: this.buildCheese(),
+    veggies: this.buildVeggies(),
+    meats: this.buildMeats(),
+    finishes: this.buildFinishes(),
+    price: 8.65,
+    quantity: [1, [Validators.required, Validators.min(1), Validators.max(99)]]
+  });
+}
 
-  save() {
+save() {
 
-  }
+}
 
 }
