@@ -4,36 +4,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 function oneCheckbox(c: AbstractControl): { [key: string]: boolean } | null {
-  console.log(c);
-  console.log(c.value.value);
-  console.log(c.value.value.includes(true))
-  // if (c.value != null) {
-  //   var trueCount = 0;
-  //   for (let single of c.value) {
-  //     if (single.value == true) {
-  //       trueCount += 1;
-  //     }
-  //   }
-  //   if(trueCount == 0) {
-  //     return { 'oneCheckbox': true };
-  //   }
-  // }
-  if(!c.value.value.includes(true)) {
-    return { 'oneBox': true };
+  if(c.value != null && !c.value.includes(true)) {
+      return { 'oneBox': true };
   }
-
-
-  // c.value.greens != null && c.value.greens.includes(true) == false
-
-  // if (c.value.controls.greens.value != null && c.value.controls.greens.value.includes(true) == false) {
-  //   return { 'oneBox': true };
-  // }
-
-  // let Form = JSON.stringify(c);
-  // if (Form.value != null && exampleArray.value.includes(true) == false) {
-  //      return { 'oneBox': true };
-  //    }
-
   return null;
 }
 
@@ -106,7 +79,19 @@ export class SaladModalComponent {
   constructor(private modalService: NgbModal, private fb: FormBuilder) { }
 
 
+
   openLg(saladType) {
+    if(saladType == 'BUILD YOUR OWN SALAD') {
+      this.saladForm.patchValue({
+        type: saladType
+      });
+    } else {
+      this.saladForm.patchValue({
+        type: saladType,
+        greens: [true],
+        freshProduce: [true]
+      });
+    }
     this.saladForm.patchValue({
       type: saladType
     });
@@ -121,7 +106,7 @@ export class SaladModalComponent {
     const arr = this.saladCheckboxes.greens.map(green => {
       return this.fb.control(green.selected);
     });
-    return this.fb.array(arr);
+    return this.fb.array(arr, oneCheckbox);
   }
 
   buildCheese() {
@@ -135,7 +120,7 @@ export class SaladModalComponent {
     const arr = this.saladCheckboxes.freshProduce.map(oneFreshProduce => {
       return this.fb.control(oneFreshProduce.selected);
     });
-    return this.fb.array(arr);
+    return this.fb.array(arr, oneCheckbox);
   }
 
   buildMeats() {
@@ -432,6 +417,8 @@ export class SaladModalComponent {
     this.saladItems.push(forCart);
   }
 
+  // this.buildGreens().value,
+  // freshProduce: this.buildFreshProduce().value,
   resetForm() {
     this.saladForm.reset();
     this.saladForm.patchValue({
@@ -453,9 +440,9 @@ export class SaladModalComponent {
   ngOnInit() {
     this.saladForm = this.fb.group({
       type: "",
-      greens: [this.buildGreens(), oneCheckbox],
+      greens: this.buildGreens(),
       cheese: this.buildCheese(),
-      freshProduce: [this.buildFreshProduce(), oneCheckbox],
+      freshProduce: this.buildFreshProduce(),
       meats: this.buildMeats(),
       topItOff: this.buildTopItOff(),
       dressings: this.buildDressings(),

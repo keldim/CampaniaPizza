@@ -8,8 +8,9 @@
   </div>
   <div class="modal-body">
     <form novalidate (ngSubmit)="save()" [formGroup]="saladForm">
+
       <fieldset class="fieldset" *ngIf="type.value=='BUILD YOUR OWN SALAD'">
-        <div *ngIf="saladForm.hasError('oneBox')">
+        <div *ngIf="greens.hasError('oneBox')">
           <span style="font-size: 12px; color: #b80000">
             Choose at least one item in this section
           </span>
@@ -45,7 +46,7 @@
       </fieldset>
 
       <fieldset class="fieldset" *ngIf="type.value=='BUILD YOUR OWN SALAD'">
-        <div *ngIf="saladForm.hasError('oneBox')">
+        <div *ngIf="freshProduce.hasError('oneBox')">
           <span style="font-size: 12px; color: #b80000">
             Choose at least one item in this section
           </span>
@@ -127,9 +128,10 @@
         </ul>
       </fieldset>
       <div class="quantity-box">
-          <div *ngIf="quantity.hasError('min') || quantity.hasError('max') || quantity.hasError('required')">
-              <span style="font-size: 12px; color: #b80000">Please enter a valid quantity between 1 and 99 for this product.</span>
-          </div>
+        <div *ngIf="quantity.hasError('min') || quantity.hasError('max') || quantity.hasError('required')">
+          <span style="font-size: 12px; color: #b80000">Please enter a valid quantity between 1 and 99 for this
+            product.</span>
+        </div>
         <label for="qty">Quantity:</label>
         <input class="quantity-input" type="text" id="qty" maxlength=3 formControlName="quantity">
       </div>
