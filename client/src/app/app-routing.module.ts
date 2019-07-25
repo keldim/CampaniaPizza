@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
 import { LocationComponent } from './locations/locations.component';
-import { OrderOnlineComponent } from './order-online/order-online.component';
+
 import { AboutUsComponent } from './about-us/about-us.component';
 
 
@@ -21,10 +21,4 @@ import { AboutUsComponent } from './about-us/about-us.component';
     RouterModule
   ]
 })
-export class AppRoutingModule {
-
-  // routing
-  // { path: 'order-online', component: OrderOnlineComponent },
-
-
-}
+export class AppRoutingModule { }

@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from '../models/user';
 import { UserService } from '../services/user.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PizzaModalComponent } from './pizza-modal.component';
-import { DessertModalComponent } from './dessert-modal.component';
-import { SaladModalComponent } from './salad-modal.component';
-import { DrinkModalComponent } from './drink-modal.component';
+import { PizzaModalComponent } from './pizza-modal/pizza-modal.component';
+import { DessertModalComponent } from './dessert-modal/dessert-modal.component';
+import { SaladModalComponent } from './salad-modal/salad-modal.component';
+import { DrinkModalComponent } from './drink-modal/drink-modal.component';
 import { FormGroup, FormBuilder, FormControl} from '@angular/forms';
 
 @Component({
