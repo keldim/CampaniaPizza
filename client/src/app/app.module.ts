@@ -17,29 +17,39 @@ import { PizzaModalComponent } from './order-online/pizza-modal.component';
 import { DessertModalComponent } from './order-online/dessert-modal.component';
 import { SaladModalComponent } from './order-online/salad-modal.component';
 import { DrinkModalComponent } from './order-online/drink-modal.component';
+import { OrderOnlineModule } from './order-online/order-online.module';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LocationComponent,
-    AboutUsComponent,
-    OrderOnlineComponent,
-    PizzaModalComponent,
-    DessertModalComponent,
-    SaladModalComponent,
-    DrinkModalComponent
+    AboutUsComponent
   ],
   imports: [
     BrowserModule,
-    MenuModule,
-    AppRoutingModule,
-    HttpClientModule,
     RouterModule,
-    ReactiveFormsModule,
-    NgbModule.forRoot()
+    MenuModule,
+    OrderOnlineModule,
+    AppRoutingModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+  // declarations
+  // OrderOnlineComponent,
+  // PizzaModalComponent,
+  // DessertModalComponent,
+  // SaladModalComponent,
+  // DrinkModalComponent
+
+
+  // imports
+  // OrderOnlineModule
+  // ReactiveFormsModule,
+  // HttpClientModule,
+  // NgbModule.forRoot(),
+}

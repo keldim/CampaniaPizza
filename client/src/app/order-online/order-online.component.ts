@@ -146,8 +146,6 @@ export class OrderOnlineComponent implements OnInit {
 
   // use service to store order-online menu data as seen on angular getting started?
 
-  // validation for byo salad?
-
   // cart item saved, does not change on page refresh, internet cookies? internet sessions?
 
 }

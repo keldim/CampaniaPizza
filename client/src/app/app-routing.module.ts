@@ -12,7 +12,6 @@ import { AboutUsComponent } from './about-us/about-us.component';
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent },
       { path: 'locations', component: LocationComponent },
-      { path: 'order-online', component: OrderOnlineComponent },
       { path: 'about-us', component: AboutUsComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: '**', redirectTo: 'home', pathMatch: 'full' }
@@ -22,4 +21,10 @@ import { AboutUsComponent } from './about-us/about-us.component';
     RouterModule
   ]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+
+  // routing
+  // { path: 'order-online', component: OrderOnlineComponent },
+
+
+}
