@@ -10,6 +10,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OrderOnlineRoutingModule } from './order-online-routing.module';
 
+
 @NgModule({
   declarations: [
     PizzaModalComponent,

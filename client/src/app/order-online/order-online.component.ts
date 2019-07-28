@@ -124,7 +124,7 @@ export class OrderOnlineComponent implements OnInit {
 
   }
 
-  // create order-online module?
+
 
   // if there is at least one newly created form in the array, display the content of the array on the cart, use ngIf
   // create a json form ready to send to the server
@@ -143,8 +143,6 @@ export class OrderOnlineComponent implements OnInit {
   // add warning pop up for delete?
 
   // for business hours popover, connect with daily time to indicate the day? visit the ngboostrap website for more info?
-
-  // use service to store order-online menu data as seen on angular getting started?
 
   // cart item saved, does not change on page refresh, internet cookies? internet sessions?
 
