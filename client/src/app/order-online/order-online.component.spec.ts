@@ -14,6 +14,7 @@ import { DessertModalComponent } from './dessert-modal/dessert-modal.component';
 
 describe('OrderOnlineComponent', () => {
   let fixture: ComponentFixture<OrderOnlineComponent>;
+  let fixture2: ComponentFixture<PizzaModalComponent>;
   // let mockUserService;
   // let mockModalService;
   // let mockFormBuilder;
@@ -63,7 +64,10 @@ describe('OrderOnlineComponent', () => {
       });
 
       fixture = TestBed.createComponent(OrderOnlineComponent);
+      fixture2 = TestBed.createComponent(PizzaModalComponent);
   });
+
+
 
   // have to check if open lg was called
 
@@ -99,9 +103,9 @@ describe('OrderOnlineComponent', () => {
     fixture.componentInstance.clickedMenu = "Salads";
     fixture.detectChanges();
 
-    const pizzaModal = fixture.debugElement.queryAll(By.css('.empty-link'))[5];
+    const saladModal = fixture.debugElement.queryAll(By.css('.empty-link'))[5];
 
-    pizzaModal.triggerEventHandler('click', null);
+    saladModal.triggerEventHandler('click', null);
     fixture.detectChanges();
 
     expect(fixture.componentInstance.openSalad).toHaveBeenCalled();
@@ -112,9 +116,9 @@ describe('OrderOnlineComponent', () => {
     fixture.componentInstance.clickedMenu = "Drinks";
     fixture.detectChanges();
 
-    const pizzaModal = fixture.debugElement.queryAll(By.css('.empty-link'))[5];
+    const drinkModal = fixture.debugElement.queryAll(By.css('.empty-link'))[5];
 
-    pizzaModal.triggerEventHandler('click', null);
+    drinkModal.triggerEventHandler('click', null);
     fixture.detectChanges();
 
     expect(fixture.componentInstance.openDrink).toHaveBeenCalled();
@@ -125,9 +129,9 @@ describe('OrderOnlineComponent', () => {
     fixture.componentInstance.clickedMenu = "Desserts";
     fixture.detectChanges();
 
-    const pizzaModal = fixture.debugElement.queryAll(By.css('.empty-link'))[5];
+    const dessertModal = fixture.debugElement.queryAll(By.css('.empty-link'))[5];
 
-    pizzaModal.triggerEventHandler('click', null);
+    dessertModal.triggerEventHandler('click', null);
     fixture.detectChanges();
 
     expect(fixture.componentInstance.openDessert).toHaveBeenCalled();
@@ -167,10 +171,60 @@ describe('OrderOnlineComponent', () => {
     mouseEnterTest.triggerEventHandler('mouseover', null);
     fixture.detectChanges();
 
-    console.log(fixture.debugElement.queryAll(By.css(".dl-for-location-bar")));
+    // console.log(fixture.debugElement.queryAll(By.css(".dl-for-location-bar")));
 
     expect(true).toBe(true);
   });
+
+  it('should present byo pizza item when vertical byo pizza menu is clicked', () => {
+    fixture.componentInstance.clickedMenu = "Build Your Own Pizza";
+    fixture.detectChanges();
+
+    expect(fixture.debugElement.queryAll(By.css('.empty-link'))[5].nativeElement.textContent).toContain("BUILD YOUR OWN PIZZA");
+  });
+
+  it('should present specialty pizza item when vertical specialty pizza menu is clicked', () => {
+    fixture.componentInstance.clickedMenu = "Specialty Pizzas";
+    fixture.detectChanges();
+
+    expect(fixture.debugElement.queryAll(By.css('.empty-link'))[5].nativeElement.textContent).toContain("CLASSIC MARGHERITA");
+  });
+
+  it('should present salad items when vertical salad menu is clicked', () => {
+    fixture.componentInstance.clickedMenu = "Salads";
+    fixture.detectChanges();
+
+    expect(fixture.debugElement.queryAll(By.css('.empty-link'))[5].nativeElement.textContent).toContain("CHICKEN CAESAR SALAD");
+  });
+
+  it('should present drink items when vertical drink menu is clicked', () => {
+    fixture.componentInstance.clickedMenu = "Drinks";
+    fixture.detectChanges();
+
+    expect(fixture.debugElement.queryAll(By.css('.empty-link'))[5].nativeElement.textContent).toContain("FOUNTAIN DRINK");
+  });
+
+  it('should present dessert items when vertical dessert menu is clicked', () => {
+    fixture.componentInstance.clickedMenu = "Desserts";
+    fixture.detectChanges();
+
+    expect(fixture.debugElement.queryAll(By.css('.empty-link'))[5].nativeElement.textContent).toContain("COOKIES");
+  });
+
+  it('should add item to the shopping cart with selected features', () => {
+    fixture.componentInstance.clickedMenu = "Build Your Own Pizza";
+    fixture.detectChanges();
+
+    const pizzaModal = fixture.debugElement.queryAll(By.css('.empty-link'))[5];
+
+    pizzaModal.triggerEventHandler('click', null);
+    fixture.detectChanges();
+
+    console.log(fixture2.debugElement.queryAll(By.css('.label-for-choice')));
+    expect(true).toBe(true);
+    // expect(fixture.componentInstance.openPizza).toHaveBeenCalled();
+  });
+
 });
 
 // do the modals appear?
