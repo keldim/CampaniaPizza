@@ -23,7 +23,10 @@ export class OrderOnlineComponent implements OnInit {
   @ViewChild(SaladModalComponent) saladModalComponent;
   @ViewChild(DrinkModalComponent) drinkModalComponent;
 
-  constructor(private userService: UserService, private modalService: NgbModal, private fb: FormBuilder) { }
+
+  // private userService: UserService,
+  // private modalService: NgbModal,
+  constructor(private fb: FormBuilder) { }
 
   clickedVerticalNavbar(clickedMenu) {
     this.clickedMenu = clickedMenu;
