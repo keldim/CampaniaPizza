@@ -149,4 +149,6 @@ export class OrderOnlineComponent implements OnInit {
 
   // cart item saved, does not change on page refresh, internet cookies? internet sessions?
 
+  // remember to remove unnecessary files and images
+
 }
