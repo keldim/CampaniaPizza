@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OrderOnlineRoutingModule } from './order-online-routing.module';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { OrderOnlineRoutingModule } from './order-online-routing.module';
     SaladModalComponent,
     DrinkModalComponent,
     DessertModalComponent,
-    OrderOnlineComponent
+    OrderOnlineComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,
