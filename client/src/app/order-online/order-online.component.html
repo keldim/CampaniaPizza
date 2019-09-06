@@ -77,14 +77,15 @@
             </dl>
           </span>
         </ng-template>
-        <dt class="dt-for-location-bar">Pickup And Delivery Hours:</dt>
+        <dt class="dt-for-location-bar">Pickup Hours:</dt>
+        <!-- And Delivery  -->
         <dd class="dd-for-location-bar"><a [ngbPopover]="popContent" triggers="mouseenter:mouseleave"
             data-placement="bottom"><span class="link-for-hours">Open Today 11am - 1am</span></a></dd>
       </dl>
-      <dl class="dl-for-location-bar">
+      <!-- <dl class="dl-for-location-bar">
         <dt class="dt-for-location-bar">Delivery Fee:</dt>
         <dd class="dd-for-location-bar">$1.99 (Free Delivery For Orders Over $15)<br></dd>
-      </dl>
+      </dl> -->
       <dl class="dl-for-location-bar">
         <dt class="dt-for-location-bar">Accepted Cards:</dt>
         <dd class="dd-for-location-bar">Mastercard, Visa, American Express, Discover</dd>
@@ -456,6 +457,10 @@
       </div>
     </div>
 
+  <div class="button-area" *ngIf="calculateSubtotal() > 0">
+    <button type="button" class="proceed-to-checkout" [routerLink]="['/checkout']">
+      Proceed to Checkout
+    </button>
   </div>
 
 </div>

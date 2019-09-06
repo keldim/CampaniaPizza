@@ -1,0 +1,7 @@
+.order-details {
+  border: 1px solid #ccc;
+  width: 50%;
+  table-layout: fixed;
+  margin-left: auto;
+  margin-right: auto;
+}

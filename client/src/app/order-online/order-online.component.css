@@ -70,7 +70,7 @@
   margin-bottom: 3px;
 }
 
-.location-bar{
+.location-bar {
   padding-bottom: 10px;
 }
 
@@ -151,4 +151,25 @@
 
 .options-display {
   font-size: 10px;
+}
+
+.proceed-to-checkout {
+  border: 1px solid #fff;
+  background: #487a32;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  padding: 3px 10px 4px;
+  font-size: 14px;
+  width: 100%;
+}
+
+.proceed-to-checkout:hover {
+  background: #335623;;
+}
+
+.button-area {
+  margin: 10px 0 10px 0;
+  text-align: center;
 }

@@ -1,3 +1,28 @@
-<p>
-  checkout works!
-</p>
+<table class="order-details">
+  <thead>
+  <th style="padding: 5px 5px 5px 5px;">
+    <h3 style="font-size: 14px; font-weight: 700; margin: 0;">Order Details</h3>
+  </th>
+  <th style="text-align: right; padding: 5px 5px 5px 5px;">
+    <h3 style="font-size: 14px; font-weight: 700; margin: 0;">Amount</h3>
+  </th>
+  </thead>
+  <tbody>
+
+  </tbody>
+</table>
+
+
+
+
+  <form [formGroup]="creditCardForm" style="width: 50%; margin-left: auto; margin-right: auto;">
+    <input type="text" placeholder="Credit Card #" formControlName="cardNumber">
+    <input type="text" placeholder="Expiration Month" formControlName="expMonth">
+    <input type="text" placeholder="Expiration Year" formControlName="expYear">
+    <input type="text" placeholder="CVC" formControlName="cvc">
+    <button (click)="chargeCreditCard()">Submit</button>
+  </form>
+
+
+
+
