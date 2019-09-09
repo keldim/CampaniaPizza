@@ -10,6 +10,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OrderOnlineRoutingModule } from './order-online-routing.module';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { WebStorageModule } from 'ngx-store';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { CheckoutComponent } from './checkout/checkout.component';
     HttpClientModule,
     ReactiveFormsModule,
     NgbModule.forRoot(),
-    OrderOnlineRoutingModule
+    OrderOnlineRoutingModule,
+    WebStorageModule,
   ]
 })
 export class OrderOnlineModule { }

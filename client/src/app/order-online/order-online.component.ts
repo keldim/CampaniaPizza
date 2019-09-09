@@ -7,8 +7,6 @@ import { DessertModalComponent } from './dessert-modal/dessert-modal.component';
 import { SaladModalComponent } from './salad-modal/salad-modal.component';
 import { DrinkModalComponent } from './drink-modal/drink-modal.component';
 import { FormGroup, FormBuilder, FormControl} from '@angular/forms';
-import { Observable, of } from 'rxjs';
-import { CartService } from '../services/cart.service';
 
 @Component({
   templateUrl: './order-online.component.html',

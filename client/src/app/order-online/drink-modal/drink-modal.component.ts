@@ -1,8 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CartService } from 'src/app/services/cart.service';
-import { Observable, of } from 'rxjs';
+import { LocalStorage } from 'ngx-store';
 
 @Component({
   selector: 'drink-modal',
@@ -11,12 +10,12 @@ import { Observable, of } from 'rxjs';
 })
 export class DrinkModalComponent {
   @ViewChild('contentDrink') modal;
-  drinkItems: any[] = this.cartService.drinkItemsInCart;
+  @LocalStorage() drinkItems: any[] = [];
   drinkForm: FormGroup;
   forEdit: boolean = false;
   indexForEdit: any = 0;
 
-  constructor(private modalService: NgbModal, private fb: FormBuilder, private cartService: CartService) {}
+  constructor(private modalService: NgbModal, private fb: FormBuilder) {}
 
   get type(): FormControl{
     return <FormControl>this.drinkForm.get('type');
@@ -64,7 +63,6 @@ export class DrinkModalComponent {
   }
 
   deleteDrinkItem(index) {
-    this.cartService.removeFromCart(this.drinkItems[index]);
     this.drinkItems.splice(index, 1);
   }
 
@@ -77,7 +75,6 @@ export class DrinkModalComponent {
     });
     const forCart = { ...this.drinkForm.value };
     this.drinkItems.push(forCart);
-    this.cartService.addToCart(forCart);
   }
 
   resetForm() {

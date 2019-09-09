@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CartService } from 'src/app/services/cart.service';
+import { LocalStorage } from 'ngx-store';
 
 @Component({
   selector: 'dessert-modal',
@@ -10,13 +10,13 @@ import { CartService } from 'src/app/services/cart.service';
 })
 export class DessertModalComponent {
   @ViewChild('contentDessert') modal;
-  dessertItems: any[] = this.cartService.dessertItemsInCart;
+  @LocalStorage() dessertItems: any[] = [];
   dessertForm: FormGroup;
   forEdit: boolean = false;
   indexForEdit: any = 0;
 
 
-  constructor(private modalService: NgbModal, private fb: FormBuilder, private cartService: CartService) { }
+  constructor(private modalService: NgbModal, private fb: FormBuilder) { }
 
   get type(): FormControl {
     return <FormControl>this.dessertForm.get('type');
@@ -85,7 +85,6 @@ export class DessertModalComponent {
   }
 
   deleteDessertItem(index) {
-    this.cartService.removeFromCart(this.dessertItems[index]);
     this.dessertItems.splice(index, 1);
   }
 
@@ -113,7 +112,6 @@ export class DessertModalComponent {
       delete forCart.cookieChoice;
     }
     this.dessertItems.push(forCart);
-    this.cartService.addToCart(forCart);
   }
 
   resetForm() {

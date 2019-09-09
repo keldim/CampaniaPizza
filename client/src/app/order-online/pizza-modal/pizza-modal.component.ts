@@ -2,6 +2,7 @@ import { Component, ViewEncapsulation, ViewChild, ElementRef } from '@angular/co
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, FormArray, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { BuildYourOwnCheckboxes } from '../build-your-own-checkboxes';
+import { LocalStorage } from 'ngx-store';
 
 @Component({
   selector: 'pizza-modal',
@@ -10,7 +11,7 @@ import { BuildYourOwnCheckboxes } from '../build-your-own-checkboxes';
 })
 export class PizzaModalComponent {
   @ViewChild('contentPizza') modal;
-  pizzaItems: any[] = [];
+  @LocalStorage() pizzaItems: any[] = [];
   pizzaForm: FormGroup;
   forEdit: boolean = false;
   indexForEdit: any = 0;

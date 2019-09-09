@@ -2,6 +2,7 @@ import { ViewChild, Component } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl, AbstractControl, Validators, Form } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BuildYourOwnCheckboxes } from '../build-your-own-checkboxes';
+import { LocalStorage } from 'ngx-store';
 
 
 function oneCheckbox(c: AbstractControl): { [key: string]: boolean } | null {
@@ -19,7 +20,7 @@ function oneCheckbox(c: AbstractControl): { [key: string]: boolean } | null {
 })
 export class SaladModalComponent {
   @ViewChild('contentSalad') modal;
-  saladItems: any[] = [];
+  @LocalStorage() saladItems: any[] = [];
   saladForm: FormGroup;
   forEdit: boolean = false;
   indexForEdit: any = 0;
