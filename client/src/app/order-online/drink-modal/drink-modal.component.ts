@@ -55,6 +55,7 @@ export class DrinkModalComponent {
 
     this.forEdit = false;
     this.indexForEdit = 0;
+    this.drinkItems = this.drinkItems;
   }
 
   resetEdit() {

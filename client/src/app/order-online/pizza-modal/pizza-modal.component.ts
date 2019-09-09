@@ -111,6 +111,7 @@ export class PizzaModalComponent {
     }
     this.forEdit = false;
     this.indexForEdit = 0;
+    this.pizzaItems = this.pizzaItems;
   }
 
   resetEdit() {

@@ -13,6 +13,7 @@ import { UserService } from './services/user.service';
 import { AboutUsComponent } from './about-us/about-us.component';
 
 import { OrderOnlineModule } from './order-online/order-online.module';
+import { WebStorageModule } from 'ngx-store';
 
 
 @NgModule({

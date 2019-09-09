@@ -147,6 +147,7 @@ export class SaladModalComponent {
     }
     this.forEdit = false;
     this.indexForEdit = 0;
+    this.saladItems = this.saladItems;
   }
 
   resetEdit() {

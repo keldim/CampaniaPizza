@@ -28,7 +28,7 @@ import { WebStorageModule } from 'ngx-store';
     ReactiveFormsModule,
     NgbModule.forRoot(),
     OrderOnlineRoutingModule,
-    WebStorageModule,
+    WebStorageModule
   ]
 })
 export class OrderOnlineModule { }

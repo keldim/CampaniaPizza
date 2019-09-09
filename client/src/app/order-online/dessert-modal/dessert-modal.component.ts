@@ -77,6 +77,7 @@ export class DessertModalComponent {
     }
     this.forEdit = false;
     this.indexForEdit = 0;
+    this.dessertItems = this.dessertItems;
   }
 
   resetEdit() {
