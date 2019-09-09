@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'dessert-modal',
@@ -9,13 +10,13 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class DessertModalComponent {
   @ViewChild('contentDessert') modal;
-  dessertItems: any[] = [];
+  dessertItems: any[] = this.cartService.dessertItemsInCart;
   dessertForm: FormGroup;
   forEdit: boolean = false;
   indexForEdit: any = 0;
 
 
-  constructor(private modalService: NgbModal, private fb: FormBuilder) { }
+  constructor(private modalService: NgbModal, private fb: FormBuilder, private cartService: CartService) { }
 
   get type(): FormControl {
     return <FormControl>this.dessertForm.get('type');
@@ -84,6 +85,7 @@ export class DessertModalComponent {
   }
 
   deleteDessertItem(index) {
+    this.cartService.removeFromCart(this.dessertItems[index]);
     this.dessertItems.splice(index, 1);
   }
 
@@ -111,6 +113,7 @@ export class DessertModalComponent {
       delete forCart.cookieChoice;
     }
     this.dessertItems.push(forCart);
+    this.cartService.addToCart(forCart);
   }
 
   resetForm() {
