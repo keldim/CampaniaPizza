@@ -1,14 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormGroup, FormBuilder, FormControl} from '@angular/forms';
+import { PizzaModalComponent } from './../pizza-modal/pizza-modal.component';
+import { DessertModalComponent } from './../dessert-modal/dessert-modal.component';
+import { SaladModalComponent } from './../salad-modal/salad-modal.component';
+import { DrinkModalComponent } from './../drink-modal/drink-modal.component';
+import { LocalStorage } from 'ngx-store';
+import { OrderOnlineComponent } from '../order-online.component';
 
 @Component({
-  selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit {
   creditCardForm: FormGroup;
+
+  @ViewChild(PizzaModalComponent) pizzaModalComponent;
+  // @ViewChild(DessertModalComponent) dessertModalComponent;
+  // @ViewChild(SaladModalComponent) saladModalComponent;
+  // @ViewChild(DrinkModalComponent) drinkModalComponent;
+  @LocalStorage() pizzaItems: any[];
+  // @LocalStorage() dessertItems: any[];
+  // @LocalStorage() saladItems: any[];
+  // @LocalStorage() drinkItems: any[];
 
 
   constructor(private http: HttpClient, private fb: FormBuilder) {}
