@@ -170,6 +170,48 @@ export class PizzaModalComponent {
     return finalString;
   }
 
+  buildDisplayForCheckout(currentItem) {
+    var listOfChoices: any[] = [];
+    // for(let item of this.pizzaItems) {
+    if (currentItem.hasOwnProperty("cheese")) {
+      // finalString += "BUILD YOUR OWN PIZZA\n";
+      listOfChoices.push(currentItem.size);
+      listOfChoices.push(currentItem.crust);
+      listOfChoices.push(currentItem.sauce);
+      for (let oneCheese in currentItem.cheese) {
+        if (currentItem.cheese[oneCheese] != this.pizzaCheckboxes.cheese[oneCheese].selected) {
+          listOfChoices.push(this.pizzaCheckboxes.cheese[oneCheese].name);
+        }
+      }
+      for (let veggie in currentItem.veggies) {
+        if (currentItem.veggies[veggie] != this.pizzaCheckboxes.veggies[veggie].selected) {
+          listOfChoices.push(this.pizzaCheckboxes.veggies[veggie].name);
+        }
+      }
+      for (let meat in currentItem.meats) {
+        if (currentItem.meats[meat] != this.pizzaCheckboxes.meats[meat].selected) {
+          listOfChoices.push(this.pizzaCheckboxes.meats[meat].name);
+        }
+      }
+      for (let finish in currentItem.finishes) {
+        if (currentItem.finishes[finish] != this.pizzaCheckboxes.finishes[finish].selected) {
+          listOfChoices.push(this.pizzaCheckboxes.finishes[finish].name);
+        }
+      }
+    } else {
+      // finalString += "SPECIALTY PIZZA\n"
+      listOfChoices.push(currentItem.size);
+      listOfChoices.push(currentItem.crust);
+      for (let finish in currentItem.finishes) {
+        if (currentItem.finishes[finish] != this.pizzaCheckboxes.finishes[finish].selected) {
+          listOfChoices.push(this.pizzaCheckboxes.finishes[finish].name);
+        }
+      }
+    }
+    // }
+    return listOfChoices;
+  }
+
   get cheese(): FormArray {
     return <FormArray>this.pizzaForm.get('cheese');
   }

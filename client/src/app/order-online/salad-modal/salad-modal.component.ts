@@ -210,6 +210,54 @@ export class SaladModalComponent {
     return finalString;
   }
 
+  buildDisplayForCheckout(currentItem) {
+    var listOfChoices: any[] = [];
+
+    // for(let item of this.saladItems) {
+    if (currentItem.hasOwnProperty("greens")) {
+      // finalString += "BUILD YOUR OWN SALAD\n"
+
+      for (let green in currentItem.greens) {
+        if (currentItem.greens[green] != this.saladCheckboxes.greens[green].selected) {
+          listOfChoices.push(this.saladCheckboxes.greens[green].name);
+        }
+      }
+      for (let oneCheese in currentItem.cheese) {
+        if (currentItem.cheese[oneCheese] != this.saladCheckboxes.cheese[oneCheese].selected) {
+          listOfChoices.push(this.saladCheckboxes.cheese[oneCheese].name);
+        }
+      }
+      for (let oneFreshProduce in currentItem.freshProduce) {
+        if (currentItem.freshProduce[oneFreshProduce] != this.saladCheckboxes.freshProduce[oneFreshProduce].selected) {
+          listOfChoices.push(this.saladCheckboxes.freshProduce[oneFreshProduce].name);
+        }
+      }
+      for (let meat in currentItem.meats) {
+        if (currentItem.meats[meat] != this.saladCheckboxes.meats[meat].selected) {
+          listOfChoices.push(this.saladCheckboxes.meats[meat].name);
+        }
+      }
+      for (let oneTopItOff in currentItem.topItOff) {
+        if (currentItem.topItOff[oneTopItOff] != this.saladCheckboxes.topItOff[oneTopItOff].selected) {
+          listOfChoices.push(this.saladCheckboxes.topItOff[oneTopItOff].name);
+        }
+      }
+      for (let dressing in currentItem.dressings) {
+        if (currentItem.dressings[dressing] != this.saladCheckboxes.dressings[dressing].selected) {
+          listOfChoices.push(this.saladCheckboxes.dressings[dressing].name);
+        }
+      }
+    } else {
+      if (currentItem.size == "Entree") {
+        listOfChoices.push("Entree");
+      } else {
+        listOfChoices.push("Side");
+      }
+    }
+    // }
+    return listOfChoices;
+  }
+
   get greens(): FormArray {
     return <FormArray>this.saladForm.get('greens');
   }

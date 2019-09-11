@@ -16,13 +16,13 @@ export class CheckoutComponent implements OnInit {
   creditCardForm: FormGroup;
 
   @ViewChild(PizzaModalComponent) pizzaModalComponent;
-  // @ViewChild(DessertModalComponent) dessertModalComponent;
-  // @ViewChild(SaladModalComponent) saladModalComponent;
-  // @ViewChild(DrinkModalComponent) drinkModalComponent;
+  @ViewChild(DessertModalComponent) dessertModalComponent;
+  @ViewChild(SaladModalComponent) saladModalComponent;
+  @ViewChild(DrinkModalComponent) drinkModalComponent;
   @LocalStorage() pizzaItems: any[];
-  // @LocalStorage() dessertItems: any[];
-  // @LocalStorage() saladItems: any[];
-  // @LocalStorage() drinkItems: any[];
+  @LocalStorage() dessertItems: any[];
+  @LocalStorage() saladItems: any[];
+  @LocalStorage() drinkItems: any[];
 
 
   constructor(private http: HttpClient, private fb: FormBuilder) {}
