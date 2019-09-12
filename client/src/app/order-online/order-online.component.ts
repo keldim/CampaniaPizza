@@ -7,6 +7,7 @@ import { DessertModalComponent } from './dessert-modal/dessert-modal.component';
 import { SaladModalComponent } from './salad-modal/salad-modal.component';
 import { DrinkModalComponent } from './drink-modal/drink-modal.component';
 import { FormGroup, FormBuilder, FormControl} from '@angular/forms';
+import { LocalStorage } from 'ngx-store';
 
 @Component({
   templateUrl: './order-online.component.html',
@@ -17,6 +18,7 @@ export class OrderOnlineComponent implements OnInit {
   selectedUser: User;
   clickedMenu: string = "Build Your Own Pizza";
   orderOnlineForm: FormGroup;
+  @LocalStorage() pickupLocation: string = "";
 
   @ViewChild(PizzaModalComponent) pizzaModalComponent;
   @ViewChild(DessertModalComponent) dessertModalComponent;
@@ -107,6 +109,10 @@ export class OrderOnlineComponent implements OnInit {
     return <FormControl>this.orderOnlineForm.get('location');
   }
 
+  assignLocation() {
+    this.pickupLocation = this.orderOnlineForm.controls.location.value;
+  }
+
   ngOnInit() {
     // this.userService.getUserByUsername('john')
     //   .subscribe(
@@ -114,13 +120,12 @@ export class OrderOnlineComponent implements OnInit {
     //     (err: any) => console.log(err)
     //   );
 
-
     this.orderOnlineForm = this.fb.group({
-      location: ""
+      location: this.pickupLocation
     });
 
-
   }
+
 
 
   save() {

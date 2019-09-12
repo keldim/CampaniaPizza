@@ -2,87 +2,161 @@
 <salad-modal></salad-modal>
 <drink-modal></drink-modal>
 <dessert-modal></dessert-modal>
-<table class="order-details">
-  <thead>
-    <tr>
-      <th style="padding: 5px 5px 5px 5px; font-size: 14px; font-weight: 700; margin: 0;">
-        <!-- <h3 style="">Order Details</h3> -->
-        Order Details
-      </th>
-      <th style="text-align: right; padding: 5px 5px 5px 5px; font-size: 14px; font-weight: 700; margin: 0;">
-        <!-- <h3 style="">Amount</h3> -->
-        Amount
-      </th>
-    </tr>
 
-  </thead>
-  <tbody>
-    <div *ngFor="let pizzaItem of pizzaItems" style="width: 760px;">
-      <tr class="product-line">
-        <td *ngIf="pizzaItem.type=='BUILD YOUR OWN PIZZA'" class="product-name">{{ pizzaItem.quantity }} x
-          {{ pizzaItem.type }}</td>
-        <td *ngIf="pizzaItem.type!='BUILD YOUR OWN PIZZA'" class="product-name">{{ pizzaItem.quantity }} x
-          {{ pizzaItem.type }}</td>
-        <td class="product-price">({{ pizzaItem.quantity }} x ${{ pizzaItem.price }}) = ${{ (pizzaItem.quantity * pizzaItem.price).toFixed(2) }}</td>
-      </tr>
-      <div *ngFor="let choice of pizzaModalComponent.buildDisplayForCheckout(pizzaItem)">
-        <tr>
-          <td class="choice">
-            {{ choice }}
-          </td>
-          <td class="choice-price">" "</td>
-        </tr>
+
+<div class="container"
+  style="margin-top: 150px; margin-left: auto; margin-right: auto; width: 40%; border: 1px solid #ccc; border-bottom: 0;">
+  <div style="font-size: 26px; font-weight: 700; text-align: center;">Checkout</div>
+  <div style="font-size: 18px; font-weight: 700;">Pickup Location</div>
+  <div class="row" style="padding-bottom: 5px;">
+    <div class="col">
+      <span *ngIf="pickupLocation=='Midtown'">
+        Campania Pizza, Midtown<br>
+        31 W 46th St<br>
+        New York, NY 10036
+      </span>
+      <span *ngIf="pickupLocation=='Chelsea'">
+        Campania Pizza, Chelsea<br>
+        601 6th Ave<br>
+        New York, NY 10011
+      </span>
+      <span *ngIf="pickupLocation=='East Village'">
+        Campania Pizza, East Village<br>
+        32 St Marks Pl<br>
+        New York, NY 10003
+      </span>
+    </div>
+    <div class="col" style="text-align: right;">
+      <a class="btn btn-outline-secondary" href="#" [routerLink]="['/order-online']" role="button">Modify Order</a>
+    </div>
+  </div>
+
+</div>
+<div class="container order-details">
+  <div class="row">
+    <div class="col name-column">
+      Order Details
+    </div>
+    <div class="col price-column">
+      Amount
+    </div>
+  </div>
+  <div *ngFor="let pizzaItem of pizzaItems">
+    <div class="row product-line">
+      <div *ngIf="pizzaItem.type=='BUILD YOUR OWN PIZZA'" class="col product-name">{{ pizzaItem.quantity }} x
+        {{ pizzaItem.type }}</div>
+      <div *ngIf="pizzaItem.type!='BUILD YOUR OWN PIZZA'" class="col product-name">{{ pizzaItem.quantity }} x
+        {{ pizzaItem.type }}</div>
+      <div class="col product-price">({{ pizzaItem.quantity }} x ${{ pizzaItem.price }}) =
+        ${{ (pizzaItem.quantity * pizzaItem.price).toFixed(2) }}</div>
+    </div>
+    <div *ngFor="let choice of pizzaModalComponent.buildDisplayForCheckout(pizzaItem)">
+      <div class="row">
+        <div class="col choice">
+          {{ choice }}
+        </div>
+        <!-- <div class="col choice-price">" "</div> -->
       </div>
     </div>
+  </div>
 
-    <div *ngFor="let saladItem of saladItems" style="width: 760px;">
-      <tr>
-        <td *ngIf="saladItem.type=='BUILD YOUR OWN SALAD'" class="product-name">{{ saladItem.quantity }} x
-          {{ saladItem.type }}</td>
-        <td *ngIf="saladItem.type!='BUILD YOUR OWN SALAD'" class="product-name">{{ saladItem.quantity }} x
-          {{ saladItem.type }}</td>
-        <td class="product-price">({{ saladItem.quantity }} x ${{ saladItem.price }}) = ${{ (saladItem.quantity * saladItem.price).toFixed(2) }}</td>
-      </tr>
-      <div *ngFor="let choice of saladModalComponent.buildDisplayForCheckout(saladItem)">
-        <tr>
-          <td class="choice">
-            {{ choice }}
-          </td>
-          <td class="choice-price"></td>
-        </tr>
+  <div *ngFor="let saladItem of saladItems">
+    <div class="row product-line">
+      <div *ngIf="saladItem.type=='BUILD YOUR OWN SALAD'" class="col product-name">{{ saladItem.quantity }} x
+        {{ saladItem.type }}</div>
+      <div *ngIf="saladItem.type!='BUILD YOUR OWN SALAD'" class="col product-name">{{ saladItem.quantity }} x
+        {{ saladItem.type }}</div>
+      <div class="col product-price">({{ saladItem.quantity }} x ${{ saladItem.price }}) =
+        ${{ (saladItem.quantity * saladItem.price).toFixed(2) }}</div>
+    </div>
+    <div *ngFor="let choice of saladModalComponent.buildDisplayForCheckout(saladItem)">
+      <div class="row">
+        <div class="col choice">
+          {{ choice }}
+        </div>
+        <!-- <div class="col choice-price"></div> -->
       </div>
     </div>
+  </div>
 
-    <div *ngFor="let drinkItem of drinkItems" style="width: 760px;">
-      <tr>
-        <td class="product-name">{{ drinkItem.quantity }} x {{ drinkItem.type }}</td>
-        <td class="product-price">({{ drinkItem.quantity }} x ${{ drinkItem.price }}) = ${{ (drinkItem.quantity * drinkItem.price).toFixed(2) }}</td>
-      </tr>
+  <div *ngFor="let drinkItem of drinkItems">
+    <div class="row product-line-dd">
+      <div class="col product-name">{{ drinkItem.quantity }} x {{ drinkItem.type }}</div>
+      <div class="col product-price">({{ drinkItem.quantity }} x ${{ drinkItem.price }}) =
+        ${{ (drinkItem.quantity * drinkItem.price).toFixed(2) }}</div>
     </div>
+  </div>
 
-    <div *ngFor="let dessertItem of dessertItems" style="width: 760px;">
-      <tr>
-        <td *ngIf="dessertItem.type=='Cookies'" class="product-name">{{ dessertItem.quantity }} x {{ dessertItem.cookieChoice }}
-        </td>
-        <td *ngIf="dessertItem.type=='Brownies'" class="product-name">{{ dessertItem.quantity }} x
-          {{ dessertItem.brownieChoice }}</td>
-        <td class="product-price">({{ dessertItem.quantity }} x ${{ dessertItem.price }}) = ${{ (dessertItem.quantity * dessertItem.price).toFixed(2) }}</td>
-      </tr>
+  <div *ngFor="let dessertItem of dessertItems">
+    <div class="row product-line-dd">
+      <div *ngIf="dessertItem.type=='Cookies'" class="col product-name">{{ dessertItem.quantity }} x
+        {{ dessertItem.cookieChoice.toUpperCase() }}
+      </div>
+      <div *ngIf="dessertItem.type=='Brownies'" class="col product-name">{{ dessertItem.quantity }} x
+        {{ dessertItem.brownieChoice.toUpperCase() }}</div>
+      <div class="col product-price">({{ dessertItem.quantity }} x ${{ dessertItem.price }}) =
+        ${{ (dessertItem.quantity * dessertItem.price).toFixed(2) }}</div>
     </div>
+  </div>
 
-  </tbody>
-</table>
+  <div class="row" style="border-top: 1px solid #ccc">
+    <div class="col product-name">
+      Subtotal
+    </div>
+    <div class="col product-price">
+      ${{ showSubtotal() }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col product-name">
+      TAX
+    </div>
+    <div class="col product-price">
+      ${{ showLocalTax() }}
+    </div>
+  </div>
+  <div class="row" style="background: #000; color: #fff; font-size: 16px;">
+    <div class="col product-name">
+      Total
+    </div>
+    <div class="col product-price">
+      ${{ showTotal() }}
+    </div>
+  </div>
+</div>
+
+<div class="container order-details">
+  <div style="font-size: 26px; font-weight: 700; text-align: center;">Payment</div>
+  <form [formGroup]="contactInfo" style="margin-left: auto; margin-right: auto;">
+    <div class="row">
+      <div class="col" style="text-align: center">
+        First Name:
+        <input type="text" formControlName="firstName">
+      </div>
+      <div class="col" style="text-align: center">
+        Last Name:
+        <input type="text" formControlName="lastName">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col" style="text-align: center">
+        Email:
+        <input type="text" formControlName="email">
+      </div>
+      <div class="col" style="text-align: center">
+        Phone Number:
+        <input type="text" formControlName="phoneNumber">
+      </div>
+    </div>
+  </form>
+
+  <form [formGroup]="creditCardForm" style="margin-left: auto; margin-right: auto;">
+    <input type="text" placeholder="Credit Card #" formControlName="cardNumber">
+    <input type="text" placeholder="Expiration Month" formControlName="expMonth">
+    <input type="text" placeholder="Expiration Year" formControlName="expYear">
+    <input type="text" placeholder="CVC" formControlName="cvc">
+    <button (click)="chargeCreditCard()">Submit</button>
+  </form>
 
 
-
-
-
-
-
-<!-- <form [formGroup]="creditCardForm" style="width: 50%; margin-left: auto; margin-right: auto;">
-  <input type="text" placeholder="Credit Card #" formControlName="cardNumber">
-  <input type="text" placeholder="Expiration Month" formControlName="expMonth">
-  <input type="text" placeholder="Expiration Year" formControlName="expYear">
-  <input type="text" placeholder="CVC" formControlName="cvc">
-  <button (click)="chargeCreditCard()">Submit</button>
-</form> -->
+</div>

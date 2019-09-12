@@ -14,11 +14,13 @@ import { OrderOnlineComponent } from '../order-online.component';
 })
 export class CheckoutComponent implements OnInit {
   creditCardForm: FormGroup;
+  contactInfo: FormGroup;
 
   @ViewChild(PizzaModalComponent) pizzaModalComponent;
   @ViewChild(DessertModalComponent) dessertModalComponent;
   @ViewChild(SaladModalComponent) saladModalComponent;
   @ViewChild(DrinkModalComponent) drinkModalComponent;
+  @LocalStorage() pickupLocation: string;
   @LocalStorage() pizzaItems: any[];
   @LocalStorage() dessertItems: any[];
   @LocalStorage() saladItems: any[];
@@ -33,6 +35,13 @@ export class CheckoutComponent implements OnInit {
       expMonth: "",
       expYear: "",
       cvc: ""
+    });
+
+    this.contactInfo = this.fb.group({
+      firstName: "",
+      lastName: "",
+      email: "",
+      phoneNumber: ""
     });
   }
 
@@ -60,5 +69,40 @@ export class CheckoutComponent implements OnInit {
       })
   }
 
+  calculateSubtotal() {
+    let subtotal = 0;
+    for(let pizzaItem of this.pizzaItems) {
+      subtotal += pizzaItem.quantity * pizzaItem.price;
+    }
+    for(let saladItem of this.saladItems) {
+      subtotal += saladItem.price;
+    }
+    for(let drinkItem of this.drinkItems) {
+      subtotal += drinkItem.price;
+    }
+    for(let dessertItem of this.dessertItems) {
+      subtotal += dessertItem.price;
+    }
+    return subtotal;
+  }
 
+  calculateLocalTax() {
+    return this.calculateSubtotal() * 0.08875;
+  }
+
+  calculateTotal() {
+    return this.calculateSubtotal() + this.calculateLocalTax();
+  }
+
+  showSubtotal() {
+    return this.calculateSubtotal().toFixed(2);
+  }
+
+  showLocalTax() {
+    return this.calculateLocalTax().toFixed(2);
+  }
+
+  showTotal() {
+    return this.calculateTotal().toFixed(2);
+  }
 }

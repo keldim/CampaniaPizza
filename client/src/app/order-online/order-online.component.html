@@ -7,11 +7,12 @@
           <dd class="dd-for-location-bar">
             <select formControlName="location">
               <option value="">Choose...</option>
-              <option value="Midtown">Midtown</option>
-              <option value="Chelsea">Chelsea</option>
-              <option value="East Village">East Village</option>
+              <option value="Midtown">Midtown{{ assignLocation() }}</option>
+              <option value="Chelsea">Chelsea{{ assignLocation() }}</option>
+              <option value="East Village">East Village{{ assignLocation() }}</option>
             </select>
           </dd>
+          <!-- pickupLocation== -->
           <span *ngIf="location.value=='Midtown'">
             <dt class="dt-for-location-bar"></dt>
             <dd class="dd-for-location-bar">
@@ -426,8 +427,8 @@
 
     <div *ngFor="let dessertItem of dessertModalComponent.dessertItems; let i = index;" class="cart-item">
       <span class="quantity">{{ dessertItem.quantity }}x</span>
-      <span *ngIf="dessertItem.type=='Cookies'" class="cart-item-name">{{ dessertItem.cookieChoice }}</span>
-      <span *ngIf="dessertItem.type=='Brownies'" class="cart-item-name">{{ dessertItem.brownieChoice }}</span>
+      <span *ngIf="dessertItem.type=='Cookies'" class="cart-item-name">{{ dessertItem.cookieChoice.toUpperCase() }}</span>
+      <span *ngIf="dessertItem.type=='Brownies'" class="cart-item-name">{{ dessertItem.brownieChoice.toUpperCase() }}</span>
       <span class="cart-item-price">${{ priceTimesQuantity(dessertItem.quantity, dessertItem.price) }}</span>
       <div class="edit-delete">
         <span>[ </span>
