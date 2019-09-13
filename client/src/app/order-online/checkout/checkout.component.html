@@ -3,12 +3,10 @@
 <drink-modal></drink-modal>
 <dessert-modal></dessert-modal>
 
-
-<div class="container"
-  style="margin-top: 150px; margin-left: auto; margin-right: auto; width: 40%; border: 1px solid #ccc; border-bottom: 0;">
-  <div style="font-size: 26px; font-weight: 700; text-align: center;">Checkout</div>
-  <div style="font-size: 18px; font-weight: 700;">Pickup Location</div>
-  <div class="row" style="padding-bottom: 5px;">
+<div class="container pickup-location">
+  <div class="checkout-header">Checkout</div>
+  <div class="checkout-subheader">Pickup Location</div>
+  <div class="row checkout-row-1">
     <div class="col">
       <span *ngIf="pickupLocation=='Midtown'">
         Campania Pizza, Midtown<br>
@@ -26,13 +24,13 @@
         New York, NY 10003
       </span>
     </div>
-    <div class="col" style="text-align: right;">
+    <div class="col checkout-row-1-col-2">
       <a class="btn btn-outline-secondary" href="#" [routerLink]="['/order-online']" role="button">Modify Order</a>
     </div>
   </div>
-
 </div>
-<div class="container order-details">
+
+<div class="container box-form">
   <div class="row">
     <div class="col name-column">
       Order Details
@@ -55,7 +53,6 @@
         <div class="col choice">
           {{ choice }}
         </div>
-        <!-- <div class="col choice-price">" "</div> -->
       </div>
     </div>
   </div>
@@ -74,7 +71,6 @@
         <div class="col choice">
           {{ choice }}
         </div>
-        <!-- <div class="col choice-price"></div> -->
       </div>
     </div>
   </div>
@@ -99,7 +95,7 @@
     </div>
   </div>
 
-  <div class="row" style="border-top: 1px solid #ccc">
+  <div class="row subtotal-above">
     <div class="col product-name">
       Subtotal
     </div>
@@ -115,7 +111,7 @@
       ${{ showLocalTax() }}
     </div>
   </div>
-  <div class="row" style="background: #000; color: #fff; font-size: 16px;">
+  <div class="row total-row">
     <div class="col product-name">
       Total
     </div>
@@ -125,38 +121,81 @@
   </div>
 </div>
 
-<div class="container order-details">
-  <div style="font-size: 26px; font-weight: 700; text-align: center;">Payment</div>
-  <form [formGroup]="contactInfo" style="margin-left: auto; margin-right: auto;">
-    <div class="row">
-      <div class="col" style="text-align: center">
+<div class="container box-form">
+  <div class="contact-info-header">Contact Info</div>
+  <form [formGroup]="contactInfo" class="contact-info-form">
+    <div class="row contact-info-row">
+      <div class="col col-center">
         First Name:
+      </div>
+      <div class="col col-center">
         <input type="text" formControlName="firstName">
       </div>
-      <div class="col" style="text-align: center">
+      <div class="col col-center">
         Last Name:
+      </div>
+      <div class="col col-center">
         <input type="text" formControlName="lastName">
       </div>
     </div>
-    <div class="row">
-      <div class="col" style="text-align: center">
+    <div class="row contact-info-row">
+      <div class="col col-center">
         Email:
+      </div>
+      <div class="col col-center">
         <input type="text" formControlName="email">
       </div>
-      <div class="col" style="text-align: center">
+      <div class="col col-center">
         Phone Number:
+      </div>
+      <div class="col col-center">
         <input type="text" formControlName="phoneNumber">
       </div>
     </div>
   </form>
+</div>
 
-  <form [formGroup]="creditCardForm" style="margin-left: auto; margin-right: auto;">
-    <input type="text" placeholder="Credit Card #" formControlName="cardNumber">
-    <input type="text" placeholder="Expiration Month" formControlName="expMonth">
-    <input type="text" placeholder="Expiration Year" formControlName="expYear">
-    <input type="text" placeholder="CVC" formControlName="cvc">
-    <button (click)="chargeCreditCard()">Submit</button>
+<div class="container box-form">
+  <div class="payment-header">Payment</div>
+  <form [formGroup]="creditCardForm" class="payment-form">
+    <div class="row payment-row">
+      <div class="col payment-subheader">
+        Accepted Credit Cards:
+      </div>
+      <div class="col col-center">
+        <img src="../../../assets/images/credit_card_logos_10.gif">
+      </div>
+    </div>
+    <div class="row payment-row">
+      <div class="col col-center">
+        Card Number:
+      </div>
+      <div class="col col-center">
+        <input type="text" formControlName="cardNumber">
+      </div>
+      <div class="col col-center">
+        Expiration Month:
+      </div>
+      <div class="col col-center">
+        <input type="text" formControlName="expMonth">
+      </div>
+    </div>
+    <div class="row payment-row">
+      <div class="col col-center">
+        Expiration Year:
+      </div>
+      <div class="col col-center">
+        <input type="text" formControlName="expYear">
+      </div>
+      <div class="col col-center">
+        CVC:
+      </div>
+      <div class="col col-center">
+        <input type="text" formControlName="cvc">
+      </div>
+    </div>
+    <div class="place-order-button">
+      <a class="btn btn-outline-success" (click)="chargeCreditCard()" role="button">Place Order</a>
+    </div>
   </form>
-
-
 </div>

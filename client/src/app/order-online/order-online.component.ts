@@ -143,7 +143,6 @@ export class OrderOnlineComponent implements OnInit {
   // memoirze concepts of the course for better website building skills? don't forget the FormArray struggle, despite I had difficulty
   // remembering that FormArray was covered in the course because the subject I worked on was checkbox, not dynamically duplicating input elements?
 
-
   // important parts of the css are now copied? refer back to css from example websites for minor details now?
 
   // no need to remove mobile compatibility from the order-online page, looks good with it
@@ -151,8 +150,6 @@ export class OrderOnlineComponent implements OnInit {
   // add warning pop up for delete?
 
   // for business hours popover, connect with daily time to indicate the day? visit the ngboostrap website for more info?
-
-  // cart item saved, does not change on page refresh, internet cookies? internet sessions?
 
   // remember to remove unnecessary files and images
 
