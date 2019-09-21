@@ -1,12 +1,14 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, ElementRef, ViewChildren } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { FormGroup, FormBuilder, FormControl} from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { PizzaModalComponent } from './../pizza-modal/pizza-modal.component';
 import { DessertModalComponent } from './../dessert-modal/dessert-modal.component';
 import { SaladModalComponent } from './../salad-modal/salad-modal.component';
 import { DrinkModalComponent } from './../drink-modal/drink-modal.component';
-import { LocalStorage } from 'ngx-store';
+import { LocalStorage, LocalStorageService } from 'ngx-store';
 import { OrderOnlineComponent } from '../order-online.component';
+import * as jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   templateUrl: './checkout.component.html',
@@ -15,6 +17,7 @@ import { OrderOnlineComponent } from '../order-online.component';
 export class CheckoutComponent implements OnInit {
   creditCardForm: FormGroup;
   contactInfo: FormGroup;
+  inoviceImg: any;
 
   @ViewChild(PizzaModalComponent) pizzaModalComponent;
   @ViewChild(DessertModalComponent) dessertModalComponent;
@@ -26,8 +29,11 @@ export class CheckoutComponent implements OnInit {
   @LocalStorage() saladItems: any[];
   @LocalStorage() drinkItems: any[];
 
+  @ViewChild('content') content: ElementRef;
+  @ViewChild('canvas') canvas: ElementRef;
+  @ViewChild('downloadLink') downloadLink: ElementRef;
 
-  constructor(private http: HttpClient, private fb: FormBuilder) {}
+  constructor(private http: HttpClient, private fb: FormBuilder) { }
 
   ngOnInit() {
     this.creditCardForm = this.fb.group({
@@ -62,25 +68,60 @@ export class CheckoutComponent implements OnInit {
   }
 
   chargeCard(token: string) {
-    const headers = new HttpHeaders({'token': token, 'amount': this.showTotal().toString()});
-    this.http.post('http://localhost:8080/payment/charge', {}, {headers: headers})
+    const headers = new HttpHeaders({
+      'token': token,
+      'amount': this.showTotal().toString(),
+      'pickupLocation': this.pickupLocation,
+      'firstName': this.contactInfo.controls.firstName.value,
+      'lastName': this.contactInfo.controls.lastName.value,
+      'email': this.contactInfo.controls.email.value,
+      'phoneNumber': this.contactInfo.controls.phoneNumber.value,
+      'invoiceImg': this.inoviceImg
+    });
+    this.http.post('http://localhost:8080/payment/charge', {}, { headers: headers })
       .subscribe(resp => {
         console.log(resp);
-      })
+      });
+
+    localStorage.clear();
+
+    //   this.pickupLocation = "";
+    //   this.pizzaItems = [];
+    //   this.saladItems = [];
+    //   this.drinkItems = [];
+    //   this.dessertItems = [];
+
+
+    //   this.pickupLocation.clear();
+    //   this.pizzaItems.clear();
+    //   this.saladItems.save();
+    //   this.drinkItems.save();
+    //   this.dessertItems.save();
+  }
+
+  downloadPDF() {
+    html2canvas(this.content.nativeElement).then(canvas => {
+      this.canvas.nativeElement.src = canvas.toDataURL();
+      this.inoviceImg = canvas.toDataURL('image/png').split(",")[1];
+    });
+  }
+
+  ngAfterViewInit() {
+    this.downloadPDF();
   }
 
   calculateSubtotal() {
     let subtotal = 0;
-    for(let pizzaItem of this.pizzaItems) {
+    for (let pizzaItem of this.pizzaItems) {
       subtotal += pizzaItem.quantity * pizzaItem.price;
     }
-    for(let saladItem of this.saladItems) {
+    for (let saladItem of this.saladItems) {
       subtotal += saladItem.price;
     }
-    for(let drinkItem of this.drinkItems) {
+    for (let drinkItem of this.drinkItems) {
       subtotal += drinkItem.price;
     }
-    for(let dessertItem of this.dessertItems) {
+    for (let dessertItem of this.dessertItems) {
       subtotal += dessertItem.price;
     }
     return subtotal;

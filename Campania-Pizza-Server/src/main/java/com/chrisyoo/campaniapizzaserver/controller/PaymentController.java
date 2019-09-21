@@ -3,6 +3,7 @@ package com.chrisyoo.campaniapizzaserver.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,9 +25,10 @@ public class PaymentController {
     }
 
     @PostMapping("/charge")
-    public Charge chargeCard(HttpServletRequest request) throws Exception {
+    public Charge chargeCard(HttpServletRequest request, Model theModel) throws Exception {
         String token = request.getHeader("token");
         Double amount = Double.parseDouble(request.getHeader("amount"));
-        return this.stripeClient.chargeCreditCard(token, amount);
+         
+        return this.stripeClient.chargeCreditCard(token, amount, request);
     }
 }

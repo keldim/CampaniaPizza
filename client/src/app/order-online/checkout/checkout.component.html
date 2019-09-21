@@ -30,96 +30,98 @@
   </div>
 </div>
 
-<div class="container box-form">
-  <div class="row">
-    <div class="col name-column">
-      Order Details
+<span #content>
+  <div class="container box-form">
+    <div class="row">
+      <div class="col name-column">
+        Order Details
+      </div>
+      <div class="col price-column">
+        Amount
+      </div>
     </div>
-    <div class="col price-column">
-      Amount
-    </div>
-  </div>
-  <div *ngFor="let pizzaItem of pizzaItems">
-    <div class="row product-line">
-      <div *ngIf="pizzaItem.type=='BUILD YOUR OWN PIZZA'" class="col product-name">{{ pizzaItem.quantity }} x
-        {{ pizzaItem.type }}</div>
-      <div *ngIf="pizzaItem.type!='BUILD YOUR OWN PIZZA'" class="col product-name">{{ pizzaItem.quantity }} x
-        {{ pizzaItem.type }}</div>
-      <div class="col product-price">({{ pizzaItem.quantity }} x ${{ pizzaItem.price }}) =
-        ${{ (pizzaItem.quantity * pizzaItem.price).toFixed(2) }}</div>
-    </div>
-    <div *ngFor="let choice of pizzaModalComponent.buildDisplayForCheckout(pizzaItem)">
-      <div class="row">
-        <div class="col choice">
-          {{ choice }}
+    <div *ngFor="let pizzaItem of pizzaItems">
+      <div class="row product-line">
+        <div *ngIf="pizzaItem.type=='BUILD YOUR OWN PIZZA'" class="col product-name">{{ pizzaItem.quantity }} x
+          {{ pizzaItem.type }}</div>
+        <div *ngIf="pizzaItem.type!='BUILD YOUR OWN PIZZA'" class="col product-name">{{ pizzaItem.quantity }} x
+          {{ pizzaItem.type }}</div>
+        <div class="col product-price">({{ pizzaItem.quantity }} x ${{ pizzaItem.price }}) =
+          ${{ (pizzaItem.quantity * pizzaItem.price).toFixed(2) }}</div>
+      </div>
+      <div *ngFor="let choice of pizzaModalComponent.buildDisplayForCheckout(pizzaItem)">
+        <div class="row">
+          <div class="col choice">
+            {{ choice }}
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div *ngFor="let saladItem of saladItems">
-    <div class="row product-line">
-      <div *ngIf="saladItem.type=='BUILD YOUR OWN SALAD'" class="col product-name">{{ saladItem.quantity }} x
-        {{ saladItem.type }}</div>
-      <div *ngIf="saladItem.type!='BUILD YOUR OWN SALAD'" class="col product-name">{{ saladItem.quantity }} x
-        {{ saladItem.type }}</div>
-      <div class="col product-price">({{ saladItem.quantity }} x ${{ saladItem.price }}) =
-        ${{ (saladItem.quantity * saladItem.price).toFixed(2) }}</div>
-    </div>
-    <div *ngFor="let choice of saladModalComponent.buildDisplayForCheckout(saladItem)">
-      <div class="row">
-        <div class="col choice">
-          {{ choice }}
+    <div *ngFor="let saladItem of saladItems">
+      <div class="row product-line">
+        <div *ngIf="saladItem.type=='BUILD YOUR OWN SALAD'" class="col product-name">{{ saladItem.quantity }} x
+          {{ saladItem.type }}</div>
+        <div *ngIf="saladItem.type!='BUILD YOUR OWN SALAD'" class="col product-name">{{ saladItem.quantity }} x
+          {{ saladItem.type }}</div>
+        <div class="col product-price">({{ saladItem.quantity }} x ${{ saladItem.price }}) =
+          ${{ (saladItem.quantity * saladItem.price).toFixed(2) }}</div>
+      </div>
+      <div *ngFor="let choice of saladModalComponent.buildDisplayForCheckout(saladItem)">
+        <div class="row">
+          <div class="col choice">
+            {{ choice }}
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div *ngFor="let drinkItem of drinkItems">
-    <div class="row product-line-dd">
-      <div class="col product-name">{{ drinkItem.quantity }} x {{ drinkItem.type }}</div>
-      <div class="col product-price">({{ drinkItem.quantity }} x ${{ drinkItem.price }}) =
-        ${{ (drinkItem.quantity * drinkItem.price).toFixed(2) }}</div>
-    </div>
-  </div>
-
-  <div *ngFor="let dessertItem of dessertItems">
-    <div class="row product-line-dd">
-      <div *ngIf="dessertItem.type=='Cookies'" class="col product-name">{{ dessertItem.quantity }} x
-        {{ dessertItem.cookieChoice.toUpperCase() }}
+    <div *ngFor="let drinkItem of drinkItems">
+      <div class="row product-line-dd">
+        <div class="col product-name">{{ drinkItem.quantity }} x {{ drinkItem.type }}</div>
+        <div class="col product-price">({{ drinkItem.quantity }} x ${{ drinkItem.price }}) =
+          ${{ (drinkItem.quantity * drinkItem.price).toFixed(2) }}</div>
       </div>
-      <div *ngIf="dessertItem.type=='Brownies'" class="col product-name">{{ dessertItem.quantity }} x
-        {{ dessertItem.brownieChoice.toUpperCase() }}</div>
-      <div class="col product-price">({{ dessertItem.quantity }} x ${{ dessertItem.price }}) =
-        ${{ (dessertItem.quantity * dessertItem.price).toFixed(2) }}</div>
     </div>
-  </div>
 
-  <div class="row subtotal-above">
-    <div class="col product-name">
-      Subtotal
+    <div *ngFor="let dessertItem of dessertItems">
+      <div class="row product-line-dd">
+        <div *ngIf="dessertItem.type=='Cookies'" class="col product-name">{{ dessertItem.quantity }} x
+          {{ dessertItem.cookieChoice.toUpperCase() }}
+        </div>
+        <div *ngIf="dessertItem.type=='Brownies'" class="col product-name">{{ dessertItem.quantity }} x
+          {{ dessertItem.brownieChoice.toUpperCase() }}</div>
+        <div class="col product-price">({{ dessertItem.quantity }} x ${{ dessertItem.price }}) =
+          ${{ (dessertItem.quantity * dessertItem.price).toFixed(2) }}</div>
+      </div>
     </div>
-    <div class="col product-price">
-      ${{ showSubtotal() }}
+
+    <div class="row subtotal-above">
+      <div class="col product-name">
+        Subtotal
+      </div>
+      <div class="col product-price">
+        ${{ showSubtotal() }}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col product-name">
+        TAX
+      </div>
+      <div class="col product-price">
+        ${{ showLocalTax() }}
+      </div>
+    </div>
+    <div class="row total-row">
+      <div class="col product-name">
+        Total
+      </div>
+      <div class="col product-price">
+        ${{ showTotal() }}
+      </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col product-name">
-      TAX
-    </div>
-    <div class="col product-price">
-      ${{ showLocalTax() }}
-    </div>
-  </div>
-  <div class="row total-row">
-    <div class="col product-name">
-      Total
-    </div>
-    <div class="col product-price">
-      ${{ showTotal() }}
-    </div>
-  </div>
-</div>
+</span>
 
 <div class="container box-form">
   <div class="contact-info-header">Contact Info</div>
@@ -195,7 +197,14 @@
       </div>
     </div>
     <div class="place-order-button">
-      <a class="btn btn-outline-success" (click)="chargeCreditCard()" role="button">Place Order</a>
+      <a class="btn btn-outline-success" href="#" [routerLink]="['/thank-you']"
+        (click)="chargeCreditCard();" role="button">Place Order</a>
+        <!--  -->
     </div>
   </form>
+</div>
+
+<div id="download" class="imgCapture">
+  <img #canvas>
+  <a #downloadLink></a>
 </div>

@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Campania Pizza Order Confirmation Email</title>
+</head>
+<link rel="stylesheet" th:href="@{/css/order-confirmation.css}" />
+<body>
+
+	
+	<div class="container pickup-location">
+  <div class="checkout-header">Checkout</div>
+  <div class="checkout-subheader">Pickup Location</div>
+  <div class="row checkout-row-1">
+    <div class="col">
+      <span th:if="${pickupLocation=='Midtown'}">
+        Campania Pizza, Midtown<br>
+        31 W 46th St<br>
+        New York, NY 10036
+      </span>
+      <span th:if="${pickupLocation=='Chelsea'}">
+        Campania Pizza, Chelsea<br>
+        601 6th Ave<br>
+        New York, NY 10011
+      </span>
+      <span th:if="${pickupLocation=='East Village'}">
+        Campania Pizza, East Village<br>
+        32 St Marks Pl<br>
+        New York, NY 10003
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="container box-form">
+  <div class="row">
+    <div th:text="Order Details" class="col name-column">
+    </div>
+    <div th:text="Amount" class="col price-column">
+    </div>
+  </div>
+  <div th:each="pizzaItem : ${pizzaItems}">
+    <div class="row product-line">
+      <div th:if="${pizzaItem.type=='BUILD YOUR OWN PIZZA'}" th:text="${pizzaItem.quantity} + ' x ' +
+        ${pizzaItem.type}" class="col product-name"></div>
+      <div th:if="${pizzaItem.type!='BUILD YOUR OWN PIZZA'}" th:text="${pizzaItem.quantity} + ' x ' + 
+      ${pizzaItem.type}" class="col product-name"></div>
+      <div th:text="'(' + ${pizzaItem.quantity} + ' x ' + ${pizzaItem.price} + ') = ' + 
+      ${(pizzaItem.quantity * pizzaItem.price)}" class="col product-price"></div>
+    </div>
+    <div th:each="choice : pizzaItem.cheese">
+      <div class="row">
+        <div th:text="choice" class="col choice">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div th:each="saladItem : ${saladItems}">
+    <div class="row product-line">
+      <div th:if="${saladItem.type=='BUILD YOUR OWN SALAD'}" th:text="${saladItem.quantity} + ' x ' + 
+      ${saladItem.type}" class="col product-name"></div>
+      <div th:if="${saladItem.type!='BUILD YOUR OWN SALAD'}" th:text="${saladItem.quantity} + ' x ' + 
+      ${saladItem.type}" class="col product-name"></div>
+      <div th:text="'(' + ${saladItem.quantity} + ' x ' + ${saladItem.price} + ') = ' + 
+      ${(saladItem.quantity * saladItem.price)}" class="col product-price"></div>
+    </div>
+    <div th:each="choice : saladItem.cheese">
+      <div class="row">
+        <div th:text="choice" class="col choice">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div th:each="drinkItem : ${drinkItems}">
+    <div class="row product-line-dd">
+      <div th:text="${drinkItem.quantity} + ' x ' + ${drinkItem.type}" class="col product-name"></div>
+      <div th:text="'(' + ${drinkItem.quantity} + ' x ' + ${drinkItem.price} + ') = ' +  
+      ${(drinkItem.quantity * drinkItem.price)}" class="col product-price"></div>
+    </div>
+  </div>
+
+  <div th:each="dessertItem : ${dessertItems}">
+    <div class="row product-line-dd">
+      <div th:if="${dessertItem.type=='Cookies'}" th:text="${dessertItem.quantity} + ' x ' +
+        ${dessertItem.cookieChoice.toUpperCase()}" class="col product-name">
+      </div>
+      <div th:if="${dessertItem.type=='Brownies'}" th:text="${dessertItem.quantity} + ' x ' +
+        ${dessertItem.brownieChoice.toUpperCase()}" class="col product-name"></div>
+      <div th:text="'(' + ${dessertItem.quantity} + ' x ' + ${dessertItem.price} + ') = ' + 
+      ${(dessertItem.quantity * dessertItem.price)}" class="col product-price"></div>
+    </div>
+  </div>
+
+  <div class="row subtotal-above">
+    <div th:text="'Subtotal'" class="col product-name">
+      Subtotal
+    </div>
+    <div th:text="${subtotal}" class="col product-price">
+    </div>
+  </div>
+  <div class="row">
+    <div th:text="'TAX'" class="col product-name">
+    </div>
+    <div th:text="${tax}" class="col product-price">
+    </div>
+  </div>
+  <div class="row total-row">
+    <div th:text="'Total'" class="col product-name">
+    </div>
+    <div th:text="${total}" class="col product-price">
+    </div>
+  </div>
+</div>
+	
+	
+</body>
+
+</html>

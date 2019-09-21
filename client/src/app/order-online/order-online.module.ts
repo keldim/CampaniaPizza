@@ -11,6 +11,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OrderOnlineRoutingModule } from './order-online-routing.module';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { WebStorageModule } from 'ngx-store';
+import { ThankYouComponent } from './thank-you/thank-you.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { WebStorageModule } from 'ngx-store';
     DrinkModalComponent,
     DessertModalComponent,
     OrderOnlineComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    ThankYouComponent
   ],
   imports: [
     BrowserModule,
