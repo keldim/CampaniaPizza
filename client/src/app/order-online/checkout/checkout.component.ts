@@ -9,6 +9,7 @@ import { LocalStorage, LocalStorageService } from 'ngx-store';
 import { OrderOnlineComponent } from '../order-online.component';
 import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   templateUrl: './checkout.component.html',
@@ -19,21 +20,34 @@ export class CheckoutComponent implements OnInit {
   contactInfo: FormGroup;
   inoviceImg: any;
 
+  @ViewChild(OrderOnlineComponent) orderOnlineComponent;
   @ViewChild(PizzaModalComponent) pizzaModalComponent;
   @ViewChild(DessertModalComponent) dessertModalComponent;
   @ViewChild(SaladModalComponent) saladModalComponent;
   @ViewChild(DrinkModalComponent) drinkModalComponent;
-  @LocalStorage() pickupLocation: string;
-  @LocalStorage() pizzaItems: any[];
-  @LocalStorage() dessertItems: any[];
-  @LocalStorage() saladItems: any[];
-  @LocalStorage() drinkItems: any[];
+  // @LocalStorage() pickupLocation: string;
+  // @LocalStorage() pizzaItems: any[];
+  // @LocalStorage() dessertItems: any[];
+  // @LocalStorage() saladItems: any[];
+  // @LocalStorage() drinkItems: any[];
+
+  // pizzaItemsSubscription: BehaviorSubject<any[]> = new BehaviorSubject([]);
+  // saladItemsSubscription: BehaviorSubject<any[]> = new BehaviorSubject([]);
+  // drinkItemsSubscription: BehaviorSubject<any[]> = new BehaviorSubject([]);
+  // dessertItemsSubscription: BehaviorSubject<any[]> = new BehaviorSubject([]);
+
 
   @ViewChild('content') content: ElementRef;
   @ViewChild('canvas') canvas: ElementRef;
   @ViewChild('downloadLink') downloadLink: ElementRef;
 
-  constructor(private http: HttpClient, private fb: FormBuilder) { }
+  // , private localStorageService: LocalStorageService
+  constructor(private http: HttpClient, private fb: FormBuilder) {
+    // this.pizzaItemsSubscription.subscribe(_ => this.pizzaModalComponent.pizzaItems = _);
+    // this.saladItemsSubscription.subscribe(_ => this.saladModalComponent.saladItems = _);
+    // this.drinkItemsSubscription.subscribe(_ => this.drinkModalComponent.drinkItems = _);
+    // this.dessertItemsSubscription.subscribe(_ => this.dessertModalComponent.dessertItems = _);
+  }
 
   ngOnInit() {
     this.creditCardForm = this.fb.group({
@@ -70,33 +84,34 @@ export class CheckoutComponent implements OnInit {
   chargeCard(token: string) {
     const headers = new HttpHeaders({
       'token': token,
-      'amount': this.showTotal().toString(),
-      'pickupLocation': this.pickupLocation,
+      'amount': this.orderOnlineComponent.showTotal().toString(),
+      'pickupLocation': this.orderOnlineComponent.pickupLocation,
       'firstName': this.contactInfo.controls.firstName.value,
       'lastName': this.contactInfo.controls.lastName.value,
       'email': this.contactInfo.controls.email.value,
       'phoneNumber': this.contactInfo.controls.phoneNumber.value,
       'invoiceImg': this.inoviceImg
     });
-    this.http.post('http://localhost:8080/payment/charge', {}, { headers: headers })
-      .subscribe(resp => {
+
+    this.http.post('http://localhost:8080/payment/charge', {}, { headers: headers }).subscribe(resp => {
         console.log(resp);
-      });
+    });
 
-    localStorage.clear();
+    // reload localstorage variables?
+    // display none orderonlinecomponent? for pickuplocation?
 
-    //   this.pickupLocation = "";
-    //   this.pizzaItems = [];
-    //   this.saladItems = [];
-    //   this.drinkItems = [];
-    //   this.dessertItems = [];
+    // this.orderOnlineComponent.pickupLocation = "";
+    // this.pizzaModalComponent.pizzaItems = [];
+    // this.saladModalComponent.saladItems = [];
+    // this.drinkModalComponent.drinkItems = [];
+    // this.dessertModalComponent.dessertItems = [];
 
-
-    //   this.pickupLocation.clear();
-    //   this.pizzaItems.clear();
-    //   this.saladItems.save();
-    //   this.drinkItems.save();
-    //   this.dessertItems.save();
+    // this.orderOnlineComponent.destoryPickUpLocation();
+    // this.pizzaModalComponent.pizzaItems.save();
+    // this.saladModalComponent.saladItems.save();
+    // this.drinkModalComponent.destroyDrinkItems();
+    // this.dessertModalComponent.dessertItems.save();
+    // this.localStorageService.clear("all");
   }
 
   downloadPDF() {
@@ -110,40 +125,40 @@ export class CheckoutComponent implements OnInit {
     this.downloadPDF();
   }
 
-  calculateSubtotal() {
-    let subtotal = 0;
-    for (let pizzaItem of this.pizzaItems) {
-      subtotal += pizzaItem.quantity * pizzaItem.price;
-    }
-    for (let saladItem of this.saladItems) {
-      subtotal += saladItem.price;
-    }
-    for (let drinkItem of this.drinkItems) {
-      subtotal += drinkItem.price;
-    }
-    for (let dessertItem of this.dessertItems) {
-      subtotal += dessertItem.price;
-    }
-    return subtotal;
-  }
+  // calculateSubtotal() {
+  //   let subtotal = 0;
+  //   for (let pizzaItem of this.pizzaItems) {
+  //     subtotal += pizzaItem.quantity * pizzaItem.price;
+  //   }
+  //   for (let saladItem of this.saladItems) {
+  //     subtotal += saladItem.price;
+  //   }
+  //   for (let drinkItem of this.drinkItems) {
+  //     subtotal += drinkItem.price;
+  //   }
+  //   for (let dessertItem of this.dessertItems) {
+  //     subtotal += dessertItem.price;
+  //   }
+  //   return subtotal;
+  // }
 
-  calculateLocalTax() {
-    return this.calculateSubtotal() * 0.08875;
-  }
+  // calculateLocalTax() {
+  //   return this.calculateSubtotal() * 0.08875;
+  // }
 
-  calculateTotal() {
-    return this.calculateSubtotal() + this.calculateLocalTax();
-  }
+  // calculateTotal() {
+  //   return this.calculateSubtotal() + this.calculateLocalTax();
+  // }
 
-  showSubtotal() {
-    return this.calculateSubtotal().toFixed(2);
-  }
+  // showSubtotal() {
+  //   return this.calculateSubtotal().toFixed(2);
+  // }
 
-  showLocalTax() {
-    return this.calculateLocalTax().toFixed(2);
-  }
+  // showLocalTax() {
+  //   return this.calculateLocalTax().toFixed(2);
+  // }
 
-  showTotal() {
-    return this.calculateTotal().toFixed(2);
-  }
+  // showTotal() {
+  //   return this.calculateTotal().toFixed(2);
+  // }
 }

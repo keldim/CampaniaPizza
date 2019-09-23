@@ -6,8 +6,8 @@ import { LocalStorage } from 'ngx-store';
 
 
 function oneCheckbox(c: AbstractControl): { [key: string]: boolean } | null {
-  if(c.value != null && !c.value.includes(true)) {
-      return { 'oneBox': true };
+  if (c.value != null && !c.value.includes(true)) {
+    return { 'oneBox': true };
   }
   return null;
 }
@@ -26,12 +26,14 @@ export class SaladModalComponent {
   indexForEdit: any = 0;
   saladCheckboxes = BuildYourOwnCheckboxes.saladItems;
 
-  constructor(private modalService: NgbModal, private fb: FormBuilder) { }
+  constructor(private modalService: NgbModal, private fb: FormBuilder) {
+
+  }
 
 
 
   openLg(saladType) {
-    if(saladType == 'BUILD YOUR OWN SALAD') {
+    if (saladType == 'BUILD YOUR OWN SALAD') {
       this.saladForm.patchValue({
         type: saladType
       });

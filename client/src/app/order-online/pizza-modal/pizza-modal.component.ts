@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation, ViewChild, ElementRef } from '@angular/co
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, FormArray, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { BuildYourOwnCheckboxes } from '../build-your-own-checkboxes';
-import { LocalStorage } from 'ngx-store';
+import { LocalStorage, LocalStorageService } from 'ngx-store';
 
 @Component({
   selector: 'pizza-modal',
@@ -17,8 +17,10 @@ export class PizzaModalComponent {
   indexForEdit: any = 0;
   pizzaCheckboxes = BuildYourOwnCheckboxes.pizzaItems;
 
-  constructor(private modalService: NgbModal, private fb: FormBuilder) { }
+  constructor(private modalService: NgbModal, private fb: FormBuilder) {
 
+  }
+  // private localStorageService: LocalStorageService
 
 
 
@@ -333,39 +335,39 @@ export class PizzaModalComponent {
     this.pizzaItems.push(forCart);
   }
 
-resetForm() {
-  this.pizzaForm.reset();
-  this.pizzaForm.patchValue({
-    type: "",
-    size: "10 Inch",
-    crust: "Traditional Crust",
-    sauce: "Signature Marinara",
-    cheese: this.buildCheese().value,
-    veggies: this.buildVeggies().value,
-    meats: this.buildMeats().value,
-    finishes: this.buildFinishes().value,
-    price: 8.65,
-    quantity: 1
-  });
-}
+  resetForm() {
+    this.pizzaForm.reset();
+    this.pizzaForm.patchValue({
+      type: "",
+      size: "10 Inch",
+      crust: "Traditional Crust",
+      sauce: "Signature Marinara",
+      cheese: this.buildCheese().value,
+      veggies: this.buildVeggies().value,
+      meats: this.buildMeats().value,
+      finishes: this.buildFinishes().value,
+      price: 8.65,
+      quantity: 1
+    });
+  }
 
-ngOnInit() {
-  this.pizzaForm = this.fb.group({
-    type: "",
-    size: "10 Inch",
-    crust: "Traditional Crust",
-    sauce: "Signature Marinara",
-    cheese: this.buildCheese(),
-    veggies: this.buildVeggies(),
-    meats: this.buildMeats(),
-    finishes: this.buildFinishes(),
-    price: 8.65,
-    quantity: [1, [Validators.required, Validators.min(1), Validators.max(99)]]
-  });
-}
+  ngOnInit() {
+    this.pizzaForm = this.fb.group({
+      type: "",
+      size: "10 Inch",
+      crust: "Traditional Crust",
+      sauce: "Signature Marinara",
+      cheese: this.buildCheese(),
+      veggies: this.buildVeggies(),
+      meats: this.buildMeats(),
+      finishes: this.buildFinishes(),
+      price: 8.65,
+      quantity: [1, [Validators.required, Validators.min(1), Validators.max(99)]]
+    });
+  }
 
-save() {
+  save() {
 
-}
+  }
 
 }

@@ -137,3 +137,7 @@
 .imgCapture {
   display: none;
 }
+
+.hide-order-online {
+  display: none;
+}

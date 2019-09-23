@@ -71,11 +71,16 @@ public class StripeClient {
         helper.setText(text, true); // set to html
         helper.setSubject("Order Confirmation - Campania Pizza");
         
-        byte[] decodedBytes = Base64.getMimeDecoder().decode(request.getHeader("invoiceImg"));
-        // by default, file is overwritten if it already exists
-        FileUtils.writeByteArrayToFile(new File("./src/main/resources/invoice.png"), decodedBytes);
-        helper.addAttachment("invoice.png", new ClassPathResource("invoice.png"));
- 
+        try {
+        	byte[] decodedBytes = Base64.getMimeDecoder().decode(request.getHeader("invoiceImg"));
+            // by default, file is overwritten if it already exists
+            FileUtils.writeByteArrayToFile(new File("./src/main/resources/invoice.png"), decodedBytes);
+        } catch (Exception e) {
+        	System.out.println("Error in creating image file: " + e);
+        } finally {
+        	helper.addAttachment("invoice.png", new ClassPathResource("invoice.png"));
+        }
+          
         emailSender.send(message);
     }
     

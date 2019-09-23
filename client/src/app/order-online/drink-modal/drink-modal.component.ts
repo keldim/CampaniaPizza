@@ -1,7 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { LocalStorage } from 'ngx-store';
+import { LocalStorage, LocalStorageService } from 'ngx-store';
+import { Resource } from 'ngx-store/src/service/resource';
 
 @Component({
   selector: 'drink-modal',
@@ -15,7 +16,9 @@ export class DrinkModalComponent {
   forEdit: boolean = false;
   indexForEdit: any = 0;
 
-  constructor(private modalService: NgbModal, private fb: FormBuilder) {}
+  constructor(private modalService: NgbModal, private fb: FormBuilder) {
+
+  }
 
   get type(): FormControl{
     return <FormControl>this.drinkForm.get('type');

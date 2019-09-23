@@ -10,6 +10,7 @@ import { FormGroup, FormBuilder, FormControl} from '@angular/forms';
 import { LocalStorage } from 'ngx-store';
 
 @Component({
+  selector: 'order-online',
   templateUrl: './order-online.component.html',
   styleUrls: ['./order-online.component.css']
 })
@@ -28,7 +29,9 @@ export class OrderOnlineComponent implements OnInit {
 
   // private userService: UserService,
   // private modalService: NgbModal,
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) {
+
+  }
 
   clickedVerticalNavbar(clickedMenu) {
     this.clickedMenu = clickedMenu;
