@@ -2,6 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LocalStorage } from 'ngx-store';
+import { Observable, Subscription } from 'rxjs';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'dessert-modal',
@@ -10,15 +12,19 @@ import { LocalStorage } from 'ngx-store';
 })
 export class DessertModalComponent {
   @ViewChild('contentDessert') modal;
-  @LocalStorage() dessertItems: any[] = [];
+  // @LocalStorage() dessertItems: any[] = [];
+  // dessertItems: Observable<any[]>;
+  dessertItems: any[] = this.storageService.getDessertItems();
   dessertForm: FormGroup;
   forEdit: boolean = false;
   indexForEdit: any = 0;
 
 
-  constructor(private modalService: NgbModal, private fb: FormBuilder) {
-
-   }
+  constructor(private modalService: NgbModal, private fb: FormBuilder, private storageService: StorageService) {
+    this.storageService.watchDessertItems().subscribe(dessertItems => {
+      this.dessertItems = dessertItems;
+    });
+  }
 
   get type(): FormControl {
     return <FormControl>this.dessertForm.get('type');
@@ -46,6 +52,7 @@ export class DessertModalComponent {
     // need to get the index for the item in the pizzaItems??
     // distinguish between create and edit in createTempForm()?
     // create openPizzaForEdit()? if using openPizzaForEdit(), create a diffrent button in pizza modal?
+
     this.forEdit = true;
     this.indexForEdit = index;
     if (this.dessertItems[index].type == "Cookies") {
@@ -64,22 +71,41 @@ export class DessertModalComponent {
   }
 
   updateTempForm() {
+    let newArrayWithUpdate = this.storageService.getDessertItems();
+
     if (this.dessertForm.controls.type.value == 'Cookies') {
-      this.dessertItems[this.indexForEdit].type = this.dessertForm.controls.type.value;
-      this.dessertItems[this.indexForEdit].cookieChoice = this.dessertForm.controls.cookieChoice.value;
+      newArrayWithUpdate[this.indexForEdit].type = this.dessertForm.controls.type.value;
+      newArrayWithUpdate[this.indexForEdit].cookieChoice = this.dessertForm.controls.cookieChoice.value;
 
       const noLeadingZero = parseInt(this.dessertForm.controls.quantity.value, 10);
-      this.dessertItems[this.indexForEdit].quantity = noLeadingZero;
+      newArrayWithUpdate[this.indexForEdit].quantity = noLeadingZero;
     } else {
-      this.dessertItems[this.indexForEdit].type = this.dessertForm.controls.type.value;
-      this.dessertItems[this.indexForEdit].brownieChoice = this.dessertForm.controls.brownieChoice.value;
+      newArrayWithUpdate[this.indexForEdit].type = this.dessertForm.controls.type.value;
+      newArrayWithUpdate[this.indexForEdit].brownieChoice = this.dessertForm.controls.brownieChoice.value;
 
       const noLeadingZero = parseInt(this.dessertForm.controls.quantity.value, 10);
-      this.dessertItems[this.indexForEdit].quantity = noLeadingZero;
+      newArrayWithUpdate[this.indexForEdit].quantity = noLeadingZero;
     }
+
+    this.storageService.updateDessertItems("dessertItems", newArrayWithUpdate);
+
     this.forEdit = false;
     this.indexForEdit = 0;
-    this.dessertItems = this.dessertItems;
+
+    // if (this.dessertForm.controls.type.value == 'Cookies') {
+    //   this.dessertItems[this.indexForEdit].type = this.dessertForm.controls.type.value;
+    //   this.dessertItems[this.indexForEdit].cookieChoice = this.dessertForm.controls.cookieChoice.value;
+
+    //   const noLeadingZero = parseInt(this.dessertForm.controls.quantity.value, 10);
+    //   this.dessertItems[this.indexForEdit].quantity = noLeadingZero;
+    // } else {
+    //   this.dessertItems[this.indexForEdit].type = this.dessertForm.controls.type.value;
+    //   this.dessertItems[this.indexForEdit].brownieChoice = this.dessertForm.controls.brownieChoice.value;
+
+    //   const noLeadingZero = parseInt(this.dessertForm.controls.quantity.value, 10);
+    //   this.dessertItems[this.indexForEdit].quantity = noLeadingZero;
+    // }
+
   }
 
   resetEdit() {
@@ -88,7 +114,9 @@ export class DessertModalComponent {
   }
 
   deleteDessertItem(index) {
-    this.dessertItems.splice(index, 1);
+    let newArrayWithDeletedItem = this.storageService.getDessertItems();
+    newArrayWithDeletedItem.splice(index, 1);
+    this.storageService.updateDessertItems("dessertItems", newArrayWithDeletedItem);
   }
 
   cookieRadioClicking(selectedValue) {
@@ -114,7 +142,11 @@ export class DessertModalComponent {
     } else if (this.dessertForm.controls.type.value == "Brownies") {
       delete forCart.cookieChoice;
     }
-    this.dessertItems.push(forCart);
+    // this.dessertItems.push(forCart);
+
+    let newArrayWithAddedItem = this.storageService.getDessertItems();
+    newArrayWithAddedItem.push(forCart);
+    this.storageService.updateDessertItems("dessertItems", newArrayWithAddedItem);
   }
 
   resetForm() {

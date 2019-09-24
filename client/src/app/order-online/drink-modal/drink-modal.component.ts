@@ -1,8 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { LocalStorage, LocalStorageService } from 'ngx-store';
+import { LocalStorage, LocalStorageService, NgxStorageEvent } from 'ngx-store';
 import { Resource } from 'ngx-store/src/service/resource';
+import { Observable, of, Subscription } from 'rxjs';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'drink-modal',
@@ -11,16 +13,21 @@ import { Resource } from 'ngx-store/src/service/resource';
 })
 export class DrinkModalComponent {
   @ViewChild('contentDrink') modal;
-  @LocalStorage() drinkItems: any[] = [];
+  // @LocalStorage() drinkItems: any[] = [];
+  // drinkItems: Observable<any[]>;
+  drinkItems: any[] = this.storageService.getDrinkItems();
   drinkForm: FormGroup;
   forEdit: boolean = false;
   indexForEdit: any = 0;
 
-  constructor(private modalService: NgbModal, private fb: FormBuilder) {
 
+  constructor(private modalService: NgbModal, private fb: FormBuilder, private storageService: StorageService) {
+    this.storageService.watchDrinkItems().subscribe(drinkItems => {
+      this.drinkItems = drinkItems;
+    });
   }
 
-  get type(): FormControl{
+  get type(): FormControl {
     return <FormControl>this.drinkForm.get('type');
   }
 
@@ -54,11 +61,13 @@ export class DrinkModalComponent {
 
   updateTempForm() {
     const noLeadingZero = parseInt(this.drinkForm.controls.quantity.value, 10);
-    this.drinkItems[this.indexForEdit].quantity = noLeadingZero;
+
+    let newArrayWithUpdate = this.storageService.getDrinkItems();
+    newArrayWithUpdate[this.indexForEdit].quantity = noLeadingZero;
+    this.storageService.updateDrinkItems("drinkItems", newArrayWithUpdate);
 
     this.forEdit = false;
     this.indexForEdit = 0;
-    this.drinkItems = this.drinkItems;
   }
 
   resetEdit() {
@@ -67,7 +76,9 @@ export class DrinkModalComponent {
   }
 
   deleteDrinkItem(index) {
-    this.drinkItems.splice(index, 1);
+    let newArrayWithDeletedItem = this.storageService.getDrinkItems();
+    newArrayWithDeletedItem.splice(index, 1);
+    this.storageService.updateDrinkItems("drinkItems", newArrayWithDeletedItem);
   }
 
 
@@ -78,7 +89,17 @@ export class DrinkModalComponent {
       quantity: noLeadingZero
     });
     const forCart = { ...this.drinkForm.value };
-    this.drinkItems.push(forCart);
+
+    // if(this.storageService.getDrinkItems() == null) {
+    //   this.storageService.createDrinkItems();
+    //   let newArrayWithAddedItem = this.storageService.getDrinkItems();
+    //   newArrayWithAddedItem.push(forCart);
+    //   this.storageService.updateDrinkItems("drinkItems", newArrayWithAddedItem);
+    // } else {
+    let newArrayWithAddedItem = this.storageService.getDrinkItems();
+    newArrayWithAddedItem.push(forCart);
+    this.storageService.updateDrinkItems("drinkItems", newArrayWithAddedItem);
+    // }
   }
 
   resetForm() {
@@ -96,6 +117,7 @@ export class DrinkModalComponent {
       price: 1.85,
       quantity: [1, [Validators.required, Validators.min(1), Validators.max(99)]]
     });
+
   }
 
   save() {

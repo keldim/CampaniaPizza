@@ -11,7 +11,7 @@
   <div class="checkout-subheader">Pickup Location</div>
   <div class="row checkout-row-1">
     <div class="col">
-      <span *ngIf="orderOnlineComponent.pickupLocation=='Midtown'">
+      <!-- <span *ngIf="orderOnlineComponent.pickupLocation=='Midtown'">
         Campania Pizza, Midtown<br>
         31 W 46th St<br>
         New York, NY 10036
@@ -22,6 +22,21 @@
         New York, NY 10011
       </span>
       <span *ngIf="orderOnlineComponent.pickupLocation=='East Village'">
+        Campania Pizza, East Village<br>
+        32 St Marks Pl<br>
+        New York, NY 10003
+      </span> -->
+      <span *ngIf="pickupLocation=='Midtown'">
+        Campania Pizza, Midtown<br>
+        31 W 46th St<br>
+        New York, NY 10036
+      </span>
+      <span *ngIf="pickupLocation=='Chelsea'">
+        Campania Pizza, Chelsea<br>
+        601 6th Ave<br>
+        New York, NY 10011
+      </span>
+      <span *ngIf="pickupLocation=='East Village'">
         Campania Pizza, East Village<br>
         32 St Marks Pl<br>
         New York, NY 10003
@@ -43,7 +58,8 @@
         Amount
       </div>
     </div>
-    <div *ngFor="let pizzaItem of pizzaModalComponent.pizzaItems">
+    <!-- <div *ngFor="let pizzaItem of pizzaModalComponent.pizzaItems"> -->
+    <div *ngFor="let pizzaItem of pizzaItems">
       <div class="row product-line">
         <div *ngIf="pizzaItem.type=='BUILD YOUR OWN PIZZA'" class="col product-name">{{ pizzaItem.quantity }} x
           {{ pizzaItem.type }}</div>
@@ -61,7 +77,8 @@
       </div>
     </div>
 
-    <div *ngFor="let saladItem of saladModalComponent.saladItems">
+    <div *ngFor="let saladItem of saladItems">
+        <!-- <div *ngFor="let saladItem of saladModalComponent.saladItems"> -->
       <div class="row product-line">
         <div *ngIf="saladItem.type=='BUILD YOUR OWN SALAD'" class="col product-name">{{ saladItem.quantity }} x
           {{ saladItem.type }}</div>
@@ -79,7 +96,8 @@
       </div>
     </div>
 
-    <div *ngFor="let drinkItem of drinkModalComponent.drinkItems">
+    <div *ngFor="let drinkItem of drinkItems">
+        <!-- <div *ngFor="let drinkItem of drinkModalComponent.drinkItems"> -->
       <div class="row product-line-dd">
         <div class="col product-name">{{ drinkItem.quantity }} x {{ drinkItem.type }}</div>
         <div class="col product-price">({{ drinkItem.quantity }} x ${{ drinkItem.price }}) =
@@ -87,7 +105,8 @@
       </div>
     </div>
 
-    <div *ngFor="let dessertItem of dessertModalComponent.dessertItems">
+    <div *ngFor="let dessertItem of dessertItems">
+        <!-- <div *ngFor="let dessertItem of dessertModalComponent.dessertItems"> -->
       <div class="row product-line-dd">
         <div *ngIf="dessertItem.type=='Cookies'" class="col product-name">{{ dessertItem.quantity }} x
           {{ dessertItem.cookieChoice.toUpperCase() }}

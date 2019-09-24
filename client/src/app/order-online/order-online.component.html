@@ -364,12 +364,11 @@
     </div>
   </div>
 
-
   <div class="shopping-cart">
     <div class="order-contents">
       <h2 class="order-contents-text">Order Contents</h2>
     </div>
-    <div *ngFor="let pizzaItem of pizzaModalComponent.pizzaItems; let i = index;" class="cart-item">
+    <div *ngFor="let pizzaItem of pizzaItems; let i = index;" class="cart-item">
       <span class="quantity">{{ pizzaItem.quantity }}x</span>
       <span *ngIf="pizzaItem.type=='BUILD YOUR OWN PIZZA'" class="cart-item-name">{{ pizzaItem.type }}</span>
       <span *ngIf="pizzaItem.type!='BUILD YOUR OWN PIZZA'" class="cart-item-name">{{ pizzaItem.type }}</span>
@@ -387,9 +386,29 @@
       </div>
     </div>
 
+  <!-- <div class="shopping-cart">
+    <div class="order-contents">
+      <h2 class="order-contents-text">Order Contents</h2>
+    </div>
+    <div *ngFor="let pizzaItem of pizzaModalComponent.pizzaItems; let i = index;" class="cart-item">
+      <span class="quantity">{{ pizzaItem.quantity }}x</span>
+      <span *ngIf="pizzaItem.type=='BUILD YOUR OWN PIZZA'" class="cart-item-name">{{ pizzaItem.type }}</span>
+      <span *ngIf="pizzaItem.type!='BUILD YOUR OWN PIZZA'" class="cart-item-name">{{ pizzaItem.type }}</span>
+      <span class="cart-item-price">${{ priceTimesQuantity(pizzaItem.quantity, pizzaItem.price) }}</span>
+      <div class="edit-delete"> -->
+        <!-- add the modal html code here? for delete? -->
+        <!-- <span>[ </span>
+        <a class="empty-link" (click)="pizzaModalComponent.valueBindingForEdit(i); openPizza(pizzaItem.type)"><span
+            class="empty-link-text">edit</span></a> | <a class="empty-link"><span class="empty-link-text"
+            (click)="pizzaModalComponent.deletePizzaItem(i)">delete</span></a>
+        <span> ]</span>
+      </div>
+      <div class="options-display">
+        {{ pizzaModalComponent.buildDisplayForCart(pizzaItem) }}
+      </div>
+    </div> -->
 
-
-    <div *ngFor="let saladItem of saladModalComponent.saladItems; let i = index;" class="cart-item">
+    <div *ngFor="let saladItem of saladItems; let i = index;" class="cart-item">
       <span class="quantity">{{ saladItem.quantity }}x</span>
       <span class="cart-item-name" *ngIf="saladItem.type=='BUILD YOUR OWN SALAD'">{{ saladItem.type }}</span>
       <span class="cart-item-name" *ngIf="saladItem.type!='BUILD YOUR OWN SALAD'">{{ saladItem.type }}</span>
@@ -406,9 +425,24 @@
       </div>
     </div>
 
+    <!-- <div *ngFor="let saladItem of saladModalComponent.saladItems; let i = index;" class="cart-item">
+      <span class="quantity">{{ saladItem.quantity }}x</span>
+      <span class="cart-item-name" *ngIf="saladItem.type=='BUILD YOUR OWN SALAD'">{{ saladItem.type }}</span>
+      <span class="cart-item-name" *ngIf="saladItem.type!='BUILD YOUR OWN SALAD'">{{ saladItem.type }}</span>
+      <span class="cart-item-price">${{ priceTimesQuantity(saladItem.quantity, saladItem.price) }}</span>
+      <div class="edit-delete">
+        <span>[ </span>
+        <a class="empty-link" (click)="saladModalComponent.valueBindingForEdit(i); openSalad(saladItem.type)"><span
+            class="empty-link-text">edit</span></a> | <a class="empty-link"><span class="empty-link-text"
+            (click)="saladModalComponent.deleteSaladItem(i)">delete</span></a>
+        <span> ]</span>
+      </div>
+      <div class="options-display">
+        {{ saladModalComponent.buildDisplayForCart(saladItem) }}
+      </div>
+    </div> -->
 
-
-    <div *ngFor="let drinkItem of drinkModalComponent.drinkItems; let i = index;" class="cart-item">
+    <div *ngFor="let drinkItem of drinkItems; let i = index;" class="cart-item">
       <span class="quantity">{{ drinkItem.quantity }}x</span>
       <span class="cart-item-name">{{ drinkItem.type }}</span>
       <span class="cart-item-price">${{ priceTimesQuantity(drinkItem.quantity, drinkItem.price) }}</span>
@@ -424,8 +458,23 @@
       </div>
     </div>
 
+    <!-- <div *ngFor="let drinkItem of drinkModalComponent.drinkItems; let i = index;" class="cart-item">
+      <span class="quantity">{{ drinkItem.quantity }}x</span>
+      <span class="cart-item-name">{{ drinkItem.type }}</span>
+      <span class="cart-item-price">${{ priceTimesQuantity(drinkItem.quantity, drinkItem.price) }}</span>
+      <div class="edit-delete">
+        <span>[ </span>
+        <a class="empty-link" (click)="drinkModalComponent.valueBindingForEdit(i); openDrink(drinkItem.type)"><span
+            class="empty-link-text">edit</span></a> | <a class="empty-link"><span class="empty-link-text"
+            (click)="drinkModalComponent.deleteDrinkItem(i)">delete</span></a>
+        <span> ]</span>
+      </div>
+      <div class="options-display">
+        {{ drinkModalComponent.buildDisplayForCart() }}
+      </div>
+    </div> -->
 
-    <div *ngFor="let dessertItem of dessertModalComponent.dessertItems; let i = index;" class="cart-item">
+    <div *ngFor="let dessertItem of dessertItems; let i = index;" class="cart-item">
       <span class="quantity">{{ dessertItem.quantity }}x</span>
       <span *ngIf="dessertItem.type=='Cookies'" class="cart-item-name">{{ dessertItem.cookieChoice.toUpperCase() }}</span>
       <span *ngIf="dessertItem.type=='Brownies'" class="cart-item-name">{{ dessertItem.brownieChoice.toUpperCase() }}</span>
@@ -442,6 +491,25 @@
         {{ dessertModalComponent.buildDisplayForCart() }}
       </div>
     </div>
+
+
+    <!-- <div *ngFor="let dessertItem of dessertModalComponent.dessertItems; let i = index;" class="cart-item">
+      <span class="quantity">{{ dessertItem.quantity }}x</span>
+      <span *ngIf="dessertItem.type=='Cookies'" class="cart-item-name">{{ dessertItem.cookieChoice.toUpperCase() }}</span>
+      <span *ngIf="dessertItem.type=='Brownies'" class="cart-item-name">{{ dessertItem.brownieChoice.toUpperCase() }}</span>
+      <span class="cart-item-price">${{ priceTimesQuantity(dessertItem.quantity, dessertItem.price) }}</span>
+      <div class="edit-delete">
+        <span>[ </span>
+        <a class="empty-link"
+          (click)="dessertModalComponent.valueBindingForEdit(i); openDessert(dessertItem.type)"><span
+            class="empty-link-text">edit</span></a> | <a class="empty-link"><span class="empty-link-text"
+            (click)="dessertModalComponent.deleteDessertItem(i)">delete</span></a>
+        <span> ]</span>
+      </div>
+      <div class="options-display">
+        {{ dessertModalComponent.buildDisplayForCart() }}
+      </div>
+    </div> -->
 
     <div class="calculate-total-section">
       <div class="calculate-total-subsection">

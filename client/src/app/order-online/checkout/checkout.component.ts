@@ -9,7 +9,8 @@ import { LocalStorage, LocalStorageService } from 'ngx-store';
 import { OrderOnlineComponent } from '../order-online.component';
 import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   templateUrl: './checkout.component.html',
@@ -25,6 +26,13 @@ export class CheckoutComponent implements OnInit {
   @ViewChild(DessertModalComponent) dessertModalComponent;
   @ViewChild(SaladModalComponent) saladModalComponent;
   @ViewChild(DrinkModalComponent) drinkModalComponent;
+
+  pizzaItems: any[] = this.storageService.getPizzaItems();
+  saladItems: any[] = this.storageService.getSaladItems();
+  drinkItems: any[] = this.storageService.getDrinkItems();
+  dessertItems: any[] = this.storageService.getDessertItems();
+  pickupLocation: string = this.storageService.getPickupLocation();
+
   // @LocalStorage() pickupLocation: string;
   // @LocalStorage() pizzaItems: any[];
   // @LocalStorage() dessertItems: any[];
@@ -41,12 +49,27 @@ export class CheckoutComponent implements OnInit {
   @ViewChild('canvas') canvas: ElementRef;
   @ViewChild('downloadLink') downloadLink: ElementRef;
 
-  // , private localStorageService: LocalStorageService
-  constructor(private http: HttpClient, private fb: FormBuilder) {
+  constructor(private http: HttpClient, private fb: FormBuilder, public storageService: StorageService) {
     // this.pizzaItemsSubscription.subscribe(_ => this.pizzaModalComponent.pizzaItems = _);
     // this.saladItemsSubscription.subscribe(_ => this.saladModalComponent.saladItems = _);
     // this.drinkItemsSubscription.subscribe(_ => this.drinkModalComponent.drinkItems = _);
     // this.dessertItemsSubscription.subscribe(_ => this.dessertModalComponent.dessertItems = _);
+    // this.drinkItems = this.localStorageService.observe("drinkItems");
+    this.storageService.watchPizzaItems().subscribe(pizzaItems => {
+      this.pizzaItems = pizzaItems;
+    });
+    this.storageService.watchSaladItems().subscribe(saladItems => {
+      this.saladItems = saladItems;
+    });
+    this.storageService.watchDrinkItems().subscribe(drinkItems => {
+      this.drinkItems = drinkItems;
+    });
+    this.storageService.watchDessertItems().subscribe(dessertItems => {
+      this.dessertItems = dessertItems;
+    });
+    this.storageService.watchPickupLocation().subscribe(pickupLocation => {
+      this.pickupLocation = pickupLocation;
+    });
   }
 
   ngOnInit() {
@@ -80,12 +103,12 @@ export class CheckoutComponent implements OnInit {
       }
     });
   }
-
+  // this.orderOnlineComponent.pickupLocation,
   chargeCard(token: string) {
     const headers = new HttpHeaders({
       'token': token,
       'amount': this.orderOnlineComponent.showTotal().toString(),
-      'pickupLocation': this.orderOnlineComponent.pickupLocation,
+      'pickupLocation': this.pickupLocation,
       'firstName': this.contactInfo.controls.firstName.value,
       'lastName': this.contactInfo.controls.lastName.value,
       'email': this.contactInfo.controls.email.value,
@@ -97,6 +120,7 @@ export class CheckoutComponent implements OnInit {
         console.log(resp);
     });
 
+    this.storageService.clear();
     // reload localstorage variables?
     // display none orderonlinecomponent? for pickuplocation?
 

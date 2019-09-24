@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, FormArray, FormControl, AbstractControl, Valida
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BuildYourOwnCheckboxes } from '../build-your-own-checkboxes';
 import { LocalStorage } from 'ngx-store';
+import { Observable, Subscription } from 'rxjs';
+import { StorageService } from 'src/app/services/storage.service';
 
 
 function oneCheckbox(c: AbstractControl): { [key: string]: boolean } | null {
@@ -20,17 +22,19 @@ function oneCheckbox(c: AbstractControl): { [key: string]: boolean } | null {
 })
 export class SaladModalComponent {
   @ViewChild('contentSalad') modal;
-  @LocalStorage() saladItems: any[] = [];
+  // @LocalStorage() saladItems: any[] = [];
+  // saladItems: Observable<any[]>;
+  saladItems: any[] = this.storageService.getSaladItems();
   saladForm: FormGroup;
   forEdit: boolean = false;
   indexForEdit: any = 0;
   saladCheckboxes = BuildYourOwnCheckboxes.saladItems;
 
-  constructor(private modalService: NgbModal, private fb: FormBuilder) {
-
+  constructor(private modalService: NgbModal, private fb: FormBuilder, private storageService: StorageService) {
+    this.storageService.watchSaladItems().subscribe(saladItems => {
+      this.saladItems = saladItems;
+    });
   }
-
-
 
   openLg(saladType) {
     if (saladType == 'BUILD YOUR OWN SALAD') {
@@ -48,54 +52,6 @@ export class SaladModalComponent {
       type: saladType
     });
     this.modalService.open(this.modal, { size: 'lg' });
-  }
-
-  get type(): FormControl {
-    return <FormControl>this.saladForm.get('type');
-  }
-
-  buildGreens() {
-    const arr = this.saladCheckboxes.greens.map(green => {
-      return this.fb.control(green.selected);
-    });
-    return this.fb.array(arr, oneCheckbox);
-  }
-
-  buildCheese() {
-    const arr = this.saladCheckboxes.cheese.map(oneCheese => {
-      return this.fb.control(oneCheese.selected);
-    });
-    return this.fb.array(arr);
-  }
-
-  buildFreshProduce() {
-    const arr = this.saladCheckboxes.freshProduce.map(oneFreshProduce => {
-      return this.fb.control(oneFreshProduce.selected);
-    });
-    return this.fb.array(arr, oneCheckbox);
-  }
-
-  buildMeats() {
-    const arr = this.saladCheckboxes.meats.map(meat => {
-      return this.fb.control(meat.selected);
-    });
-    return this.fb.array(arr);
-  }
-
-
-
-  buildTopItOff() {
-    const arr = this.saladCheckboxes.topItOff.map(oneTopItOff => {
-      return this.fb.control(oneTopItOff.selected);
-    });
-    return this.fb.array(arr);
-  }
-
-  buildDressings() {
-    const arr = this.saladCheckboxes.dressings.map(dressing => {
-      return this.fb.control(dressing.selected);
-    });
-    return this.fb.array(arr);
   }
 
   valueBindingForEdit(index) {
@@ -125,31 +81,64 @@ export class SaladModalComponent {
   }
 
   updateTempForm() {
+    let newArrayWithUpdate = this.storageService.getSaladItems();
+
     if (this.saladForm.controls.type.value == "BUILD YOUR OWN SALAD") {
-      this.saladItems[this.indexForEdit].type = this.saladForm.controls.type.value;
-      this.saladItems[this.indexForEdit].greens = this.saladForm.controls.greens.value;
-      this.saladItems[this.indexForEdit].cheese = this.saladForm.controls.cheese.value;
-      this.saladItems[this.indexForEdit].freshProduce = this.saladForm.controls.freshProduce.value;
-      this.saladItems[this.indexForEdit].meats = this.saladForm.controls.meats.value;
-      this.saladItems[this.indexForEdit].topItOff = this.saladForm.controls.topItOff.value;
-      this.saladItems[this.indexForEdit].dressings = this.saladForm.controls.dressings.value;
+      newArrayWithUpdate[this.indexForEdit].type = this.saladForm.controls.type.value;
+      newArrayWithUpdate[this.indexForEdit].greens = this.saladForm.controls.greens.value;
+      newArrayWithUpdate[this.indexForEdit].cheese = this.saladForm.controls.cheese.value;
+      newArrayWithUpdate[this.indexForEdit].freshProduce = this.saladForm.controls.freshProduce.value;
+      newArrayWithUpdate[this.indexForEdit].meats = this.saladForm.controls.meats.value;
+      newArrayWithUpdate[this.indexForEdit].topItOff = this.saladForm.controls.topItOff.value;
+      newArrayWithUpdate[this.indexForEdit].dressings = this.saladForm.controls.dressings.value;
 
       const noLeadingZero = parseInt(this.saladForm.controls.quantity.value, 10);
-      this.saladItems[this.indexForEdit].quantity = noLeadingZero;
+      newArrayWithUpdate[this.indexForEdit].quantity = noLeadingZero;
     } else {
-      this.saladItems[this.indexForEdit].type = this.saladForm.controls.type.value;
-      this.saladItems[this.indexForEdit].size = this.saladForm.controls.size.value;
+      newArrayWithUpdate[this.indexForEdit].type = this.saladForm.controls.type.value;
+      newArrayWithUpdate[this.indexForEdit].size = this.saladForm.controls.size.value;
       if (this.saladForm.controls.size.value == "Entree") {
-        this.saladItems[this.indexForEdit].price = 6.95;
+        newArrayWithUpdate[this.indexForEdit].price = 6.95;
       } else {
-        this.saladItems[this.indexForEdit].price = 3.95;
+        newArrayWithUpdate[this.indexForEdit].price = 3.95;
       }
       const noLeadingZero = parseInt(this.saladForm.controls.quantity.value, 10);
-      this.saladItems[this.indexForEdit].quantity = noLeadingZero;
+      newArrayWithUpdate[this.indexForEdit].quantity = noLeadingZero;
     }
+
+    this.storageService.updateSaladItems("saladItems", newArrayWithUpdate);
+
     this.forEdit = false;
     this.indexForEdit = 0;
-    this.saladItems = this.saladItems;
+
+
+
+
+    // if (this.saladForm.controls.type.value == "BUILD YOUR OWN SALAD") {
+    //   this.saladItems[this.indexForEdit].type = this.saladForm.controls.type.value;
+    //   this.saladItems[this.indexForEdit].greens = this.saladForm.controls.greens.value;
+    //   this.saladItems[this.indexForEdit].cheese = this.saladForm.controls.cheese.value;
+    //   this.saladItems[this.indexForEdit].freshProduce = this.saladForm.controls.freshProduce.value;
+    //   this.saladItems[this.indexForEdit].meats = this.saladForm.controls.meats.value;
+    //   this.saladItems[this.indexForEdit].topItOff = this.saladForm.controls.topItOff.value;
+    //   this.saladItems[this.indexForEdit].dressings = this.saladForm.controls.dressings.value;
+
+    //   const noLeadingZero = parseInt(this.saladForm.controls.quantity.value, 10);
+    //   this.saladItems[this.indexForEdit].quantity = noLeadingZero;
+    // } else {
+    //   this.saladItems[this.indexForEdit].type = this.saladForm.controls.type.value;
+    //   this.saladItems[this.indexForEdit].size = this.saladForm.controls.size.value;
+    //   if (this.saladForm.controls.size.value == "Entree") {
+    //     this.saladItems[this.indexForEdit].price = 6.95;
+    //   } else {
+    //     this.saladItems[this.indexForEdit].price = 3.95;
+    //   }
+    //   const noLeadingZero = parseInt(this.saladForm.controls.quantity.value, 10);
+    //   this.saladItems[this.indexForEdit].quantity = noLeadingZero;
+    // }
+    // this.forEdit = false;
+    // this.indexForEdit = 0;
+    // this.saladItems = this.saladItems;
   }
 
   resetEdit() {
@@ -158,10 +147,43 @@ export class SaladModalComponent {
   }
 
   deleteSaladItem(index) {
-    this.saladItems.splice(index, 1);
+    // this.saladItems.splice(index, 1);
+
+    let newArrayWithDeletedItem = this.storageService.getSaladItems();
+    newArrayWithDeletedItem.splice(index, 1);
+    this.storageService.updateSaladItems("saladItems", newArrayWithDeletedItem);
   }
 
+  createTempForm() {
+    // set pricing here?
+    const noLeadingZero = parseInt(this.saladForm.controls.quantity.value, 10);
+    this.saladForm.patchValue({
+      quantity: noLeadingZero
+    });
 
+    const forCart = { ...this.saladForm.value };
+    if (this.saladForm.controls.type.value == 'CHICKEN CAESAR SALAD' || this.saladForm.controls.type.value == 'GREEK SALAD') {
+      delete forCart.greens;
+      delete forCart.cheese;
+      delete forCart.freshProduce;
+      delete forCart.meats;
+      delete forCart.topItOff;
+      delete forCart.dressings;
+      if (forCart.size == "Entree") {
+        forCart.price = 6.95;
+      } else {
+        forCart.price = 3.95;
+      }
+    } else {
+      delete forCart.size;
+      forCart.price = 8.65;
+    }
+    // this.saladItems.push(forCart);
+
+    let newArrayWithAddedItem = this.storageService.getSaladItems();
+    newArrayWithAddedItem.push(forCart);
+    this.storageService.updateSaladItems("saladItems", newArrayWithAddedItem);
+  }
 
   buildDisplayForCart(currentItem) {
     var finalString: string = "";
@@ -260,6 +282,10 @@ export class SaladModalComponent {
     return listOfChoices;
   }
 
+  get type(): FormControl {
+    return <FormControl>this.saladForm.get('type');
+  }
+
   get greens(): FormArray {
     return <FormArray>this.saladForm.get('greens');
   }
@@ -286,6 +312,48 @@ export class SaladModalComponent {
 
   get quantity(): FormControl {
     return <FormControl>this.saladForm.get('quantity');
+  }
+
+  buildGreens() {
+    const arr = this.saladCheckboxes.greens.map(green => {
+      return this.fb.control(green.selected);
+    });
+    return this.fb.array(arr, oneCheckbox);
+  }
+
+  buildCheese() {
+    const arr = this.saladCheckboxes.cheese.map(oneCheese => {
+      return this.fb.control(oneCheese.selected);
+    });
+    return this.fb.array(arr);
+  }
+
+  buildFreshProduce() {
+    const arr = this.saladCheckboxes.freshProduce.map(oneFreshProduce => {
+      return this.fb.control(oneFreshProduce.selected);
+    });
+    return this.fb.array(arr, oneCheckbox);
+  }
+
+  buildMeats() {
+    const arr = this.saladCheckboxes.meats.map(meat => {
+      return this.fb.control(meat.selected);
+    });
+    return this.fb.array(arr);
+  }
+
+  buildTopItOff() {
+    const arr = this.saladCheckboxes.topItOff.map(oneTopItOff => {
+      return this.fb.control(oneTopItOff.selected);
+    });
+    return this.fb.array(arr);
+  }
+
+  buildDressings() {
+    const arr = this.saladCheckboxes.dressings.map(dressing => {
+      return this.fb.control(dressing.selected);
+    });
+    return this.fb.array(arr);
   }
 
   greenBoxClicking(index) {
@@ -388,34 +456,6 @@ export class SaladModalComponent {
     this.saladForm.patchValue({
       size: selectedValue
     });
-  }
-
-
-  createTempForm() {
-    // set pricing here?
-    const noLeadingZero = parseInt(this.saladForm.controls.quantity.value, 10);
-    this.saladForm.patchValue({
-      quantity: noLeadingZero
-    });
-
-    const forCart = { ...this.saladForm.value };
-    if (this.saladForm.controls.type.value == 'CHICKEN CAESAR SALAD' || this.saladForm.controls.type.value == 'GREEK SALAD') {
-      delete forCart.greens;
-      delete forCart.cheese;
-      delete forCart.freshProduce;
-      delete forCart.meats;
-      delete forCart.topItOff;
-      delete forCart.dressings;
-      if (forCart.size == "Entree") {
-        forCart.price = 6.95;
-      } else {
-        forCart.price = 3.95;
-      }
-    } else {
-      delete forCart.size;
-      forCart.price = 8.65;
-    }
-    this.saladItems.push(forCart);
   }
 
   // this.buildGreens().value,

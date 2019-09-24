@@ -1,10 +1,12 @@
 package com.chrisyoo.campaniapizzaserver.entity;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.activation.FileDataSource;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,7 +36,7 @@ public class StripeClient {
 	
     @Autowired
     StripeClient() {
-        Stripe.apiKey = "sk_test_VQAuuz3EahFI8YKpoAMRxAB1";
+        Stripe.apiKey = "";
     }
  
     public void sendSimpleMessage(
@@ -71,16 +73,29 @@ public class StripeClient {
         helper.setText(text, true); // set to html
         helper.setSubject("Order Confirmation - Campania Pizza");
         
-        try {
-        	byte[] decodedBytes = Base64.getMimeDecoder().decode(request.getHeader("invoiceImg"));
-            // by default, file is overwritten if it already exists
-            FileUtils.writeByteArrayToFile(new File("./src/main/resources/invoice.png"), decodedBytes);
-        } catch (Exception e) {
-        	System.out.println("Error in creating image file: " + e);
-        } finally {
-        	helper.addAttachment("invoice.png", new ClassPathResource("invoice.png"));
-        }
+//        try {
+//        	byte[] decodedBytes = Base64.getMimeDecoder().decode(request.getHeader("invoiceImg"));
+//            // by default, file is overwritten if it already exists
+//            FileUtils.writeByteArrayToFile(new File("./src/main/resources/invoice.png"), decodedBytes);
+//        } catch (Exception e) {
+//        	System.out.println("Error in creating image file: " + e);
+//        } finally {
+//        	helper.addAttachment("invoice.png", new ClassPathResource("invoice.png"));
+//        }
           
+        byte[] decodedBytes = Base64.getMimeDecoder().decode(request.getHeader("invoiceImg"));
+        
+        try(FileOutputStream imageOutFile = new FileOutputStream("./src/main/resources/invoice.png")) {
+            imageOutFile.write(decodedBytes);
+        } catch (Exception e) {
+            System.out.println("Error in creating image file: " + e);
+        }
+        
+        // from documentation => Note that the InputStream returned by the DataSource implementation needs to be a fresh one on each call, 
+        // as JavaMail will invoke getInputStream() multiple times. => need to create a fresh FileDataSource
+        FileDataSource attachment = new FileDataSource("./src/main/resources/invoice.png");
+        helper.addAttachment("OrderInvoice.png", attachment);
+        
         emailSender.send(message);
     }
     

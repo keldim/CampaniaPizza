@@ -8,6 +8,8 @@ import { SaladModalComponent } from './salad-modal/salad-modal.component';
 import { DrinkModalComponent } from './drink-modal/drink-modal.component';
 import { FormGroup, FormBuilder, FormControl} from '@angular/forms';
 import { LocalStorage } from 'ngx-store';
+import { Observable, Subscription, of } from 'rxjs';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'order-online',
@@ -19,7 +21,13 @@ export class OrderOnlineComponent implements OnInit {
   selectedUser: User;
   clickedMenu: string = "Build Your Own Pizza";
   orderOnlineForm: FormGroup;
-  @LocalStorage() pickupLocation: string = "";
+  // @LocalStorage() pickupLocation: string = "";
+  // pickupLocation: Observable<String>;
+  pizzaItems: any[] = this.storageService.getPizzaItems();
+  saladItems: any[] = this.storageService.getSaladItems();
+  drinkItems: any[] = this.storageService.getDrinkItems();
+  dessertItems: any[] = this.storageService.getDessertItems();
+  pickupLocation: string = this.storageService.getPickupLocation();
 
   @ViewChild(PizzaModalComponent) pizzaModalComponent;
   @ViewChild(DessertModalComponent) dessertModalComponent;
@@ -29,8 +37,22 @@ export class OrderOnlineComponent implements OnInit {
 
   // private userService: UserService,
   // private modalService: NgbModal,
-  constructor(private fb: FormBuilder) {
-
+  constructor(private fb: FormBuilder, private storageService: StorageService) {
+    this.storageService.watchPizzaItems().subscribe(pizzaItems => {
+      this.pizzaItems = pizzaItems;
+    });
+    this.storageService.watchSaladItems().subscribe(saladItems => {
+      this.saladItems = saladItems;
+    });
+    this.storageService.watchDrinkItems().subscribe(drinkItems => {
+      this.drinkItems = drinkItems;
+    });
+    this.storageService.watchDessertItems().subscribe(dessertItems => {
+      this.dessertItems = dessertItems;
+    });
+    this.storageService.watchPickupLocation().subscribe(pickupLocation => {
+      this.pickupLocation = pickupLocation;
+    });
   }
 
   clickedVerticalNavbar(clickedMenu) {
@@ -72,18 +94,32 @@ export class OrderOnlineComponent implements OnInit {
   }
 
   calculateSubtotal() {
+    // let subtotal = 0;
+    // for(let pizzaItem of this.pizzaModalComponent.pizzaItems) {
+    //   subtotal += pizzaItem.quantity * pizzaItem.price;
+    // }
+    // for(let saladItem of this.saladModalComponent.saladItems) {
+    //   subtotal += saladItem.price;
+    // }
+    // for(let drinkItem of this.drinkModalComponent.drinkItems) {
+    //   subtotal += drinkItem.price;
+    // }
+    // for(let dessertItem of this.dessertModalComponent.dessertItems) {
+    //   subtotal += dessertItem.price;
+    // }
+    // return subtotal;
     let subtotal = 0;
-    for(let pizzaItem of this.pizzaModalComponent.pizzaItems) {
+    for(let pizzaItem of this.pizzaItems) {
       subtotal += pizzaItem.quantity * pizzaItem.price;
     }
-    for(let saladItem of this.saladModalComponent.saladItems) {
-      subtotal += saladItem.price;
+    for(let saladItem of this.saladItems) {
+      subtotal += saladItem.quantity * saladItem.price;
     }
-    for(let drinkItem of this.drinkModalComponent.drinkItems) {
-      subtotal += drinkItem.price;
+    for(let drinkItem of this.drinkItems) {
+      subtotal += drinkItem.quantity * drinkItem.price;
     }
-    for(let dessertItem of this.dessertModalComponent.dessertItems) {
-      subtotal += dessertItem.price;
+    for(let dessertItem of this.dessertItems) {
+      subtotal += dessertItem.quantity * dessertItem.price;
     }
     return subtotal;
   }
@@ -113,7 +149,9 @@ export class OrderOnlineComponent implements OnInit {
   }
 
   assignLocation() {
-    this.pickupLocation = this.orderOnlineForm.controls.location.value;
+    // this.pickupLocation = this.orderOnlineForm.controls.location.value;
+    let updatedLocation = this.orderOnlineForm.controls.location.value;
+    this.storageService.updatePickupLocation("pickupLocation", updatedLocation);
   }
 
   ngOnInit() {

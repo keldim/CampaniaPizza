@@ -3,6 +3,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, FormArray, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { BuildYourOwnCheckboxes } from '../build-your-own-checkboxes';
 import { LocalStorage, LocalStorageService } from 'ngx-store';
+import { Observable, Subscription } from 'rxjs';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'pizza-modal',
@@ -11,52 +13,26 @@ import { LocalStorage, LocalStorageService } from 'ngx-store';
 })
 export class PizzaModalComponent {
   @ViewChild('contentPizza') modal;
-  @LocalStorage() pizzaItems: any[] = [];
+  // @LocalStorage() pizzaItems: any[] = [];
+  // pizzaItems: Observable<any[]>;
+  pizzaItems: any[] = this.storageService.getPizzaItems();
   pizzaForm: FormGroup;
   forEdit: boolean = false;
   indexForEdit: any = 0;
   pizzaCheckboxes = BuildYourOwnCheckboxes.pizzaItems;
 
-  constructor(private modalService: NgbModal, private fb: FormBuilder) {
-
+  constructor(private modalService: NgbModal, private fb: FormBuilder, private storageService: StorageService) {
+    this.storageService.watchPizzaItems().subscribe(pizzaItems => {
+      this.pizzaItems = pizzaItems;
+    });
   }
   // private localStorageService: LocalStorageService
-
-
-
-
 
   openLg(pizzaType) {
     this.pizzaForm.patchValue({
       type: pizzaType
     });
     this.modalService.open(this.modal, { size: 'lg' });
-  }
-
-  buildCheese() {
-    const arr = this.pizzaCheckboxes.cheese.map(oneCheese => {
-      return this.fb.control(oneCheese.selected);
-    });
-    return this.fb.array(arr);
-  }
-  buildVeggies() {
-    const arr = this.pizzaCheckboxes.veggies.map(veggie => {
-      return this.fb.control(veggie.selected);
-    });
-    return this.fb.array(arr);
-  }
-  buildMeats() {
-    const arr = this.pizzaCheckboxes.meats.map(meat => {
-      return this.fb.control(meat.selected);
-    });
-    return this.fb.array(arr);
-  }
-
-  buildFinishes() {
-    const arr = this.pizzaCheckboxes.finishes.map(finish => {
-      return this.fb.control(finish.selected);
-    });
-    return this.fb.array(arr);
   }
 
   valueBindingForEdit(index) {
@@ -89,31 +65,64 @@ export class PizzaModalComponent {
   }
 
   updateTempForm() {
+    let newArrayWithUpdate = this.storageService.getPizzaItems();
+
     if (this.pizzaForm.controls.type.value != 'BUILD YOUR OWN PIZZA') {
-      this.pizzaItems[this.indexForEdit].type = this.pizzaForm.controls.type.value;
-      this.pizzaItems[this.indexForEdit].size = this.pizzaForm.controls.size.value;
-      this.pizzaItems[this.indexForEdit].crust = this.pizzaForm.controls.crust.value;
-      this.pizzaItems[this.indexForEdit].finishes = this.pizzaForm.controls.finishes.value;
+      newArrayWithUpdate[this.indexForEdit].type = this.pizzaForm.controls.type.value;
+      newArrayWithUpdate[this.indexForEdit].size = this.pizzaForm.controls.size.value;
+      newArrayWithUpdate[this.indexForEdit].crust = this.pizzaForm.controls.crust.value;
+      newArrayWithUpdate[this.indexForEdit].finishes = this.pizzaForm.controls.finishes.value;
 
       const noLeadingZero = parseInt(this.pizzaForm.controls.quantity.value, 10);
-      this.pizzaItems[this.indexForEdit].quantity = noLeadingZero;
+      newArrayWithUpdate[this.indexForEdit].quantity = noLeadingZero;
     } else {
-      this.pizzaItems[this.indexForEdit].type = this.pizzaForm.controls.type.value;
-      this.pizzaItems[this.indexForEdit].size = this.pizzaForm.controls.size.value;
-      this.pizzaItems[this.indexForEdit].crust = this.pizzaForm.controls.crust.value;
-      this.pizzaItems[this.indexForEdit].sauce = this.pizzaForm.controls.sauce.value;
-      this.pizzaItems[this.indexForEdit].cheese = this.pizzaForm.controls.cheese.value;
-      this.pizzaItems[this.indexForEdit].veggies = this.pizzaForm.controls.veggies.value;
-      this.pizzaItems[this.indexForEdit].meats = this.pizzaForm.controls.meats.value;
-      this.pizzaItems[this.indexForEdit].finishes = this.pizzaForm.controls.finishes.value;
-      this.pizzaItems[this.indexForEdit].quantity = this.pizzaForm.controls.quantity.value;
+      newArrayWithUpdate[this.indexForEdit].type = this.pizzaForm.controls.type.value;
+      newArrayWithUpdate[this.indexForEdit].size = this.pizzaForm.controls.size.value;
+      newArrayWithUpdate[this.indexForEdit].crust = this.pizzaForm.controls.crust.value;
+      newArrayWithUpdate[this.indexForEdit].sauce = this.pizzaForm.controls.sauce.value;
+      newArrayWithUpdate[this.indexForEdit].cheese = this.pizzaForm.controls.cheese.value;
+      newArrayWithUpdate[this.indexForEdit].veggies = this.pizzaForm.controls.veggies.value;
+      newArrayWithUpdate[this.indexForEdit].meats = this.pizzaForm.controls.meats.value;
+      newArrayWithUpdate[this.indexForEdit].finishes = this.pizzaForm.controls.finishes.value;
+      newArrayWithUpdate[this.indexForEdit].quantity = this.pizzaForm.controls.quantity.value;
 
       const noLeadingZero = parseInt(this.pizzaForm.controls.quantity.value, 10);
-      this.pizzaItems[this.indexForEdit].quantity = noLeadingZero;
+      newArrayWithUpdate[this.indexForEdit].quantity = noLeadingZero;
     }
+
+    this.storageService.updatePizzaItems("pizzaItems", newArrayWithUpdate);
+
+
     this.forEdit = false;
     this.indexForEdit = 0;
-    this.pizzaItems = this.pizzaItems;
+
+
+
+    // if (this.pizzaForm.controls.type.value != 'BUILD YOUR OWN PIZZA') {
+    //   this.pizzaItems[this.indexForEdit].type = this.pizzaForm.controls.type.value;
+    //   this.pizzaItems[this.indexForEdit].size = this.pizzaForm.controls.size.value;
+    //   this.pizzaItems[this.indexForEdit].crust = this.pizzaForm.controls.crust.value;
+    //   this.pizzaItems[this.indexForEdit].finishes = this.pizzaForm.controls.finishes.value;
+
+    //   const noLeadingZero = parseInt(this.pizzaForm.controls.quantity.value, 10);
+    //   this.pizzaItems[this.indexForEdit].quantity = noLeadingZero;
+    // } else {
+    //   this.pizzaItems[this.indexForEdit].type = this.pizzaForm.controls.type.value;
+    //   this.pizzaItems[this.indexForEdit].size = this.pizzaForm.controls.size.value;
+    //   this.pizzaItems[this.indexForEdit].crust = this.pizzaForm.controls.crust.value;
+    //   this.pizzaItems[this.indexForEdit].sauce = this.pizzaForm.controls.sauce.value;
+    //   this.pizzaItems[this.indexForEdit].cheese = this.pizzaForm.controls.cheese.value;
+    //   this.pizzaItems[this.indexForEdit].veggies = this.pizzaForm.controls.veggies.value;
+    //   this.pizzaItems[this.indexForEdit].meats = this.pizzaForm.controls.meats.value;
+    //   this.pizzaItems[this.indexForEdit].finishes = this.pizzaForm.controls.finishes.value;
+    //   this.pizzaItems[this.indexForEdit].quantity = this.pizzaForm.controls.quantity.value;
+
+    //   const noLeadingZero = parseInt(this.pizzaForm.controls.quantity.value, 10);
+    //   this.pizzaItems[this.indexForEdit].quantity = noLeadingZero;
+    // }
+    // this.forEdit = false;
+    // this.indexForEdit = 0;
+    // this.pizzaItems = this.pizzaItems;
   }
 
   resetEdit() {
@@ -122,7 +131,30 @@ export class PizzaModalComponent {
   }
 
   deletePizzaItem(index) {
-    this.pizzaItems.splice(index, 1);
+    // this.pizzaItems.splice(index, 1);
+
+    let newArrayWithDeletedItem = this.storageService.getPizzaItems();
+    newArrayWithDeletedItem.splice(index, 1);
+    this.storageService.updatePizzaItems("pizzaItems", newArrayWithDeletedItem);
+  }
+
+  createTempForm() {
+    const noLeadingZero = parseInt(this.pizzaForm.controls.quantity.value, 10);
+    this.pizzaForm.patchValue({
+      quantity: noLeadingZero
+    });
+    const forCart = { ...this.pizzaForm.value };
+    if (this.pizzaForm.controls.type.value != 'BUILD YOUR OWN PIZZA') {
+      delete forCart.sauce;
+      delete forCart.cheese;
+      delete forCart.veggies;
+      delete forCart.meats;
+    }
+    // this.pizzaItems.push(forCart);
+
+    let newArrayWithAddedItem = this.storageService.getPizzaItems();
+    newArrayWithAddedItem.push(forCart);
+    this.storageService.updatePizzaItems("pizzaItems", newArrayWithAddedItem);
   }
 
   // create other modals?
@@ -212,6 +244,32 @@ export class PizzaModalComponent {
     }
     // }
     return listOfChoices;
+  }
+
+  buildCheese() {
+    const arr = this.pizzaCheckboxes.cheese.map(oneCheese => {
+      return this.fb.control(oneCheese.selected);
+    });
+    return this.fb.array(arr);
+  }
+  buildVeggies() {
+    const arr = this.pizzaCheckboxes.veggies.map(veggie => {
+      return this.fb.control(veggie.selected);
+    });
+    return this.fb.array(arr);
+  }
+  buildMeats() {
+    const arr = this.pizzaCheckboxes.meats.map(meat => {
+      return this.fb.control(meat.selected);
+    });
+    return this.fb.array(arr);
+  }
+
+  buildFinishes() {
+    const arr = this.pizzaCheckboxes.finishes.map(finish => {
+      return this.fb.control(finish.selected);
+    });
+    return this.fb.array(arr);
   }
 
   get cheese(): FormArray {
@@ -318,21 +376,6 @@ export class PizzaModalComponent {
         finishes: replacement
       });
     }
-  }
-
-  createTempForm() {
-    const noLeadingZero = parseInt(this.pizzaForm.controls.quantity.value, 10);
-    this.pizzaForm.patchValue({
-      quantity: noLeadingZero
-    });
-    const forCart = { ...this.pizzaForm.value };
-    if (this.pizzaForm.controls.type.value != 'BUILD YOUR OWN PIZZA') {
-      delete forCart.sauce;
-      delete forCart.cheese;
-      delete forCart.veggies;
-      delete forCart.meats;
-    }
-    this.pizzaItems.push(forCart);
   }
 
   resetForm() {
