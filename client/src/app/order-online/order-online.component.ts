@@ -21,8 +21,6 @@ export class OrderOnlineComponent implements OnInit {
   selectedUser: User;
   clickedMenu: string = "Build Your Own Pizza";
   orderOnlineForm: FormGroup;
-  // @LocalStorage() pickupLocation: string = "";
-  // pickupLocation: Observable<String>;
   pizzaItems: any[] = this.storageService.getPizzaItems();
   saladItems: any[] = this.storageService.getSaladItems();
   drinkItems: any[] = this.storageService.getDrinkItems();
@@ -94,20 +92,6 @@ export class OrderOnlineComponent implements OnInit {
   }
 
   calculateSubtotal() {
-    // let subtotal = 0;
-    // for(let pizzaItem of this.pizzaModalComponent.pizzaItems) {
-    //   subtotal += pizzaItem.quantity * pizzaItem.price;
-    // }
-    // for(let saladItem of this.saladModalComponent.saladItems) {
-    //   subtotal += saladItem.price;
-    // }
-    // for(let drinkItem of this.drinkModalComponent.drinkItems) {
-    //   subtotal += drinkItem.price;
-    // }
-    // for(let dessertItem of this.dessertModalComponent.dessertItems) {
-    //   subtotal += dessertItem.price;
-    // }
-    // return subtotal;
     let subtotal = 0;
     for(let pizzaItem of this.pizzaItems) {
       subtotal += pizzaItem.quantity * pizzaItem.price;
@@ -149,7 +133,6 @@ export class OrderOnlineComponent implements OnInit {
   }
 
   assignLocation() {
-    // this.pickupLocation = this.orderOnlineForm.controls.location.value;
     let updatedLocation = this.orderOnlineForm.controls.location.value;
     this.storageService.updatePickupLocation("pickupLocation", updatedLocation);
   }
@@ -167,31 +150,8 @@ export class OrderOnlineComponent implements OnInit {
 
   }
 
-
-
   save() {
 
   }
-
-
-
-  // if there is at least one newly created form in the array, display the content of the array on the cart, use ngIf
-  // create a json form ready to send to the server
-  // read the created json form in the shopping cart for display
-  // no need to convert to json form, already in json form?
-
-  // watch the rest of the angular reactive course??
-  // memoirze concepts of the course for better website building skills? don't forget the FormArray struggle, despite I had difficulty
-  // remembering that FormArray was covered in the course because the subject I worked on was checkbox, not dynamically duplicating input elements?
-
-  // important parts of the css are now copied? refer back to css from example websites for minor details now?
-
-  // no need to remove mobile compatibility from the order-online page, looks good with it
-
-  // add warning pop up for delete?
-
-  // for business hours popover, connect with daily time to indicate the day? visit the ngboostrap website for more info?
-
-  // remember to remove unnecessary files and images
 
 }

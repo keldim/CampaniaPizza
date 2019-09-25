@@ -13,8 +13,6 @@ import { StorageService } from 'src/app/services/storage.service';
 })
 export class DrinkModalComponent {
   @ViewChild('contentDrink') modal;
-  // @LocalStorage() drinkItems: any[] = [];
-  // drinkItems: Observable<any[]>;
   drinkItems: any[] = this.storageService.getDrinkItems();
   drinkForm: FormGroup;
   forEdit: boolean = false;
@@ -49,9 +47,6 @@ export class DrinkModalComponent {
   }
 
   valueBindingForEdit(index) {
-    // need to get the index for the item in the pizzaItems??
-    // distinguish between create and edit in createTempForm()?
-    // create openPizzaForEdit()? if using openPizzaForEdit(), create a diffrent button in pizza modal?
     this.forEdit = true;
     this.indexForEdit = index;
     this.drinkForm.patchValue({
@@ -90,16 +85,9 @@ export class DrinkModalComponent {
     });
     const forCart = { ...this.drinkForm.value };
 
-    // if(this.storageService.getDrinkItems() == null) {
-    //   this.storageService.createDrinkItems();
-    //   let newArrayWithAddedItem = this.storageService.getDrinkItems();
-    //   newArrayWithAddedItem.push(forCart);
-    //   this.storageService.updateDrinkItems("drinkItems", newArrayWithAddedItem);
-    // } else {
     let newArrayWithAddedItem = this.storageService.getDrinkItems();
     newArrayWithAddedItem.push(forCart);
     this.storageService.updateDrinkItems("drinkItems", newArrayWithAddedItem);
-    // }
   }
 
   resetForm() {

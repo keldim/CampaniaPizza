@@ -33,28 +33,11 @@ export class CheckoutComponent implements OnInit {
   dessertItems: any[] = this.storageService.getDessertItems();
   pickupLocation: string = this.storageService.getPickupLocation();
 
-  // @LocalStorage() pickupLocation: string;
-  // @LocalStorage() pizzaItems: any[];
-  // @LocalStorage() dessertItems: any[];
-  // @LocalStorage() saladItems: any[];
-  // @LocalStorage() drinkItems: any[];
-
-  // pizzaItemsSubscription: BehaviorSubject<any[]> = new BehaviorSubject([]);
-  // saladItemsSubscription: BehaviorSubject<any[]> = new BehaviorSubject([]);
-  // drinkItemsSubscription: BehaviorSubject<any[]> = new BehaviorSubject([]);
-  // dessertItemsSubscription: BehaviorSubject<any[]> = new BehaviorSubject([]);
-
-
   @ViewChild('content') content: ElementRef;
   @ViewChild('canvas') canvas: ElementRef;
   @ViewChild('downloadLink') downloadLink: ElementRef;
 
   constructor(private http: HttpClient, private fb: FormBuilder, public storageService: StorageService) {
-    // this.pizzaItemsSubscription.subscribe(_ => this.pizzaModalComponent.pizzaItems = _);
-    // this.saladItemsSubscription.subscribe(_ => this.saladModalComponent.saladItems = _);
-    // this.drinkItemsSubscription.subscribe(_ => this.drinkModalComponent.drinkItems = _);
-    // this.dessertItemsSubscription.subscribe(_ => this.dessertModalComponent.dessertItems = _);
-    // this.drinkItems = this.localStorageService.observe("drinkItems");
     this.storageService.watchPizzaItems().subscribe(pizzaItems => {
       this.pizzaItems = pizzaItems;
     });
@@ -103,7 +86,7 @@ export class CheckoutComponent implements OnInit {
       }
     });
   }
-  // this.orderOnlineComponent.pickupLocation,
+
   chargeCard(token: string) {
     const headers = new HttpHeaders({
       'token': token,
@@ -121,21 +104,6 @@ export class CheckoutComponent implements OnInit {
     });
 
     this.storageService.clear();
-    // reload localstorage variables?
-    // display none orderonlinecomponent? for pickuplocation?
-
-    // this.orderOnlineComponent.pickupLocation = "";
-    // this.pizzaModalComponent.pizzaItems = [];
-    // this.saladModalComponent.saladItems = [];
-    // this.drinkModalComponent.drinkItems = [];
-    // this.dessertModalComponent.dessertItems = [];
-
-    // this.orderOnlineComponent.destoryPickUpLocation();
-    // this.pizzaModalComponent.pizzaItems.save();
-    // this.saladModalComponent.saladItems.save();
-    // this.drinkModalComponent.destroyDrinkItems();
-    // this.dessertModalComponent.dessertItems.save();
-    // this.localStorageService.clear("all");
   }
 
   downloadPDF() {
@@ -148,41 +116,4 @@ export class CheckoutComponent implements OnInit {
   ngAfterViewInit() {
     this.downloadPDF();
   }
-
-  // calculateSubtotal() {
-  //   let subtotal = 0;
-  //   for (let pizzaItem of this.pizzaItems) {
-  //     subtotal += pizzaItem.quantity * pizzaItem.price;
-  //   }
-  //   for (let saladItem of this.saladItems) {
-  //     subtotal += saladItem.price;
-  //   }
-  //   for (let drinkItem of this.drinkItems) {
-  //     subtotal += drinkItem.price;
-  //   }
-  //   for (let dessertItem of this.dessertItems) {
-  //     subtotal += dessertItem.price;
-  //   }
-  //   return subtotal;
-  // }
-
-  // calculateLocalTax() {
-  //   return this.calculateSubtotal() * 0.08875;
-  // }
-
-  // calculateTotal() {
-  //   return this.calculateSubtotal() + this.calculateLocalTax();
-  // }
-
-  // showSubtotal() {
-  //   return this.calculateSubtotal().toFixed(2);
-  // }
-
-  // showLocalTax() {
-  //   return this.calculateLocalTax().toFixed(2);
-  // }
-
-  // showTotal() {
-  //   return this.calculateTotal().toFixed(2);
-  // }
 }

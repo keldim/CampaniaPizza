@@ -22,8 +22,6 @@ function oneCheckbox(c: AbstractControl): { [key: string]: boolean } | null {
 })
 export class SaladModalComponent {
   @ViewChild('contentSalad') modal;
-  // @LocalStorage() saladItems: any[] = [];
-  // saladItems: Observable<any[]>;
   saladItems: any[] = this.storageService.getSaladItems();
   saladForm: FormGroup;
   forEdit: boolean = false;
@@ -55,9 +53,6 @@ export class SaladModalComponent {
   }
 
   valueBindingForEdit(index) {
-    // need to get the index for the item in the pizzaItems??
-    // distinguish between create and edit in createTempForm()?
-    // create openPizzaForEdit()? if using openPizzaForEdit(), create a diffrent button in pizza modal?
     this.forEdit = true;
     this.indexForEdit = index;
     if (this.saladItems[index].type == "BUILD YOUR OWN SALAD") {
@@ -110,35 +105,6 @@ export class SaladModalComponent {
 
     this.forEdit = false;
     this.indexForEdit = 0;
-
-
-
-
-    // if (this.saladForm.controls.type.value == "BUILD YOUR OWN SALAD") {
-    //   this.saladItems[this.indexForEdit].type = this.saladForm.controls.type.value;
-    //   this.saladItems[this.indexForEdit].greens = this.saladForm.controls.greens.value;
-    //   this.saladItems[this.indexForEdit].cheese = this.saladForm.controls.cheese.value;
-    //   this.saladItems[this.indexForEdit].freshProduce = this.saladForm.controls.freshProduce.value;
-    //   this.saladItems[this.indexForEdit].meats = this.saladForm.controls.meats.value;
-    //   this.saladItems[this.indexForEdit].topItOff = this.saladForm.controls.topItOff.value;
-    //   this.saladItems[this.indexForEdit].dressings = this.saladForm.controls.dressings.value;
-
-    //   const noLeadingZero = parseInt(this.saladForm.controls.quantity.value, 10);
-    //   this.saladItems[this.indexForEdit].quantity = noLeadingZero;
-    // } else {
-    //   this.saladItems[this.indexForEdit].type = this.saladForm.controls.type.value;
-    //   this.saladItems[this.indexForEdit].size = this.saladForm.controls.size.value;
-    //   if (this.saladForm.controls.size.value == "Entree") {
-    //     this.saladItems[this.indexForEdit].price = 6.95;
-    //   } else {
-    //     this.saladItems[this.indexForEdit].price = 3.95;
-    //   }
-    //   const noLeadingZero = parseInt(this.saladForm.controls.quantity.value, 10);
-    //   this.saladItems[this.indexForEdit].quantity = noLeadingZero;
-    // }
-    // this.forEdit = false;
-    // this.indexForEdit = 0;
-    // this.saladItems = this.saladItems;
   }
 
   resetEdit() {
@@ -147,15 +113,12 @@ export class SaladModalComponent {
   }
 
   deleteSaladItem(index) {
-    // this.saladItems.splice(index, 1);
-
     let newArrayWithDeletedItem = this.storageService.getSaladItems();
     newArrayWithDeletedItem.splice(index, 1);
     this.storageService.updateSaladItems("saladItems", newArrayWithDeletedItem);
   }
 
   createTempForm() {
-    // set pricing here?
     const noLeadingZero = parseInt(this.saladForm.controls.quantity.value, 10);
     this.saladForm.patchValue({
       quantity: noLeadingZero
@@ -178,7 +141,6 @@ export class SaladModalComponent {
       delete forCart.size;
       forCart.price = 8.65;
     }
-    // this.saladItems.push(forCart);
 
     let newArrayWithAddedItem = this.storageService.getSaladItems();
     newArrayWithAddedItem.push(forCart);
@@ -188,9 +150,7 @@ export class SaladModalComponent {
   buildDisplayForCart(currentItem) {
     var finalString: string = "";
 
-    // for(let item of this.saladItems) {
     if (currentItem.hasOwnProperty("greens")) {
-      // finalString += "BUILD YOUR OWN SALAD\n"
 
       for (let green in currentItem.greens) {
         if (currentItem.greens[green] != this.saladCheckboxes.greens[green].selected) {
@@ -230,16 +190,14 @@ export class SaladModalComponent {
         finalString += "Side"
       }
     }
-    // }
+
     return finalString;
   }
 
   buildDisplayForCheckout(currentItem) {
     var listOfChoices: any[] = [];
 
-    // for(let item of this.saladItems) {
     if (currentItem.hasOwnProperty("greens")) {
-      // finalString += "BUILD YOUR OWN SALAD\n"
 
       for (let green in currentItem.greens) {
         if (currentItem.greens[green] != this.saladCheckboxes.greens[green].selected) {
@@ -278,7 +236,7 @@ export class SaladModalComponent {
         listOfChoices.push("Side");
       }
     }
-    // }
+
     return listOfChoices;
   }
 
@@ -458,8 +416,6 @@ export class SaladModalComponent {
     });
   }
 
-  // this.buildGreens().value,
-  // freshProduce: this.buildFreshProduce().value,
   resetForm() {
     this.saladForm.reset();
     this.saladForm.patchValue({
@@ -476,8 +432,6 @@ export class SaladModalComponent {
     });
   }
 
-  // [this.buildGreens(), oneCheckbox],
-  // [this.buildFreshProduce(), oneCheckbox],
   ngOnInit() {
     this.saladForm = this.fb.group({
       type: "",

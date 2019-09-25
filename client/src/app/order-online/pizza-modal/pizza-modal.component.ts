@@ -13,8 +13,6 @@ import { StorageService } from 'src/app/services/storage.service';
 })
 export class PizzaModalComponent {
   @ViewChild('contentPizza') modal;
-  // @LocalStorage() pizzaItems: any[] = [];
-  // pizzaItems: Observable<any[]>;
   pizzaItems: any[] = this.storageService.getPizzaItems();
   pizzaForm: FormGroup;
   forEdit: boolean = false;
@@ -26,7 +24,6 @@ export class PizzaModalComponent {
       this.pizzaItems = pizzaItems;
     });
   }
-  // private localStorageService: LocalStorageService
 
   openLg(pizzaType) {
     this.pizzaForm.patchValue({
@@ -36,9 +33,6 @@ export class PizzaModalComponent {
   }
 
   valueBindingForEdit(index) {
-    // need to get the index for the item in the pizzaItems??
-    // distinguish between create and edit in createTempForm()?
-    // create openPizzaForEdit()? if using openPizzaForEdit(), create a diffrent button in pizza modal?
     this.forEdit = true;
     this.indexForEdit = index;
     if (this.pizzaItems[index].type == "BUILD YOUR OWN PIZZA") {
@@ -92,37 +86,8 @@ export class PizzaModalComponent {
 
     this.storageService.updatePizzaItems("pizzaItems", newArrayWithUpdate);
 
-
     this.forEdit = false;
     this.indexForEdit = 0;
-
-
-
-    // if (this.pizzaForm.controls.type.value != 'BUILD YOUR OWN PIZZA') {
-    //   this.pizzaItems[this.indexForEdit].type = this.pizzaForm.controls.type.value;
-    //   this.pizzaItems[this.indexForEdit].size = this.pizzaForm.controls.size.value;
-    //   this.pizzaItems[this.indexForEdit].crust = this.pizzaForm.controls.crust.value;
-    //   this.pizzaItems[this.indexForEdit].finishes = this.pizzaForm.controls.finishes.value;
-
-    //   const noLeadingZero = parseInt(this.pizzaForm.controls.quantity.value, 10);
-    //   this.pizzaItems[this.indexForEdit].quantity = noLeadingZero;
-    // } else {
-    //   this.pizzaItems[this.indexForEdit].type = this.pizzaForm.controls.type.value;
-    //   this.pizzaItems[this.indexForEdit].size = this.pizzaForm.controls.size.value;
-    //   this.pizzaItems[this.indexForEdit].crust = this.pizzaForm.controls.crust.value;
-    //   this.pizzaItems[this.indexForEdit].sauce = this.pizzaForm.controls.sauce.value;
-    //   this.pizzaItems[this.indexForEdit].cheese = this.pizzaForm.controls.cheese.value;
-    //   this.pizzaItems[this.indexForEdit].veggies = this.pizzaForm.controls.veggies.value;
-    //   this.pizzaItems[this.indexForEdit].meats = this.pizzaForm.controls.meats.value;
-    //   this.pizzaItems[this.indexForEdit].finishes = this.pizzaForm.controls.finishes.value;
-    //   this.pizzaItems[this.indexForEdit].quantity = this.pizzaForm.controls.quantity.value;
-
-    //   const noLeadingZero = parseInt(this.pizzaForm.controls.quantity.value, 10);
-    //   this.pizzaItems[this.indexForEdit].quantity = noLeadingZero;
-    // }
-    // this.forEdit = false;
-    // this.indexForEdit = 0;
-    // this.pizzaItems = this.pizzaItems;
   }
 
   resetEdit() {
@@ -131,8 +96,6 @@ export class PizzaModalComponent {
   }
 
   deletePizzaItem(index) {
-    // this.pizzaItems.splice(index, 1);
-
     let newArrayWithDeletedItem = this.storageService.getPizzaItems();
     newArrayWithDeletedItem.splice(index, 1);
     this.storageService.updatePizzaItems("pizzaItems", newArrayWithDeletedItem);
@@ -150,21 +113,15 @@ export class PizzaModalComponent {
       delete forCart.veggies;
       delete forCart.meats;
     }
-    // this.pizzaItems.push(forCart);
 
     let newArrayWithAddedItem = this.storageService.getPizzaItems();
     newArrayWithAddedItem.push(forCart);
     this.storageService.updatePizzaItems("pizzaItems", newArrayWithAddedItem);
   }
 
-  // create other modals?
-
-  // find out about how to dynamically add html?
   buildDisplayForCart(currentItem) {
     var finalString: string = "";
-    // for(let item of this.pizzaItems) {
     if (currentItem.hasOwnProperty("cheese")) {
-      // finalString += "BUILD YOUR OWN PIZZA\n";
       finalString += (currentItem.size + ", ");
       finalString += (currentItem.crust + ", ");
       finalString += (currentItem.sauce + ", ");
@@ -190,7 +147,6 @@ export class PizzaModalComponent {
       }
       finalString = finalString.replace(/,\s*$/, "");
     } else {
-      // finalString += "SPECIALTY PIZZA\n"
       finalString += (currentItem.size + ", ");
       finalString += (currentItem.crust + ", ");
       for (let finish in currentItem.finishes) {
@@ -200,15 +156,12 @@ export class PizzaModalComponent {
       }
       finalString = finalString.replace(/,\s*$/, "");
     }
-    // }
     return finalString;
   }
 
   buildDisplayForCheckout(currentItem) {
     var listOfChoices: any[] = [];
-    // for(let item of this.pizzaItems) {
     if (currentItem.hasOwnProperty("cheese")) {
-      // finalString += "BUILD YOUR OWN PIZZA\n";
       listOfChoices.push(currentItem.size);
       listOfChoices.push(currentItem.crust);
       listOfChoices.push(currentItem.sauce);
@@ -233,7 +186,6 @@ export class PizzaModalComponent {
         }
       }
     } else {
-      // finalString += "SPECIALTY PIZZA\n"
       listOfChoices.push(currentItem.size);
       listOfChoices.push(currentItem.crust);
       for (let finish in currentItem.finishes) {
@@ -242,7 +194,6 @@ export class PizzaModalComponent {
         }
       }
     }
-    // }
     return listOfChoices;
   }
 
