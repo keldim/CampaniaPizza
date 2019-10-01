@@ -9,11 +9,13 @@ import { LocationComponent } from './locations/locations.component';
 import { MenuModule } from './menu/menu.module';
 import { AppRoutingModule } from './app-routing.module';
 
-import { UserService } from './services/user.service';
+import { SecurityService } from './services/security.service';
 import { AboutUsComponent } from './about-us/about-us.component';
 
 import { OrderOnlineModule } from './order-online/order-online.module';
 import { WebStorageModule } from 'ngx-store';
+import { SecurityComponent } from './security/security.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -21,16 +23,18 @@ import { WebStorageModule } from 'ngx-store';
     AppComponent,
     HomeComponent,
     LocationComponent,
-    AboutUsComponent
+    AboutUsComponent,
+    SecurityComponent
   ],
   imports: [
     BrowserModule,
     RouterModule,
     MenuModule,
     OrderOnlineModule,
+    ReactiveFormsModule,
     AppRoutingModule
   ],
-  providers: [UserService],
+  // providers: [SecurityService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

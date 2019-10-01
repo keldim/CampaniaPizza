@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from '../models/user';
-import { UserService } from '../services/user.service';
+import { SecurityService } from '../services/security.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PizzaModalComponent } from './pizza-modal/pizza-modal.component';
 import { DessertModalComponent } from './dessert-modal/dessert-modal.component';
@@ -32,8 +32,6 @@ export class OrderOnlineComponent implements OnInit {
   @ViewChild(SaladModalComponent) saladModalComponent;
   @ViewChild(DrinkModalComponent) drinkModalComponent;
 
-
-  // private userService: UserService,
   // private modalService: NgbModal,
   constructor(private fb: FormBuilder, private storageService: StorageService) {
     this.storageService.watchPizzaItems().subscribe(pizzaItems => {
@@ -138,11 +136,6 @@ export class OrderOnlineComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.userService.getUserByUsername('john')
-    //   .subscribe(
-    //     (data: User) => this.selectedUser = data,
-    //     (err: any) => console.log(err)
-    //   );
 
     this.orderOnlineForm = this.fb.group({
       location: this.pickupLocation
