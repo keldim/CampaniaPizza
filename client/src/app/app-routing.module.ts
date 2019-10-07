@@ -14,7 +14,7 @@ import { SecurityComponent } from './security/security.component';
       { path: 'home', component: HomeComponent },
       { path: 'locations', component: LocationComponent },
       { path: 'about-us', component: AboutUsComponent },
-      { path: 'login', component: SecurityComponent },
+      // { path: 'login', component: SecurityComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: '**', redirectTo: 'home', pathMatch: 'full' }
     ], {scrollPositionRestoration: 'enabled'})

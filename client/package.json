@@ -27,6 +27,7 @@
     "jspdf": "^1.5.3",
     "ngx-bootstrap": "^4.1.1",
     "ngx-store": "^2.1.0",
+    "oidc-client": "^1.9.1",
     "popper": "^1.0.1",
     "popper.js": "^1.15.0",
     "rxjs": "~6.3.3",

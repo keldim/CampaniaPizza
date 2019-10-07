@@ -9,7 +9,7 @@ import { LocationComponent } from './locations/locations.component';
 import { MenuModule } from './menu/menu.module';
 import { AppRoutingModule } from './app-routing.module';
 
-import { SecurityService } from './services/security.service';
+import { AuthService } from './services/auth.service';
 import { AboutUsComponent } from './about-us/about-us.component';
 
 import { OrderOnlineModule } from './order-online/order-online.module';
@@ -23,8 +23,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppComponent,
     HomeComponent,
     LocationComponent,
-    AboutUsComponent,
-    SecurityComponent
+    AboutUsComponent
+    // ,
+    // SecurityComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +35,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     AppRoutingModule
   ],
-  // providers: [SecurityService],
+  // providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

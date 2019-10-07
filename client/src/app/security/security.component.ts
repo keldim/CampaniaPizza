@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SecurityService } from '../services/security.service';
+import { AuthService } from '../services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -13,15 +13,15 @@ export class SecurityComponent implements OnInit {
   securityCredentials: FormGroup;
   credentials = {username: '', password: ''};
 
-  constructor(private app: SecurityService, private http: HttpClient, private router: Router, private fb: FormBuilder) {
+  constructor(private app: AuthService, private http: HttpClient, private router: Router, private fb: FormBuilder) {
   }
 
-  login() {
-    this.app.authenticate(this.credentials, () => {
-        this.router.navigateByUrl('/');
-    });
-    return false;
-  }
+  // login() {
+  //   this.app.authenticate(this.credentials, () => {
+  //       this.router.navigateByUrl('/');
+  //   });
+  //   return false;
+  // }
 
   ngOnInit() {
     this.securityCredentials = this.fb.group({

@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from '../models/user';
-import { SecurityService } from '../services/security.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PizzaModalComponent } from './pizza-modal/pizza-modal.component';
 import { DessertModalComponent } from './dessert-modal/dessert-modal.component';
