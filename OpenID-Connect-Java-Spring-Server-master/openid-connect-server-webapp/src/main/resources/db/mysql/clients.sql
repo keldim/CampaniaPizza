@@ -2,6 +2,8 @@
 -- Turn off autocommit and start a transaction so that we can use the temp tables
 --
 
+USE `mitre-openid-connect`;
+
 SET AUTOCOMMIT = 0;
 
 START TRANSACTION;
