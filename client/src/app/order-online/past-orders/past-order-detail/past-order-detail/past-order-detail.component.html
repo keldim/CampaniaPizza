@@ -1,0 +1,27 @@
+
+<div class="hide-order-online">
+  <pizza-modal></pizza-modal>
+</div>
+<div class="container" style="text-align: center;">
+  <div *ngIf="pastOrder">
+    <div *ngFor="let pizzaItem of pastOrder.pizzaItems">
+      <span>
+        {{ pizzaItem.quantity }} x {{ pizzaItem.type }}
+      </span>
+      <span>
+        <span *ngFor="let choice of jsonArrayToArray(pizzaItem.cheese)">
+          <!-- *ngFor="let choice of pizzaModalComponent.buildDisplayForCheckout(pizzaItem)" -->
+          <!-- <span class="row"> -->
+            <span>
+              <!-- class="col choice" -->
+              {{ choice }}
+            </span>
+          <!-- </span> -->
+        </span>
+        <span>
+          {{ pizzaItem.cheese }}
+        </span>
+      </span>
+    </div>
+  </div>
+</div>

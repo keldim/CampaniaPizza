@@ -1,0 +1,12 @@
+.linkColor {
+  color: black;
+}
+
+.clicked-link {
+  border-bottom: 5px solid red;
+}
+
+.submenu-button-tweak {
+  margin-left: 10px;
+  margin-right: 10px;
+}

@@ -1,12 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
 import { HomeComponent } from './home/home.component';
 import { LocationComponent } from './locations/locations.component';
-
 import { AboutUsComponent } from './about-us/about-us.component';
-import { SecurityComponent } from './security/security.component';
-
 
 @NgModule({
   imports: [
@@ -14,7 +10,6 @@ import { SecurityComponent } from './security/security.component';
       { path: 'home', component: HomeComponent },
       { path: 'locations', component: LocationComponent },
       { path: 'about-us', component: AboutUsComponent },
-      // { path: 'login', component: SecurityComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: '**', redirectTo: 'home', pathMatch: 'full' }
     ], {scrollPositionRestoration: 'enabled'})

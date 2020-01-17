@@ -9,13 +9,13 @@ import { LocationComponent } from './locations/locations.component';
 import { MenuModule } from './menu/menu.module';
 import { AppRoutingModule } from './app-routing.module';
 
-import { AuthService } from './services/auth.service';
 import { AboutUsComponent } from './about-us/about-us.component';
 
 import { OrderOnlineModule } from './order-online/order-online.module';
 import { WebStorageModule } from 'ngx-store';
-import { SecurityComponent } from './security/security.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthInterceptor } from './interceptor/interceptor.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
 @NgModule({
@@ -24,8 +24,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     HomeComponent,
     LocationComponent,
     AboutUsComponent
-    // ,
-    // SecurityComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +33,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     AppRoutingModule
   ],
-  // providers: [AuthService],
+  // providers: [
+  //   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  // ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

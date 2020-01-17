@@ -1,9 +1,9 @@
-<script src="https://cdnjs.cloudfare.com/ajax/libs/oidc-client/1.4.1/oidc-client.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/oidc-client/1.4.1/oidc-client.min.js"></script>
 <script>
   var config = {
     userStore: new Oidc.WebStorageStateStore({ store: window.localStorage })
   };
-  var mgr = new Oidc.UserManager(userStore);
+  var mgr = new Oidc.UserManager(config);
   mgr.signinRedirectCallback().then(
     () => {
       window.history.replaceState({},

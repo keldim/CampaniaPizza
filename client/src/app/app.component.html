@@ -20,11 +20,6 @@
         <li class="nav-item active menu-button-tweak">
           <a class="nav-link" href="#" [routerLink]="['/order-online']" routerLinkActive="clicked-link">Order Online</a>
         </li>
-        <li class="nav-item active menu-button-tweak">
-          <!-- <a class="btn btn-outline-danger" href="#" [routerLink]="['/login']" role="button">Login</a> -->
-          <button *ngIf="!isLoggedIn()" type="button" class="btn btn-outline-danger" (click)="login()">Login</button>
-          <button *ngIf="isLoggedIn()" type="button" class="btn btn-outline-danger" (click)="logout()">Logout</button>
-        </li>
       </ul>
     </div>
   </div>

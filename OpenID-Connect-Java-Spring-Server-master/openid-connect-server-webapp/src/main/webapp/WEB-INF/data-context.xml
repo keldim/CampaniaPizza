@@ -45,7 +45,7 @@
 		<property name="jdbcUrl"
 			value="jdbc:mysql://127.0.0.1:3306/mitre-openid-connect?useSSL=false&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC" />
 		<property name="username" value="mitre-openid-connect" />
-		<property name="password" value="" />
+		<property name="password" value="mitre-55555" />
 	</bean>
 
 	<bean id="jpaAdapter"

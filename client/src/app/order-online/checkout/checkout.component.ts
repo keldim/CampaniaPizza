@@ -11,6 +11,8 @@ import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { StorageService } from 'src/app/services/storage.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { CurrentOrderComponent } from '../current-order.component';
 
 @Component({
   templateUrl: './checkout.component.html',
@@ -26,6 +28,7 @@ export class CheckoutComponent implements OnInit {
   @ViewChild(DessertModalComponent) dessertModalComponent;
   @ViewChild(SaladModalComponent) saladModalComponent;
   @ViewChild(DrinkModalComponent) drinkModalComponent;
+  @ViewChild(CurrentOrderComponent) currentOrderComponent;
 
   pizzaItems: any[] = this.storageService.getPizzaItems();
   saladItems: any[] = this.storageService.getSaladItems();
@@ -37,7 +40,8 @@ export class CheckoutComponent implements OnInit {
   @ViewChild('canvas') canvas: ElementRef;
   @ViewChild('downloadLink') downloadLink: ElementRef;
 
-  constructor(private http: HttpClient, private fb: FormBuilder, public storageService: StorageService) {
+  // changed
+  constructor(private http: HttpClient, private fb: FormBuilder, public storageService: StorageService, private _authService: AuthService) {
     this.storageService.watchPizzaItems().subscribe(pizzaItems => {
       this.pizzaItems = pizzaItems;
     });
@@ -88,20 +92,56 @@ export class CheckoutComponent implements OnInit {
   }
 
   chargeCard(token: string) {
-    const headers = new HttpHeaders({
-      'token': token,
-      'amount': this.orderOnlineComponent.showTotal().toString(),
-      'pickupLocation': this.pickupLocation,
-      'firstName': this.contactInfo.controls.firstName.value,
-      'lastName': this.contactInfo.controls.lastName.value,
-      'email': this.contactInfo.controls.email.value,
-      'phoneNumber': this.contactInfo.controls.phoneNumber.value,
-      'invoiceImg': this.inoviceImg
-    });
+    if (this.currentOrderComponent.isLoggedIn()) {
+      // changed
+      const headers = new HttpHeaders({
+        'Authorization': `Bearer ` + this._authService.getAccessToken(),
+        'token': token,
+        'amount': this.orderOnlineComponent.showTotal().toString(),
+        'pickupLocation': this.pickupLocation,
+        'firstName': this.contactInfo.controls.firstName.value,
+        'lastName': this.contactInfo.controls.lastName.value,
+        'email': this.contactInfo.controls.email.value,
+        'phoneNumber': this.contactInfo.controls.phoneNumber.value,
+        'invoiceImg': this.inoviceImg,
+        // this part only shows as [object]
+        // 'pizzaItems': this.pizzaItems,
+        // 'saladItems': this.saladItems,
+        // 'drinkItems': this.drinkItems,
+        // 'dessertItems': this.dessertItems
+        'pizzaItems': localStorage.getItem("pizzaItems"),
+        'saladItems': localStorage.getItem("saladItems"),
+        'drinkItems': localStorage.getItem("drinkItems"),
+        'dessertItems': localStorage.getItem("dessertItems")
+      });
+      console.log(headers);
 
-    this.http.post('http://localhost:8080/payment/charge', {}, { headers: headers }).subscribe(resp => {
+      this.http.post('http://localhost:8181/registered-user/charge', {}, { headers: headers }).subscribe(resp => {
         console.log(resp);
-    });
+      });
+    } else {
+      // changed
+      const headers = new HttpHeaders({
+        'token': token,
+        'amount': this.orderOnlineComponent.showTotal().toString(),
+        'pickupLocation': this.pickupLocation,
+        'firstName': this.contactInfo.controls.firstName.value,
+        'lastName': this.contactInfo.controls.lastName.value,
+        'email': this.contactInfo.controls.email.value,
+        'phoneNumber': this.contactInfo.controls.phoneNumber.value,
+        'invoiceImg': this.inoviceImg,
+        'pizzaItems': localStorage.getItem("pizzaItems"),
+        'saladItems': localStorage.getItem("saladItems"),
+        'drinkItems': localStorage.getItem("drinkItems"),
+        'dessertItems': localStorage.getItem("dessertItems")
+      });
+      console.log(headers);
+
+      this.http.post('http://localhost:8181/unregistered-user/charge', {}, { headers: headers }).subscribe(resp => {
+        console.log(resp);
+      });
+    }
+
 
     this.storageService.clear();
   }

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { UserManager, User, WebStorageStateStore } from 'oidc-client';
+import { NONE_TYPE } from '@angular/compiler/src/output/output_ast';
 
 @Injectable({
   providedIn: 'root'
@@ -13,16 +14,18 @@ export class AuthService {
   private _user : User;
 
   constructor(private http: HttpClient) {
-    // http://localhost:8080/
     var config = {
-      authority: 'https://securingangularappscourse-sts.azurewebsites.net',
-      client_id: 'spa-client',
+      authority: 'http://localhost:8080/openid-connect-server-webapp/',
+      client_id: 'client',
       redirect_uri: 'http://localhost:4200/assets/oidc-login-redirect.html',
-      scope: 'openid projects-api profile',
+      scope: 'openid',
       response_type: 'id_token token',
+      // projects-api profile
+      // prompt: 'none',
       post_logout_redirect_uri: 'http://localhost:4200/?postLogout=true',
       userStore: new WebStorageStateStore({ store: window.localStorage })
     };
+
     this._userManager = new UserManager(config);
     this._userManager.getUser().then(user => {
       if (user && !user.expired) {
@@ -36,7 +39,7 @@ export class AuthService {
   }
 
   logout(): Promise<any> {
-    return this._userManager.signinRedirect();
+    return this._userManager.signoutRedirect();
   }
 
   isLoggedIn(): boolean {
@@ -46,6 +49,24 @@ export class AuthService {
   getAccessToken(): string {
     return this._user ? this._user.access_token : '';
   }
+
+  // getAccessToken() {
+  //   return this._userManager.getUser().then(user => {
+  //     if (!!user && !user.expired) {
+  //       return user.access_token;
+  //     }
+  //     else {
+  //       return null;
+  //     }
+  //   });
+  // }
+
+  signoutRedirectCallback(): Promise<any> {
+    return this._userManager.signoutRedirectCallback();
+  }
+
+
+
   // getUserByUsername(username: string): Observable<User> {
   //   return this.http.get<User>(`http://localhost:8080/users/${username}`, {
   //     headers: new HttpHeaders({

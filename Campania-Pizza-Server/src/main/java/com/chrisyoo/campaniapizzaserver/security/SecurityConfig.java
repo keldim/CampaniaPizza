@@ -16,42 +16,10 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
-//@Configuration
-public class SecurityConfig extends ResourceServerConfigurerAdapter {
-	
-	@Autowired
-	private Environment env;
-	 
-	@Bean
-	public DataSource dataSource() {
-	    DriverManagerDataSource dataSource = new DriverManagerDataSource();
-	    dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
-	    dataSource.setUrl(env.getProperty("jdbc.url"));
-	    dataSource.setUsername(env.getProperty("jdbc.user"));
-	    dataSource.setPassword(env.getProperty("jdbc.pass"));
-	    return dataSource;
-	}
-	 
-	@Bean
-	public TokenStore tokenStore() {
-	    return new JdbcTokenStore(dataSource());
-	}
 
-}
 //@Configuration
-//@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
-//public class SecurityConfig extends WebSecurityConfigurerAdapter {
-//  @Override
-//  protected void configure(HttpSecurity http) throws Exception {
-//    http
-//      .httpBasic()
-//    .and()
-//      .authorizeRequests()
-//        .antMatchers("/index.html", "/", "/home", "/login").permitAll()
-//        .anyRequest().authenticated();
-//  }
-//
-//}
+//extends WebSecurityConfigurerAdapter
+public class SecurityConfig {
 
 //@Autowired
 //private DataSource securityDataSource;
@@ -78,3 +46,4 @@ public class SecurityConfig extends ResourceServerConfigurerAdapter {
 //	auth.jdbcAuthentication().dataSource(securityDataSource);
 //}
 
+}
