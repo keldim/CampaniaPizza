@@ -16,6 +16,7 @@ import { WebStorageModule } from 'ngx-store';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './interceptor/interceptor.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { UserRegistrationComponent } from './user-registration/user-registration.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     AppComponent,
     HomeComponent,
     LocationComponent,
-    AboutUsComponent
+    AboutUsComponent,
+    UserRegistrationComponent
   ],
   imports: [
     BrowserModule,

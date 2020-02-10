@@ -1,0 +1,41 @@
+
+<div class="container box-form">
+  <div class="contact-info-header">New User</div>
+  <form [formGroup]="newUserInfo" class="contact-info-form">
+    <div class="row contact-info-row">
+      <div class="col col-center">
+        Username:
+      </div>
+      <div class="col col-center">
+        <input type="text" formControlName="username">
+      </div>
+      <div class="col col-center">
+        Password:
+      </div>
+      <div class="col col-center">
+        <input type="text" formControlName="password">
+      </div>
+    </div>
+    <div class="row contact-info-row">
+      <div class="col col-center">
+        PasswordConf:
+      </div>
+      <div class="col col-center">
+        <!-- formControlName="email" -->
+        <input type="text">
+      </div>
+      <div class="col col-center">
+        Email:
+      </div>
+      <div class="col col-center">
+        <input type="text" formControlName="email">
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="place-order-button">
+  <a class="btn btn-outline-success" href="#" [routerLink]="['/home']" (click)="addNewUser()"
+    role="button">Place Order</a>
+  <!--  -->
+</div>

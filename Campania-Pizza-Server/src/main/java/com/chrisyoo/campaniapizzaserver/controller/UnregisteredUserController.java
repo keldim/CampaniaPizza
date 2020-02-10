@@ -77,6 +77,13 @@ public class UnregisteredUserController {
 		return this.stripeClient.chargeCreditCard(token, amount, request);
 
 	}
+	
+	
+	// whitelist this website
+	// send request to "/token" for admin token, using admin id and pass
+	// when you recieve admin token, use that to send request for registering a new client
+	
+	
 
 	@RequestMapping(value = "/whoareyou", method = RequestMethod.GET)
 	public @ResponseBody String whoareyou(String sub) {
