@@ -39,26 +39,26 @@ public class Pizza {
 //	@OneToOne(cascade=CascadeType.ALL)
 //	@JoinColumn(name="pizza_cheese_id")
 //	private PizzaCheese cheese;
-	@Column(name="pizza_cheese")
+	@Column(name="cheese")
 	private String cheese;
 	
 //	@OneToOne(cascade=CascadeType.ALL)
 //	@JoinColumn(name="pizza_veggie_id")
 //	private PizzaVeggie veggie;
-	@Column(name="pizza_veggie")
-	private String veggie;
+	@Column(name="veggies")
+	private String veggies;
 	
 //	@OneToOne(cascade=CascadeType.ALL)
 //	@JoinColumn(name="pizza_meat_id")
 //	private PizzaMeat meat;
-	@Column(name="pizza_meat")
-	private String meat;
+	@Column(name="meats")
+	private String meats;
 	
 //	@OneToOne(cascade=CascadeType.ALL)
 //	@JoinColumn(name="pizza_finish_id")
 //	private PizzaFinish finish;
-	@Column(name="pizza_finish")
-	private String finish;
+	@Column(name="finishes")
+	private String finishes;
 	
 	@Column(name="price")
 	private String price;
@@ -70,15 +70,15 @@ public class Pizza {
 	
 	}
 
-	public Pizza(String type, String size, String crust, String sauce, String cheese, String veggie, String meat, String finish, String price, String quantity) {
+	public Pizza(String type, String size, String crust, String sauce, String cheese, String veggies, String meats, String finishes, String price, String quantity) {
 		this.type = type;
 		this.size = size;
 		this.crust = crust;
 		this.sauce = sauce;
 		this.cheese = cheese;
-		this.veggie = veggie;
-		this.meat = meat;
-		this.finish = finish;
+		this.veggies = veggies;
+		this.meats = meats;
+		this.finishes = finishes;
 		this.price = price;
 		this.quantity = quantity;
 	}
@@ -139,28 +139,28 @@ public class Pizza {
 		this.cheese = cheese;
 	}
 
-	public String getVeggie() {
-		return veggie;
+	public String getVeggies() {
+		return veggies;
 	}
 
-	public void setVeggie(String veggie) {
-		this.veggie = veggie;
+	public void setVeggies(String veggies) {
+		this.veggies = veggies;
 	}
 
-	public String getMeat() {
-		return meat;
+	public String getMeats() {
+		return meats;
 	}
 
-	public void setMeat(String meat) {
-		this.meat = meat;
+	public void setMeats(String meats) {
+		this.meats = meats;
 	}
 
-	public String getFinish() {
-		return finish;
+	public String getFinishes() {
+		return finishes;
 	}
 
-	public void setFinish(String finish) {
-		this.finish = finish;
+	public void setFinishes(String finishes) {
+		this.finishes = finishes;
 	}
 
 	public String getPrice() {

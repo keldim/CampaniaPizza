@@ -25,9 +25,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.chrisyoo.campaniapizzaserver.entity.Dessert;
+import com.chrisyoo.campaniapizzaserver.entity.Drink;
 import com.chrisyoo.campaniapizzaserver.entity.OpenIdUser;
 import com.chrisyoo.campaniapizzaserver.entity.PastOrder;
 import com.chrisyoo.campaniapizzaserver.entity.Pizza;
+import com.chrisyoo.campaniapizzaserver.entity.Salad;
 import com.chrisyoo.campaniapizzaserver.entity.StripeClient;
 import com.chrisyoo.campaniapizzaserver.service.OpenIdUserService;
 import com.chrisyoo.campaniapizzaserver.service.PastOrderService;
@@ -114,220 +117,143 @@ public class RegisteredUserController {
 	@PostMapping("/charge")
 	public Charge chargeCard(HttpServletRequest request, Model theModel) throws Exception {
 
-		// changed
-		System.out.println(request.getHeader("token"));
-		System.out.println(request.getHeader("amount"));
-		System.out.println(request.getHeader("Authorization"));
-		System.out.println(request.getHeader("pizzaItems"));
-		System.out.println(request.getHeader("saladItems"));
-		System.out.println(request.getHeader("drinkItems"));
-		System.out.println(request.getHeader("dessertItems"));
+		JSONParser parser = new JSONParser();
 
+		// what if there are no pizzas at all?
+		JSONArray pizzaItems = (JSONArray) parser.parse(request.getHeader("pizzaItems"));
+		JSONArray saladItems = (JSONArray) parser.parse(request.getHeader("saladItems"));
+		JSONArray drinkItems = (JSONArray) parser.parse(request.getHeader("drinkItems"));
+		JSONArray dessertItems = (JSONArray) parser.parse(request.getHeader("dessertItems"));
+				
+		PastOrder newPastOrder = new PastOrder();
+			
+		for (int i = 0; i < pizzaItems.size(); i++) {
+
+			JSONObject currentPizzaItem = (JSONObject) pizzaItems.get(i);
+			String pizzaType = (String) currentPizzaItem.get("type");
+			Pizza pizzaPastOrder;
+			
+			if (pizzaType.equals("BUILD YOUR OWN PIZZA")) {
+
+				JSONArray currentPizzaCheese = (JSONArray) currentPizzaItem.get("cheese");
+				JSONArray currentPizzaVeggies = (JSONArray) currentPizzaItem.get("veggies");
+				JSONArray currentPizzaMeats = (JSONArray) currentPizzaItem.get("meats");
+				JSONArray currentPizzaFinishes = (JSONArray) currentPizzaItem.get("finishes");
+				Double price = (Double) currentPizzaItem.get("price");
+				Long quantity = (Long) currentPizzaItem.get("quantity");
+
+				pizzaPastOrder = new Pizza(pizzaType,
+						(String) currentPizzaItem.get("size"), (String) currentPizzaItem.get("crust"),
+						(String) currentPizzaItem.get("sauce"), currentPizzaCheese.toString(), currentPizzaVeggies.toString(),
+						currentPizzaMeats.toString(), currentPizzaFinishes.toString(), String.valueOf(price), String.valueOf(quantity));
+								
+			} else {
+				
+				JSONArray currentPizzaFinishes = (JSONArray) currentPizzaItem.get("finishes");
+				Double price = (Double) currentPizzaItem.get("price");
+				Long quantity = (Long) currentPizzaItem.get("quantity");
+
+				pizzaPastOrder = new Pizza(pizzaType,
+						(String) currentPizzaItem.get("size"), (String) currentPizzaItem.get("crust"),
+						(String) currentPizzaItem.get("sauce"), null, null,
+						null, currentPizzaFinishes.toString(), String.valueOf(price), String.valueOf(quantity));
+				
+			}
+
+			newPastOrder.addPizza(pizzaPastOrder);
+			
+		}
+		
+		for (int i = 0; i < saladItems.size(); i++) {
+			JSONObject currentSaladItem = (JSONObject) saladItems.get(i);
+			String saladType = (String) currentSaladItem.get("type");
+			Salad saladPastOrder;
+
+			if (saladType.equals("BUILD YOUR OWN SALAD")) {
+				JSONArray currentSaladGreens = (JSONArray) currentSaladItem.get("greens");
+				JSONArray currentSaladCheese = (JSONArray) currentSaladItem.get("cheese");
+				JSONArray currentSaladFreshProduce = (JSONArray) currentSaladItem.get("freshProduce");
+				JSONArray currentSaladMeats = (JSONArray) currentSaladItem.get("meats");
+				JSONArray currentSaladTopItOff = (JSONArray) currentSaladItem.get("topItOff");
+				JSONArray currentSaladDressings = (JSONArray) currentSaladItem.get("dressings");
+				
+				Double price = (Double) currentSaladItem.get("price");
+				Long quantity = (Long) currentSaladItem.get("quantity");
+				
+				saladPastOrder = new Salad(saladType, currentSaladGreens.toString(), currentSaladCheese.toString(), currentSaladFreshProduce.toString(), currentSaladMeats.toString(), 
+						currentSaladTopItOff.toString(), currentSaladDressings.toString(), (String) currentSaladItem.get("size"), String.valueOf(price), String.valueOf(quantity));
+				
+			} else {
+				Double price = (Double) currentSaladItem.get("price");
+				Long quantity = (Long) currentSaladItem.get("quantity");
+				
+				saladPastOrder = new Salad(saladType, null, null, null, null, null, null, (String) currentSaladItem.get("size"), String.valueOf(price), String.valueOf(quantity));
+				
+			}
+			
+			newPastOrder.addSalad(saladPastOrder);
+		}
+		
+		for (int i = 0; i < dessertItems.size(); i++) {
+			JSONObject currentDessertItem = (JSONObject) dessertItems.get(i);
+			String dessertType = (String) currentDessertItem.get("type");
+			Double price = (Double) currentDessertItem.get("price");
+			Long quantity = (Long) currentDessertItem.get("quantity");
+			
+			Dessert dessertPastOrder = new Dessert(dessertType, String.valueOf(price), String.valueOf(quantity));
+			
+			if(dessertType.equals("Cookies")) {
+				dessertPastOrder.setCookieChoice((String) currentDessertItem.get("cookieChoice"));
+			} else {
+				dessertPastOrder.setBrownieChoice((String) currentDessertItem.get("brownieChoice"));
+			}
+			
+			newPastOrder.addDessert(dessertPastOrder);
+		}
+			
+		for (int i = 0; i < drinkItems.size(); i++) {
+			JSONObject currentDrinkItem = (JSONObject) drinkItems.get(i);
+
+			Double price = (Double) currentDrinkItem.get("price");
+			Long quantity = (Long) currentDrinkItem.get("quantity");
+			
+			Drink drinkPastOrder = new Drink((String) currentDrinkItem.get("type"), String.valueOf(price), String.valueOf(quantity));
+			
+			newPastOrder.addDrink(drinkPastOrder);
+		}
+			
 		String token = request.getHeader("token");
 		// with toggle, simply run the application, if the error occurs, then enter
 		// debug perspective
 
 		String[] pre_split_string = request.getHeader("Authorization").split(" ");
 		String[] split_string = pre_split_string[1].split("\\.");
-
-		JSONParser parser = new JSONParser();
-
-		JSONArray pizzaItems = (JSONArray) parser.parse(request.getHeader("pizzaItems"));
-
-		for (int i = 0; i < pizzaItems.size(); i++) {
-
-			JSONObject currentPizzaItem = (JSONObject) pizzaItems.get(i);
-
-			String pizzaType = (String) currentPizzaItem.get("type");
-			System.out.println(pizzaType);
-			System.out.println(pizzaType == "BUILD YOUR OWN PIZZA");;
-
-			if (pizzaType.equals("BUILD YOUR OWN PIZZA")) {
-//				 == "BUILD YOUR OWN PIZZA"
-				JSONArray currentPizzaCheese = (JSONArray) currentPizzaItem.get("cheese");
-//				StringBuilder cheeseItems = new StringBuilder();
-//				for (int j = 0; j < currentPizzaCheese.size(); j++) {
-//					cheeseItems.append(currentPizzaCheese.get(j));
-//					cheeseItems.append(",");
-//				}
-//
-				JSONArray currentPizzaVeggies = (JSONArray) currentPizzaItem.get("veggies");
-//				StringBuilder veggieItems = new StringBuilder();
-//				for (int k = 0; k < currentPizzaVeggies.size(); k++) {
-//					veggieItems.append(currentPizzaVeggies.get(k));
-//					veggieItems.append(",");
-//				}
-//
-				JSONArray currentPizzaMeats = (JSONArray) currentPizzaItem.get("meats");
-//				StringBuilder meatItems = new StringBuilder();
-//				for (int l = 0; l < currentPizzaMeats.size(); l++) {
-//					meatItems.append(currentPizzaMeats.get(l));
-//					meatItems.append(",");
-//				}
-//
-				JSONArray currentPizzaFinishes = (JSONArray) currentPizzaItem.get("finishes");
-//				StringBuilder finishItems = new StringBuilder();
-//				for (int m = 0; m < currentPizzaFinishes.size(); m++) {
-//					finishItems.append(currentPizzaFinishes.get(m));
-//					finishItems.append(",");
-//				}
-
-				Double price = (Double) currentPizzaItem.get("price");
-				Long quantity = (Long) currentPizzaItem.get("quantity");
-
-//				Pizza pizzaPastOrder = new Pizza((String) currentPizzaItem.get("type"),
-//						(String) currentPizzaItem.get("size"), (String) currentPizzaItem.get("crust"),
-//						(String) currentPizzaItem.get("sauce"), cheeseItems.toString(), veggieItems.toString(),
-//						meatItems.toString(), finishItems.toString(), String.valueOf(price), String.valueOf(quantity));
-				
-//				Pizza pizzaPastOrder = new Pizza((String) currentPizzaItem.get("type"),
-//						(String) currentPizzaItem.get("size"), (String) currentPizzaItem.get("crust"),
-//						(String) currentPizzaItem.get("sauce"), (String) currentPizzaItem.get("cheese"), (String) currentPizzaItem.get("veggies"),
-//						(String) currentPizzaItem.get("meats"), (String) currentPizzaItem.get("finishes"), String.valueOf(price), String.valueOf(quantity));
-				
-				Pizza pizzaPastOrder = new Pizza((String) currentPizzaItem.get("type"),
-						(String) currentPizzaItem.get("size"), (String) currentPizzaItem.get("crust"),
-						(String) currentPizzaItem.get("sauce"), currentPizzaCheese.toString(), currentPizzaVeggies.toString(),
-						currentPizzaMeats.toString(), currentPizzaFinishes.toString(), String.valueOf(price), String.valueOf(quantity));
-				
-				System.out.println(split_string);
-				// String base64EncodedHeader = split_string[0];
-				String base64EncodedBody = split_string[1];
-				// String base64EncodedSignature = split_string[2];
-
-				// System.out.println("~~~~~~~~~ JWT Header ~~~~~~~");
-				Base64 base64Url = new Base64(true);
-				// String header = new String(base64Url.decode(base64EncodedHeader));
-				// System.out.println("JWT Header : " + header);
-
-				System.out.println("~~~~~~~~~ JWT Body ~~~~~~~");
-				String body = new String(base64Url.decode(base64EncodedBody));
-				System.out.println("JWT Body : " + body);
-				JSONObject openId = (JSONObject) parser.parse(body);
-
-				OpenIdUser existingUser = openIdUserService.findByUsername((String) openId.get("sub"));
-				if (existingUser == null) {
-					OpenIdUser newOpenIdUser = new OpenIdUser((String) openId.get("sub"));
-					openIdUserService.save(newOpenIdUser);
-					LocalDateTime now = LocalDateTime.now();
-					Timestamp timeSaved = Timestamp.valueOf(now);
-					PastOrder newPastOrder = new PastOrder(timeSaved, request.getHeader("pickupLocation"));
-					// do etc for display on angular?
-					newPastOrder.addPizza(pizzaPastOrder);
-					newOpenIdUser.addPastOrder(newPastOrder);
-					pastOrderService.save(newPastOrder);
-				} else {
-					LocalDateTime now = LocalDateTime.now();
-					Timestamp timeSaved = Timestamp.valueOf(now);
-					PastOrder newPastOrder = new PastOrder(timeSaved, request.getHeader("pickupLocation"));
-					newPastOrder.addPizza(pizzaPastOrder);
-					existingUser.addPastOrder(newPastOrder);
-					pastOrderService.save(newPastOrder);
-				}
-				
-			} else {
-				JSONArray currentPizzaFinishes = (JSONArray) currentPizzaItem.get("finishes");
-//				StringBuilder finishItems = new StringBuilder();
-//				for (int m = 0; m < currentPizzaFinishes.size(); m++) {
-//					finishItems.append(currentPizzaFinishes.get(m));
-//					finishItems.append(",");
-//				}
-				
-				Double price = (Double) currentPizzaItem.get("price");
-				Long quantity = (Long) currentPizzaItem.get("quantity");
-
-				Pizza pizzaPastOrder = new Pizza((String) currentPizzaItem.get("type"),
-						(String) currentPizzaItem.get("size"), (String) currentPizzaItem.get("crust"),
-						(String) currentPizzaItem.get("sauce"), null, null,
-						null, currentPizzaFinishes.toString(), String.valueOf(price), String.valueOf(quantity));
-				
-				System.out.println(split_string);
-				// String base64EncodedHeader = split_string[0];
-				String base64EncodedBody = split_string[1];
-				// String base64EncodedSignature = split_string[2];
-
-				// System.out.println("~~~~~~~~~ JWT Header ~~~~~~~");
-				Base64 base64Url = new Base64(true);
-				// String header = new String(base64Url.decode(base64EncodedHeader));
-				// System.out.println("JWT Header : " + header);
-
-				System.out.println("~~~~~~~~~ JWT Body ~~~~~~~");
-				String body = new String(base64Url.decode(base64EncodedBody));
-				System.out.println("JWT Body : " + body);
-				JSONObject openId = (JSONObject) parser.parse(body);
-
-				OpenIdUser existingUser = openIdUserService.findByUsername((String) openId.get("sub"));
-				if (existingUser == null) {
-					OpenIdUser newOpenIdUser = new OpenIdUser((String) openId.get("sub"));
-					openIdUserService.save(newOpenIdUser);
-					LocalDateTime now = LocalDateTime.now();
-					Timestamp timeSaved = Timestamp.valueOf(now);
-					PastOrder newPastOrder = new PastOrder(timeSaved, request.getHeader("pickupLocation"));
-					// do etc for display on angular?
-					newPastOrder.addPizza(pizzaPastOrder);
-					newOpenIdUser.addPastOrder(newPastOrder);
-					pastOrderService.save(newPastOrder);
-				} else {
-					LocalDateTime now = LocalDateTime.now();
-					Timestamp timeSaved = Timestamp.valueOf(now);
-					PastOrder newPastOrder = new PastOrder(timeSaved, request.getHeader("pickupLocation"));
-					newPastOrder.addPizza(pizzaPastOrder);
-					existingUser.addPastOrder(newPastOrder);
-					pastOrderService.save(newPastOrder);
-				}
-			}
-
-			
-			
 		
-
+		String base64EncodedBody = split_string[1];
+		Base64 base64Url = new Base64(true);
+		String body = new String(base64Url.decode(base64EncodedBody));
+		JSONObject openId = (JSONObject) parser.parse(body);
+		
+		LocalDateTime now = LocalDateTime.now();
+		Timestamp timeSaved = Timestamp.valueOf(now);
+		
+		newPastOrder.setOrdered_at(timeSaved);
+		newPastOrder.setLocation(request.getHeader("pickupLocation"));
+		
+		// what if there are no users at all?
+		OpenIdUser existingUser = openIdUserService.findByUsername((String) openId.get("sub"));
+		if (existingUser == null) {
+			OpenIdUser newOpenIdUser = new OpenIdUser((String) openId.get("sub"));
+			openIdUserService.save(newOpenIdUser);
+			newOpenIdUser.addPastOrder(newPastOrder);
+		} else {
+			existingUser.addPastOrder(newPastOrder);
 		}
+		pastOrderService.save(newPastOrder);
 
 		Double amount = Double.parseDouble(request.getHeader("amount"));
 
 		return this.stripeClient.chargeCreditCard(token, amount, request);
-
-	
-		// PizzaCheese newPizzaCheese = new PizzaCheese();
-		// use an array of item names?
-		// boolean for items on database, send the string when rest request comes in?
-		// send boolean and frontend will take care of string?
-		// String[] currentArray = newPizzaCheese.getMethodNames();
-		// currentArray[j];
-		// newPizzaCheese.getClass().getMethod(newPizzaCheese.getMethodNames()[j],
-		// boolean.class).invoke(newPizzaCheese, currentPizzaCheese.getBoolean(j));
-
-		// PizzaVeggie newPizzaVeggie = new PizzaVeggie();
-		// newPizzaVeggie.getClass().getMethod(newPizzaVeggie.getMethodNames()[k],
-		// boolean.class).invoke(newPizzaVeggie, currentPizzaVeggies.getBoolean(k));
-
-		// PizzaMeat newPizzaMeat = new PizzaMeat();
-		// newPizzaMeat.getClass().getMethod(newPizzaMeat.getMethodNames()[l],
-		// boolean.class).invoke(newPizzaMeat, currentPizzaMeats.getBoolean(l));
-
-		// PizzaFinish newPizzaFinish = new PizzaFinish();
-		// newPizzaFinish.getClass().getMethod(newPizzaFinish.getMethodNames()[m],
-		// boolean.class).invoke(newPizzaFinish, currentPizzaFinishes.getBoolean(m));
-
-		// pizzaPastOrder.setCheese(newPizzaCheese);
-		// pizzaPastOrder.setVeggie(newPizzaVeggie);
-		// pizzaPastOrder.setMeat(newPizzaMeat);
-		// pizzaPastOrder.setFinish(newPizzaFinish);
-
-		// create for loops for each array, then create inner for loops to save entries
-		// to database, create saving methods inside entries
-		// for(int i = 0; i < request.getHeader("pizzaItems").length(); i++) {
-		// for(int j = 0; j < request.getHeader("pizzaItems")[i].length(); j++) {
-		//
-		// }
-		// }
-
-		// for(String item : request.getHeader("pizzaItems")) {
-		//
-		// }
-
-
-		
 		
 	}
 }

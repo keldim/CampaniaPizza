@@ -34,7 +34,7 @@ export class PastOrdersComponent implements OnInit {
 
 
     console.log("sending request for past orders");
-    return this.http.get('http://localhost:8181/past-orders', { headers: headers });
+    return this.http.get('http://localhost:8181/registered-user/past-orders', { headers: headers });
   }
 
   // stdTimezoneOffset(pastOrderDate: string) {

@@ -35,7 +35,7 @@ export class PastOrderDetailComponent implements OnInit {
       'Authorization': `Bearer ` + this._authService.getAccessToken()
     });
     console.log("sending request for past order");
-    return this.http.get<IPastOrder>(`http://localhost:8181/past-order/${id}`, { headers: headers });
+    return this.http.get<IPastOrder>(`http://localhost:8181/registered-user/past-order/${id}`, { headers: headers });
   }
 
   jsonArrayToArray(jsonArray: string) {

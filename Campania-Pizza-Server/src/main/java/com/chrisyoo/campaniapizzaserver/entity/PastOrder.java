@@ -44,14 +44,20 @@ public class PastOrder {
 	@JoinColumn(name="past_order_id")
 	private List<Pizza> PizzaItems;
 	
-//	@OneToMany(mappedBy="past_orders", cascade=CascadeType.ALL)
-//	private List<Salad> SaladItems;
-//	
-//	@OneToMany(mappedBy="past_orders", cascade=CascadeType.ALL)
-//	private List<Drink> DrinkItems;
-//	
-//	@OneToMany(mappedBy="past_orders", cascade=CascadeType.ALL)
-//	private List<Dessert> DessertItems;		
+//	mappedBy="past_orders", 
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="past_order_id")
+	private List<Salad> SaladItems;
+	
+//	mappedBy="past_orders", 
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="past_order_id")
+	private List<Drink> DrinkItems;
+	
+//	mappedBy="past_orders", 
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="past_order_id")
+	private List<Dessert> DessertItems;		
 	
 	public PastOrder() {
 		
@@ -112,28 +118,58 @@ public class PastOrder {
 		this.location = location;
 	}
 	
-//	public List<Salad> getSaladItems() {
-//		return SaladItems;
-//	}
-//
-//	public void setSaladItems(List<Salad> saladItems) {
-//		SaladItems = saladItems;
-//	}
-//
-//	public List<Drink> getDrinkItems() {
-//		return DrinkItems;
-//	}
-//
-//	public void setDrinkItems(List<Drink> drinkItems) {
-//		DrinkItems = drinkItems;
-//	}
-//
-//	public List<Dessert> getDessertItems() {
-//		return DessertItems;
-//	}
-//
-//	public void setDessertItems(List<Dessert> dessertItems) {
-//		DessertItems = dessertItems;
-//	}
+	public List<Salad> getSaladItems() {
+		return SaladItems;
+	}
 
+	public void setSaladItems(List<Salad> saladItems) {
+		SaladItems = saladItems;
+	}
+	
+	public void addSalad(Salad salad) {
+
+		if (SaladItems == null) {
+			SaladItems = new ArrayList<>();
+		}
+
+		SaladItems.add(salad);
+//		pizza.setPastOrder(this);
+	}
+
+	public List<Drink> getDrinkItems() {
+		return DrinkItems;
+	}
+
+	public void setDrinkItems(List<Drink> drinkItems) {
+		DrinkItems = drinkItems;
+	}
+
+	public void addDrink(Drink drink) {
+
+		if (DrinkItems == null) {
+			DrinkItems = new ArrayList<>();
+		}
+
+		DrinkItems.add(drink);
+//		pizza.setPastOrder(this);
+	}
+	
+	public List<Dessert> getDessertItems() {
+		return DessertItems;
+	}
+
+	public void setDessertItems(List<Dessert> dessertItems) {
+		DessertItems = dessertItems;
+	}
+
+	public void addDessert(Dessert dessert) {
+
+		if (DessertItems == null) {
+			DessertItems = new ArrayList<>();
+		}
+
+		DessertItems.add(dessert);
+//		pizza.setPastOrder(this);
+	}
+	
 }
