@@ -5,9 +5,9 @@ export interface IPizzaitem {
   crust: string,
   sauce: string,
   cheese: boolean[],
-  veggie: boolean[],
-  meat: boolean[],
-  finish: boolean[],
+  veggies: boolean[],
+  meats: boolean[],
+  finishes: boolean[],
   price: number,
   quantity: number
 }

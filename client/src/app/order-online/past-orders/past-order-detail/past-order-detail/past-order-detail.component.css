@@ -1,3 +1,144 @@
+.pickup-location {
+  margin-top: 150px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+  border: 1px solid #ccc;
+  border-bottom: 0;
+}
+
+.checkout-header {
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.checkout-subheader {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.checkout-row-1 {
+  padding-bottom: 10px;
+}
+
+.checkout-row-1-col-2 {
+  text-align: right;
+}
+
+.box-form {
+  border: 1px solid #ccc;
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 50px;
+}
+
+.name-column {
+  padding: 5px 5px 5px 5px;
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.price-column {
+  text-align: right;
+  padding: 5px 5px 5px 5px;
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.product-line {
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  background: #f9f9f9;
+}
+
+.product-line-dd {
+  border-top: 1px solid #ccc;
+  background: #f9f9f9;
+}
+
+.product-name {
+  padding: 5px 5px 5px 30px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.product-price {
+  text-align: right;
+  padding: 5px 5px 5px 30px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.choice {
+  padding: 5px 5px 5px 32px;
+}
+
+.subtotal-above {
+  border-top: 1px solid #ccc;
+}
+
+.total-row {
+  background: #000;
+  color: #fff;
+  font-size: 16px;
+}
+
+.contact-info-header {
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.contact-info-form {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contact-info-row {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.col-center {
+  text-align: center;
+}
+
+.payment-row {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.payment-header {
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.payment-form {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.payment-subheader {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.place-order-button {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.imgCapture {
+  display: none;
+}
+
 .hide-order-online {
   display: none;
 }
+

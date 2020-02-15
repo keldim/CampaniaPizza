@@ -1,8 +1,8 @@
-
 <div class="hide-order-online">
   <pizza-modal></pizza-modal>
+  <salad-modal></salad-modal>
 </div>
-<div class="container" style="text-align: center;">
+<!-- <div class="container" style="text-align: center;">
   <div *ngIf="pastOrder">
     <div *ngFor="let pizzaItem of pastOrder.pizzaItems">
       <span>
@@ -10,18 +10,189 @@
       </span>
       <span>
         <span *ngFor="let choice of jsonArrayToArray(pizzaItem.cheese)">
-          <!-- *ngFor="let choice of pizzaModalComponent.buildDisplayForCheckout(pizzaItem)" -->
-          <!-- <span class="row"> -->
-            <span>
-              <!-- class="col choice" -->
-              {{ choice }}
-            </span>
-          <!-- </span> -->
+
+          <span>
+
+            {{ choice }}
+          </span>
+
         </span>
         <span>
           {{ pizzaItem.cheese }}
         </span>
       </span>
     </div>
+    <div *ngFor="let saladItem of pastOrder.saladItems">
+      <span>
+        {{ saladItem.quantity }} x {{ saladItem.type }}
+      </span>
+      <span>
+        <span *ngFor="let choice of jsonArrayToArray(saladItem.cheese)">
+
+          <span>
+
+            {{ choice }}
+          </span>
+
+        </span>
+        <span>
+          {{ saladItem.cheese }}
+        </span>
+      </span>
+    </div>
+    <div *ngFor="let drinkItem of pastOrder.drinkItems">
+      <span>
+        {{ drinkItem.quantity }} x {{ drinkItem.type }}
+      </span>
+    </div>
+    <div *ngFor="let dessertItem of pastOrder.dessertItems">
+      <span>
+        {{ dessertItem.quantity }} x {{ dessertItem.type }}
+      </span>
+      <span *ngIf="dessertItem.type == 'Cookies'">
+        {{ dessertItem.cookieChoice }}
+      </span>
+      <span *ngIf="dessertItem.type == 'Brownies'">
+        {{ dessertItem.brownieChoice }}
+      </span>
+    </div>
+  </div>
+</div> -->
+
+
+
+<div class="container pickup-location">
+  <!-- <div class="checkout-header">Checkout</div> -->
+  <div class="checkout-subheader">Pickup Location</div>
+  <div class="row checkout-row-1">
+    <div class="col">
+      <span *ngIf="pastOrder">
+        <span *ngIf="pastOrder.location=='Midtown'">
+          Campania Pizza, Midtown<br>
+          31 W 46th St<br>
+          New York, NY 10036
+        </span>
+        <span *ngIf="pastOrder.location=='Chelsea'">
+          Campania Pizza, Chelsea<br>
+          601 6th Ave<br>
+          New York, NY 10011
+        </span>
+        <span *ngIf="pastOrder.location=='East Village'">
+          Campania Pizza, East Village<br>
+          32 St Marks Pl<br>
+          New York, NY 10003
+        </span>
+      </span>
+    </div>
+    <div class="col checkout-row-1-col-2">
+      <a class="btn btn-outline-secondary" href="#" [routerLink]="['/order-online']" role="button">Reorder</a>
+    </div>
   </div>
 </div>
+
+<!-- <span #content> -->
+<div class="container box-form">
+  <div class="row">
+    <div class="col name-column">
+      Order Details
+    </div>
+    <div class="col price-column">
+      Amount
+    </div>
+  </div>
+  <!-- <div *ngFor="let pizzaItem of pizzaModalComponent.pizzaItems"> -->
+  <span *ngIf="pastOrder">
+    <div *ngFor="let pizzaItem of pastOrder.pizzaItems">
+      <div class="row product-line">
+        <div *ngIf="pizzaItem.type=='BUILD YOUR OWN PIZZA'" class="col product-name">{{ pizzaItem.quantity }} x
+          {{ pizzaItem.type }}</div>
+        <div *ngIf="pizzaItem.type!='BUILD YOUR OWN PIZZA'" class="col product-name">{{ pizzaItem.quantity }} x
+          {{ pizzaItem.type }}</div>
+        <div class="col product-price">({{ pizzaItem.quantity }} x ${{ pizzaItem.price }}) =
+          ${{ (pizzaItem.quantity * pizzaItem.price).toFixed(2) }}</div>
+      </div>
+      <!-- <span *ngIf="pizzaItem.type == 'BUILD YOUR OWN PIZZA'"> -->
+      <div *ngFor="let choice of pizzaModalComponent.buildDisplayForCheckout(pizzaItemParse(pizzaItem))">
+        <!-- pizzaItemParse() -->
+        <!-- jsonParse() -->
+        <div class="row">
+          <div class="col choice">
+            {{ choice }}
+          </div>
+        </div>
+      </div>
+      <!-- </span> -->
+    </div>
+
+    <div *ngFor="let saladItem of pastOrder.saladItems">
+      <div class="row product-line">
+        <div *ngIf="saladItem.type=='BUILD YOUR OWN SALAD'" class="col product-name">{{ saladItem.quantity }} x
+          {{ saladItem.type }}</div>
+        <div *ngIf="saladItem.type!='BUILD YOUR OWN SALAD'" class="col product-name">{{ saladItem.quantity }} x
+          {{ saladItem.type }}</div>
+        <div class="col product-price">({{ saladItem.quantity }} x ${{ saladItem.price }}) =
+          ${{ (saladItem.quantity * saladItem.price).toFixed(2) }}</div>
+      </div>
+      <!-- <span *ngIf="saladItem.type == 'BUILD YOUR OWN SALAD'"> -->
+      <div *ngFor="let choice of saladModalComponent.buildDisplayForCheckout(saladItemParse(saladItem))">
+        <!-- saladItemParse() -->
+        <!-- jsonParse() -->
+        <div class="row">
+          <div class="col choice">
+            {{ choice }}
+          </div>
+        </div>
+      </div>
+      <!-- </span> -->
+    </div>
+
+    <div *ngFor="let drinkItem of pastOrder.drinkItems">
+      <div class="row product-line-dd">
+        <div class="col product-name">{{ drinkItem.quantity }} x {{ drinkItem.type }}</div>
+        <div class="col product-price">({{ drinkItem.quantity }} x ${{ drinkItem.price }}) =
+          ${{ (drinkItem.quantity * drinkItem.price).toFixed(2) }}</div>
+      </div>
+    </div>
+
+    <div *ngFor="let dessertItem of pastOrder.dessertItems">
+      <div class="row product-line-dd">
+        <div *ngIf="dessertItem.type=='Cookies'" class="col product-name">{{ dessertItem.quantity }} x
+          {{ dessertItem.cookieChoice.toUpperCase() }}
+        </div>
+        <div *ngIf="dessertItem.type=='Brownies'" class="col product-name">{{ dessertItem.quantity }} x
+          {{ dessertItem.brownieChoice.toUpperCase() }}</div>
+        <div class="col product-price">({{ dessertItem.quantity }} x ${{ dessertItem.price }}) =
+          ${{ (dessertItem.quantity * dessertItem.price).toFixed(2) }}</div>
+      </div>
+    </div>
+  </span>
+
+  <span *ngIf="pastOrder">
+    <div class="row subtotal-above">
+      <div class="col product-name">
+        Subtotal
+      </div>
+      <div class="col product-price">
+        ${{ showSubtotal() }}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col product-name">
+        TAX
+      </div>
+      <div class="col product-price">
+        ${{ showLocalTax() }}
+      </div>
+    </div>
+    <div class="row total-row">
+      <div class="col product-name">
+        Total
+      </div>
+      <div class="col product-price">
+        ${{ showTotal() }}
+      </div>
+    </div>
+  </span>
+</div>
+
+<!-- </span> -->

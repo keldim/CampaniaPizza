@@ -6,6 +6,8 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { IPastOrder } from '../../past-order';
 import { ActivatedRoute } from '@angular/router';
 import { PizzaModalComponent } from 'src/app/order-online/pizza-modal/pizza-modal.component';
+import { SaladModalComponent } from 'src/app/order-online/salad-modal/salad-modal.component';
+import { getCurrencySymbol } from '@angular/common';
 
 @Component({
   selector: 'app-past-order-detail',
@@ -14,6 +16,7 @@ import { PizzaModalComponent } from 'src/app/order-online/pizza-modal/pizza-moda
 })
 export class PastOrderDetailComponent implements OnInit {
   @ViewChild(PizzaModalComponent) pizzaModalComponent;
+  @ViewChild(SaladModalComponent) saladModalComponent;
 
   pastOrder: IPastOrder;
   constructor(private route: ActivatedRoute, private http: HttpClient, private _authService: AuthService) {
@@ -39,7 +42,146 @@ export class PastOrderDetailComponent implements OnInit {
   }
 
   jsonArrayToArray(jsonArray: string) {
+    // console.log(this.pastOrder.pizzaItems);
     return JSON.parse(jsonArray);
   }
+
+  jsonParse(json) {
+    console.log(json);
+    console.log(JSON.parse(json));
+    return JSON.parse(json);
+  }
+
+  pizzaItemParse(pizzaItem) {
+    if (pizzaItem.type == "BUILD YOUR OWN PIZZA") {
+      const parsedItem = {
+        type: pizzaItem.price,
+        size: pizzaItem.size,
+        crust: pizzaItem.crust,
+        sauce: pizzaItem.sauce,
+        cheese: this.jsonArrayToArray(pizzaItem.cheese),
+        veggies: this.jsonArrayToArray(pizzaItem.veggies),
+        meats: this.jsonArrayToArray(pizzaItem.meats),
+        finishes: this.jsonArrayToArray(pizzaItem.finishes),
+        price: pizzaItem.price,
+        quantity: pizzaItem.quantity
+      }
+
+      return parsedItem;
+    } else {
+      const parsedItem = {
+        type: pizzaItem.price,
+        size: pizzaItem.size,
+        crust: pizzaItem.crust,
+        finishes: this.jsonArrayToArray(pizzaItem.finishes),
+        price: pizzaItem.price,
+        quantity: pizzaItem.quantity
+      }
+
+      return parsedItem;
+    }
+
+
+    // console.log("pizza cheese: " + pizzaItem.cheese);
+    // pizzaItem.cheese = this.jsonArrayToArray(pizzaItem.cheese);
+
+    // console.log("pizza veggies: " + pizzaItem.veggies);
+    // pizzaItem.veggies = this.jsonArrayToArray(pizzaItem.veggies);
+
+    // console.log("pizza meats: " + pizzaItem.meats);
+    // pizzaItem.meats = this.jsonArrayToArray(pizzaItem.meats);
+
+    // console.log("pizza finishes: " + pizzaItem.finishes);
+    // pizzaItem.finishes = this.jsonArrayToArray(pizzaItem.finishes);
+
+
+  }
+
+  saladItemParse(saladItem) {
+    if (saladItem.type == "BUILD YOUR OWN SALAD") {
+      const parsedItem = {
+        type: saladItem.type,
+        greens: this.jsonArrayToArray(saladItem.greens),
+        cheese: this.jsonArrayToArray(saladItem.cheese),
+        freshProduce: this.jsonArrayToArray(saladItem.freshProduce),
+        meats: this.jsonArrayToArray(saladItem.meats),
+        topItOff: this.jsonArrayToArray(saladItem.topItOff),
+        dressings: this.jsonArrayToArray(saladItem.dressings),
+        size: saladItem.size,
+        price: saladItem.price,
+        quantity: saladItem.number
+      }
+
+      return parsedItem;
+    } else {
+const parsedItem = {
+        type: saladItem.type,
+        size: saladItem.size,
+        price: saladItem.price,
+        quantity: saladItem.number
+      }
+
+      return parsedItem;
+    }
+
+
+    // console.log("greens: " + saladItem.greens);
+    // saladItem.greens = this.jsonArrayToArray(saladItem.greens);
+
+    // console.log("cheese: " + saladItem.cheese);
+    // saladItem.cheese = this.jsonArrayToArray(saladItem.cheese);
+
+    // console.log("freshProduce: " + saladItem.freshProduce);
+    // saladItem.freshProduce = this.jsonArrayToArray(saladItem.freshProduce);
+
+    // console.log("meats: " + saladItem.meats);
+    // saladItem.meats = this.jsonArrayToArray(saladItem.meats);
+
+    // console.log("topItOff: " + saladItem.topItOff);
+    // saladItem.topItOff = this.jsonArrayToArray(saladItem.topItOff);
+
+    // console.log("dressings: " + saladItem.dressings);
+    // saladItem.dressings = this.jsonArrayToArray(saladItem.dressings);
+
+
+  }
+
+  calculateSubtotal() {
+    let subtotal = 0;
+    for(let pizzaItem of this.pastOrder.pizzaItems) {
+      subtotal += pizzaItem.quantity * pizzaItem.price;
+    }
+    for(let saladItem of this.pastOrder.saladItems) {
+      subtotal += saladItem.quantity * saladItem.price;
+    }
+    for(let drinkItem of this.pastOrder.drinkItems) {
+      subtotal += drinkItem.quantity * drinkItem.price;
+    }
+    for(let dessertItem of this.pastOrder.dessertItems) {
+      subtotal += dessertItem.quantity * dessertItem.price;
+    }
+    return subtotal;
+  }
+
+  calculateLocalTax() {
+    return this.calculateSubtotal() * 0.08875;
+  }
+
+  calculateTotal() {
+    return this.calculateSubtotal() + this.calculateLocalTax();
+  }
+
+  showSubtotal() {
+    return this.calculateSubtotal().toFixed(2);
+  }
+
+  showLocalTax() {
+    return this.calculateLocalTax().toFixed(2);
+  }
+
+  showTotal() {
+    return this.calculateTotal().toFixed(2);
+  }
+
 
 }
