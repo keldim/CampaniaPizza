@@ -11,6 +11,11 @@
   border-bottom-color: red;
 } */
 
+.subNavbar {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 .clicked-link {
   border-bottom: 5px solid red;
 }

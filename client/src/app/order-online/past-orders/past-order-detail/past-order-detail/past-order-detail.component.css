@@ -1,5 +1,6 @@
 .pickup-location {
-  margin-top: 150px;
+  /* 150px; */
+  /* margin-top: 10px; */
   margin-left: auto;
   margin-right: auto;
   width: 40%;
@@ -14,6 +15,7 @@
 }
 
 .checkout-subheader {
+  padding-top: 10px;
   font-size: 18px;
   font-weight: 700;
 }

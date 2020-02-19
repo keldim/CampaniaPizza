@@ -1,6 +1,8 @@
 <div class="hide-order-online">
   <pizza-modal></pizza-modal>
   <salad-modal></salad-modal>
+  <drink-modal></drink-modal>
+  <dessert-modal></dessert-modal>
 </div>
 <!-- <div class="container" style="text-align: center;">
   <div *ngIf="pastOrder">
@@ -85,7 +87,7 @@
       </span>
     </div>
     <div class="col checkout-row-1-col-2">
-      <a class="btn btn-outline-secondary" href="#" [routerLink]="['/order-online']" role="button">Reorder</a>
+      <button type="button" class="btn btn-outline-secondary" (click)="reorder()">Reorder</button>
     </div>
   </div>
 </div>

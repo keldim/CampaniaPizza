@@ -1,17 +1,23 @@
 <div class="container">
-  <ul class="nav justify-content-center">
+  <ul class="nav justify-content-center subNavbar">
     <li class="nav-item submenu-button-tweak">
-      <a class="nav-link linkColor " href="#" [routerLink]="['/order-online/current-order']" routerLinkActive="clicked-link">Current Order</a>
+      <a class="nav-link linkColor " href="#" [routerLink]="['/order-online/current-order']"
+        routerLinkActive="clicked-link">Current Order</a>
     </li>
-    <li class="nav-item submenu-button-tweak"  *ngIf="isLoggedIn()">
-      <a class="nav-link linkColor" href="#" [routerLink]="['/order-online/past-orders']" routerLinkActive="clicked-link">Past Orders</a>
+    <li class="nav-item submenu-button-tweak" *ngIf="isLoggedIn()">
+      <a class="nav-link linkColor" href="#" [routerLink]="['/order-online/past-orders']"
+        routerLinkActive="clicked-link">Past Orders</a>
     </li>
-    <li class="nav-item submenu-button-tweak"  *ngIf="isLoggedIn()">
-      <a class="nav-link linkColor" href="#" [routerLink]="['/order-online/favorites']" routerLinkActive="clicked-link">Favorites</a>
+    <li class="nav-item submenu-button-tweak" *ngIf="isLoggedIn()">
+      <a class="nav-link linkColor" href="#" [routerLink]="['/order-online/favorites']"
+        routerLinkActive="clicked-link">Favorites</a>
     </li>
     <li class="nav-item submenu-button-tweak">
       <button type="button" class="btn btn-outline-danger" *ngIf="!isLoggedIn()" (click)="login()">Login</button>
       <button type="button" class="btn btn-outline-danger" *ngIf="isLoggedIn()" (click)="logout()">Logout</button>
+    </li>
+    <li class="nav-item submenu-button-tweak">
+      <button type="button" class="btn btn-outline-danger" *ngIf="!isLoggedIn()" [routerLink]="['/new-user']">Sign Up</button>
     </li>
   </ul>
 </div>

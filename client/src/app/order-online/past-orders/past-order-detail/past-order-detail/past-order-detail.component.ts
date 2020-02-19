@@ -4,10 +4,13 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Observable } from 'rxjs';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { IPastOrder } from '../../past-order';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PizzaModalComponent } from 'src/app/order-online/pizza-modal/pizza-modal.component';
 import { SaladModalComponent } from 'src/app/order-online/salad-modal/salad-modal.component';
 import { getCurrencySymbol } from '@angular/common';
+import { StorageService } from 'src/app/services/storage.service';
+import { DrinkModalComponent } from 'src/app/order-online/drink-modal/drink-modal.component';
+import { DessertModalComponent } from 'src/app/order-online/dessert-modal/dessert-modal.component';
 
 @Component({
   selector: 'app-past-order-detail',
@@ -15,11 +18,17 @@ import { getCurrencySymbol } from '@angular/common';
   styleUrls: ['./past-order-detail.component.css']
 })
 export class PastOrderDetailComponent implements OnInit {
+
   @ViewChild(PizzaModalComponent) pizzaModalComponent;
   @ViewChild(SaladModalComponent) saladModalComponent;
 
-  pastOrder: IPastOrder;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private _authService: AuthService) {
+// trial
+  @ViewChild(DrinkModalComponent) drinkModalComponent;
+  @ViewChild(DessertModalComponent) dessertModalComponent;
+
+
+  pastOrder: IPastOrder;                                                                                  // trial                               // trial
+  constructor(private route: ActivatedRoute, private http: HttpClient, private _authService: AuthService, public storageService: StorageService, private router: Router) {
   }
 
   ngOnInit() {
@@ -183,5 +192,35 @@ const parsedItem = {
     return this.calculateTotal().toFixed(2);
   }
 
+  // trial
+  reorder() {
+    this.storageService.clear();
+
+    for(let pizzaItem of this.pastOrder.pizzaItems) {
+      console.log(pizzaItem);
+      this.pizzaModalComponent.pastOrderDetailForm(pizzaItem);
+      this.pizzaModalComponent.createTempForm();
+      // use resetForm or create a new method for value patch in pizza modal?
+    }
+    for(let saladItem of this.pastOrder.saladItems) {
+      console.log(saladItem);
+      this.saladModalComponent.pastOrderDetailForm(saladItem);
+      this.saladModalComponent.createTempForm();
+    }
+    for(let drinkItem of this.pastOrder.drinkItems) {
+      console.log(drinkItem);
+      this.drinkModalComponent.pastOrderDetailForm(drinkItem);
+      this.drinkModalComponent.createTempForm();
+    }
+    for(let dessertItem of this.pastOrder.dessertItems) {
+      console.log(dessertItem);
+      this.dessertModalComponent.pastOrderDetailForm(dessertItem);
+      this.dessertModalComponent.createTempForm();
+    }
+
+    this.storageService.updatePickupLocation("pickupLocation", this.pastOrder.location);
+
+    this.router.navigate(['order-online/current-order']);
+  }
 
 }

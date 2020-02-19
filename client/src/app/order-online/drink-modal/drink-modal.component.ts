@@ -108,8 +108,16 @@ export class DrinkModalComponent {
 
   }
 
+  pastOrderDetailForm(drinkItem) {
+    this.drinkForm.reset();
+    this.drinkForm.patchValue({
+      type: drinkItem.type,
+      price: drinkItem.price,
+      quantity: drinkItem.quantity
+    });
+  }
+
   save() {
 
   }
-
 }

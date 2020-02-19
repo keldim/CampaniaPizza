@@ -148,8 +148,18 @@ export class DessertModalComponent {
     });
   }
 
+  pastOrderDetailForm(dessertItem) {
+    this.dessertForm.reset();
+    this.dessertForm.patchValue({
+      type: dessertItem.type,
+      cookieChoice: dessertItem.cookieChoice,
+      brownieChoice: dessertItem.brownieChoice,
+      price: dessertItem.price,
+      quantity: dessertItem.quantity
+    });
+  }
+
   save() {
 
   }
-
 }

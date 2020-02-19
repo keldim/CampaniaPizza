@@ -447,8 +447,33 @@ export class SaladModalComponent {
     });
   }
 
-  save() {
+  pastOrderDetailForm(saladItem) {
+    this.saladForm.reset();
+    if (saladItem.type == "BUILD YOUR OWN SALAD") {
+      this.saladForm.patchValue({
+        type: saladItem.type,
+        greens: JSON.parse(saladItem.greens),
+        cheese: JSON.parse(saladItem.cheese),
+        freshProduce: JSON.parse(saladItem.freshProduce),
+        meats: JSON.parse(saladItem.meats),
+        topItOff: JSON.parse(saladItem.topItOff),
+        dressings: JSON.parse(saladItem.dressings),
+        size: saladItem.size,
+        price: saladItem.price,
+        quantity: saladItem.quantity
+      });
+    } else {
+      this.saladForm.patchValue({
+        type: saladItem.type,
+        size: saladItem.size,
+        price: saladItem.price,
+        quantity: saladItem.quantity
+      });
+    }
 
   }
 
+  save() {
+
+  }
 }

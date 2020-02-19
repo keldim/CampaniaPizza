@@ -360,6 +360,34 @@ export class PizzaModalComponent {
     });
   }
 
+  pastOrderDetailForm(pizzaItem) {
+    this.pizzaForm.reset();
+    if (pizzaItem.type == "BUILD YOUR OWN PIZZA") {
+      this.pizzaForm.patchValue({
+        type: pizzaItem.type,
+        size: pizzaItem.size,
+        crust: pizzaItem.crust,
+        sauce: pizzaItem.sauce,
+        cheese: JSON.parse(pizzaItem.cheese),
+        veggies: JSON.parse(pizzaItem.veggies),
+        meats: JSON.parse(pizzaItem.meats),
+        finishes: JSON.parse(pizzaItem.finishes),
+        price: pizzaItem.price,
+        quantity: pizzaItem.quantity
+      });
+    } else {
+      this.pizzaForm.patchValue({
+        type: pizzaItem.type,
+        size: pizzaItem.size,
+        crust: pizzaItem.crust,
+        finishes: JSON.parse(pizzaItem.finishes),
+        price: pizzaItem.price,
+        quantity: pizzaItem.quantity
+      });
+    }
+
+  }
+
   save() {
 
   }
