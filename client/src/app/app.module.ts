@@ -17,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './interceptor/interceptor.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { UserRegistrationComponent } from './user-registration/user-registration
     HomeComponent,
     LocationComponent,
     AboutUsComponent,
-    UserRegistrationComponent
+    UserRegistrationComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

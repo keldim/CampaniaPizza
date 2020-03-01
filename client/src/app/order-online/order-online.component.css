@@ -158,15 +158,18 @@
   background: #487a32;
   color: #fff;
   border-radius: 4px;
-  cursor: pointer;
   display: inline-block;
   padding: 3px 10px 4px;
   font-size: 14px;
   width: 100%;
 }
 
-.proceed-to-checkout:hover {
-  background: #335623;;
+.proceed-to-checkout:hover:not([disabled]) {
+  background: #335623;
+}
+
+.proceed-to-checkout:disabled {
+  opacity: 0.65;
 }
 
 .button-area {

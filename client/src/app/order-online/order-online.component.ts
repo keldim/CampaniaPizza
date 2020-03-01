@@ -5,7 +5,7 @@ import { PizzaModalComponent } from './pizza-modal/pizza-modal.component';
 import { DessertModalComponent } from './dessert-modal/dessert-modal.component';
 import { SaladModalComponent } from './salad-modal/salad-modal.component';
 import { DrinkModalComponent } from './drink-modal/drink-modal.component';
-import { FormGroup, FormBuilder, FormControl} from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
 import { LocalStorage } from 'ngx-store';
 import { Observable, Subscription, of } from 'rxjs';
 import { StorageService } from '../services/storage.service';
@@ -137,7 +137,7 @@ export class OrderOnlineComponent implements OnInit {
   ngOnInit() {
 
     this.orderOnlineForm = this.fb.group({
-      location: this.pickupLocation
+      location: [this.pickupLocation, Validators.required]
     });
 
   }

@@ -11,6 +11,9 @@
               <option value="Chelsea">Chelsea{{ assignLocation() }}</option>
               <option value="East Village">East Village{{ assignLocation() }}</option>
             </select>
+            <span *ngIf="location.hasError('required')">
+              <span style="font-size: 12px; color: #b80000; margin-left: 10px">Please choose a location.</span>
+            </span>
           </dd>
           <!-- pickupLocation== -->
           <span *ngIf="location.value=='Midtown'">
@@ -527,7 +530,9 @@
     </div>
 
   <div class="button-area" *ngIf="calculateSubtotal() > 0">
-    <button type="button" class="proceed-to-checkout" [routerLink]="['/checkout']">
+    <button type="button" class="proceed-to-checkout" [routerLink]="['/checkout']" [disabled]="!orderOnlineForm.valid">
+      <!-- !orderOnlineForm.valid -->
+      <!-- class="proceed-to-checkout" -->
       Proceed to Checkout
     </button>
   </div>

@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { LocationComponent } from './locations/locations.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   imports: [
@@ -13,7 +14,7 @@ import { UserRegistrationComponent } from './user-registration/user-registration
       { path: 'about-us', component: AboutUsComponent },
       { path: 'new-user', component: UserRegistrationComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
-      { path: '**', redirectTo: 'home', pathMatch: 'full' }
+      { path: '**', component: PageNotFoundComponent }
     ], {scrollPositionRestoration: 'enabled'})
   ],
   exports: [

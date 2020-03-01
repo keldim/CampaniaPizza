@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Input, ElementRef, ViewChildren } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { PizzaModalComponent } from './../pizza-modal/pizza-modal.component';
 import { DessertModalComponent } from './../dessert-modal/dessert-modal.component';
 import { SaladModalComponent } from './../salad-modal/salad-modal.component';
@@ -59,19 +59,27 @@ export class CheckoutComponent implements OnInit {
     });
   }
 
+  namePattern = /^[a-zA-Z]{2,}/;
+  emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  phonePattern = /^((\\+91-?)|0)?[0-9]{10}$/;
+  cardNumberPattern = /^\d{4}\d{4}\d{4}\d{4}$/;
+  monthPattern = /^0[1-9]$|^1[0-2]$/;
+  cvcPattern = /^[0-9]{3,4}$/;
+  yearPattern = /^20[2-9][0-9]$/;
+
   ngOnInit() {
     this.creditCardForm = this.fb.group({
-      cardNumber: "",
-      expMonth: "",
-      expYear: "",
-      cvc: ""
+      cardNumber: ["", [Validators.required, Validators.pattern(this.cardNumberPattern)]],
+      expMonth: ["", [Validators.required, Validators.pattern(this.monthPattern)]],
+      expYear: ["", [Validators.required, Validators.pattern(this.yearPattern)]],
+      cvc: ["", [Validators.required, Validators.pattern(this.cvcPattern)]]
     });
 
     this.contactInfo = this.fb.group({
-      firstName: "",
-      lastName: "",
-      email: "",
-      phoneNumber: ""
+      firstName: ["", [Validators.required, Validators.pattern(this.namePattern)]],
+      lastName: ["", [Validators.required, Validators.pattern(this.namePattern)]],
+      email: ["", [Validators.required, Validators.pattern(this.emailPattern)]],
+      phoneNumber: ["", [Validators.required, Validators.pattern(this.phonePattern)]]
     });
   }
 
@@ -99,8 +107,8 @@ export class CheckoutComponent implements OnInit {
         'token': token,
         'amount': this.orderOnlineComponent.showTotal().toString(),
         'pickupLocation': this.pickupLocation,
-        'firstName': this.contactInfo.controls.firstName.value,
-        'lastName': this.contactInfo.controls.lastName.value,
+        'firstName': this.contactInfo.controls.firstName.value.trim(),
+        'lastName': this.contactInfo.controls.lastName.value.trim(),
         'email': this.contactInfo.controls.email.value,
         'phoneNumber': this.contactInfo.controls.phoneNumber.value,
         'invoiceImg': this.inoviceImg,
@@ -125,8 +133,8 @@ export class CheckoutComponent implements OnInit {
         'token': token,
         'amount': this.orderOnlineComponent.showTotal().toString(),
         'pickupLocation': this.pickupLocation,
-        'firstName': this.contactInfo.controls.firstName.value,
-        'lastName': this.contactInfo.controls.lastName.value,
+        'firstName': this.contactInfo.controls.firstName.value.trim(),
+        'lastName': this.contactInfo.controls.lastName.value.trim(),
         'email': this.contactInfo.controls.email.value,
         'phoneNumber': this.contactInfo.controls.phoneNumber.value,
         'invoiceImg': this.inoviceImg,
