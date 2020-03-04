@@ -129,6 +129,7 @@
       <salad-modal></salad-modal>
       <drink-modal></drink-modal>
       <dessert-modal></dessert-modal>
+      <delete-modal></delete-modal>
 
       <div class="product-list">
         <ul class="nav flex-column">
@@ -377,12 +378,11 @@
       <span *ngIf="pizzaItem.type!='BUILD YOUR OWN PIZZA'" class="cart-item-name">{{ pizzaItem.type }}</span>
       <span class="cart-item-price">${{ priceTimesQuantity(pizzaItem.quantity, pizzaItem.price) }}</span>
       <div class="edit-delete">
-        <!-- add the modal html code here? for delete? -->
         <span>[ </span>
         <a class="empty-link" (click)="pizzaModalComponent.valueBindingForEdit(i); openPizza(pizzaItem.type)"><span
-            class="empty-link-text">edit</span></a> | <a class="empty-link"><span class="empty-link-text"
-            (click)="pizzaModalComponent.deletePizzaItem(i)">delete</span></a>
-        <span> ]</span>
+            class="empty-link-text">edit</span></a> | <a class="empty-link">
+              <span class="empty-link-text" (click)="openDelete(i, 'pizza')">delete</span></a>
+              <span> ]</span>
       </div>
       <div class="options-display">
         {{ pizzaModalComponent.buildDisplayForCart(pizzaItem) }}
@@ -419,8 +419,8 @@
       <div class="edit-delete">
         <span>[ </span>
         <a class="empty-link" (click)="saladModalComponent.valueBindingForEdit(i); openSalad(saladItem.type)"><span
-            class="empty-link-text">edit</span></a> | <a class="empty-link"><span class="empty-link-text"
-            (click)="saladModalComponent.deleteSaladItem(i)">delete</span></a>
+            class="empty-link-text">edit</span></a> | <a class="empty-link">
+              <span class="empty-link-text" (click)="openDelete(i, 'salad')">delete</span></a>
         <span> ]</span>
       </div>
       <div class="options-display">
@@ -453,7 +453,7 @@
         <span>[ </span>
         <a class="empty-link" (click)="drinkModalComponent.valueBindingForEdit(i); openDrink(drinkItem.type)"><span
             class="empty-link-text">edit</span></a> | <a class="empty-link"><span class="empty-link-text"
-            (click)="drinkModalComponent.deleteDrinkItem(i)">delete</span></a>
+            (click)="openDelete(i, 'drink')">delete</span></a>
         <span> ]</span>
       </div>
       <div class="options-display">
@@ -487,7 +487,7 @@
         <a class="empty-link"
           (click)="dessertModalComponent.valueBindingForEdit(i); openDessert(dessertItem.type)"><span
             class="empty-link-text">edit</span></a> | <a class="empty-link"><span class="empty-link-text"
-            (click)="dessertModalComponent.deleteDessertItem(i)">delete</span></a>
+            (click)="openDelete(i, 'dessert')">delete</span></a>
         <span> ]</span>
       </div>
       <div class="options-display">

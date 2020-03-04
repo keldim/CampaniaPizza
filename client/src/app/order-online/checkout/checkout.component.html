@@ -303,7 +303,7 @@
       </div>
     </div>
     <div class="place-order-button">
-      <button type="button" class="btn btn-outline-success" [routerLink]="['/thank-you']" (click)="chargeCreditCard()"
+      <button type="button" class="btn btn-outline-success" (click)="chargeCreditCard()"
         [disabled]="!contactInfo.valid || !creditCardForm.valid || pickupLocation == '' || orderOnlineComponent.showTotal() == '0.00'">Place Order</button>
       <!-- navigate to the link inside chargeCreditCard()? -->
       <!-- do not show the page until the method is completed? see kurata angular course? -->

@@ -9,6 +9,7 @@ import { FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
 import { LocalStorage } from 'ngx-store';
 import { Observable, Subscription, of } from 'rxjs';
 import { StorageService } from '../services/storage.service';
+import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 
 @Component({
   selector: 'order-online',
@@ -30,6 +31,7 @@ export class OrderOnlineComponent implements OnInit {
   @ViewChild(DessertModalComponent) dessertModalComponent;
   @ViewChild(SaladModalComponent) saladModalComponent;
   @ViewChild(DrinkModalComponent) drinkModalComponent;
+  @ViewChild(DeleteModalComponent) deleteModalComponent;
 
   // private modalService: NgbModal,
   constructor(private fb: FormBuilder, private storageService: StorageService) {
@@ -68,6 +70,10 @@ export class OrderOnlineComponent implements OnInit {
 
   openDrink(drinkType) {
     this.drinkModalComponent.openLg(drinkType);
+  }
+
+  openDelete(index, itemType) {
+    this.deleteModalComponent.open(index, itemType);
   }
 
   isArray(item) {

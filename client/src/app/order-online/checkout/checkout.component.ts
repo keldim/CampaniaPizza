@@ -13,6 +13,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { StorageService } from 'src/app/services/storage.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CurrentOrderComponent } from '../current-order.component';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './checkout.component.html',
@@ -41,7 +42,8 @@ export class CheckoutComponent implements OnInit {
   @ViewChild('downloadLink') downloadLink: ElementRef;
 
   // changed
-  constructor(private http: HttpClient, private fb: FormBuilder, public storageService: StorageService, private _authService: AuthService) {
+  constructor(private http: HttpClient, private fb: FormBuilder, public storageService: StorageService,
+    private _authService: AuthService, private router: Router) {
     this.storageService.watchPizzaItems().subscribe(pizzaItems => {
       this.pizzaItems = pizzaItems;
     });
@@ -93,6 +95,7 @@ export class CheckoutComponent implements OnInit {
       if (status === 200) {
         let token = response.id;
         this.chargeCard(token);
+        this.router.navigate(['/thank-you']);
       } else {
         console.log(response.error.message);
       }

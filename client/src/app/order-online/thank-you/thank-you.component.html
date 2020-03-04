@@ -5,7 +5,9 @@
   Please check your email. We've emailed you an order confirmation email.<br>
   Your order will be ready within 30 minutes. Please say your name and phone number to the cashier to pickup your order. Enjoy!
 </div>
-<div style="text-align: center;">
-  <a class="btn btn-outline-success" href="#" [routerLink]="['/home']" role="button">Go to Home Page</a>
+<div style="text-align: center; margin-top: 10px">
+  <button type="button" class="btn btn-outline-success" (click)="homePageLink()">Go to Home Page</button>
+  <!-- routerlink not worked here, move 'thank-you' and its routing to app module? or move the 'thank-you' routing under '/order-online'?
+  if moving 'thank-you' routing works, do the same for 'checkout'? -->
 </div>
 

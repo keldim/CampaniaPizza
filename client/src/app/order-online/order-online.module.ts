@@ -16,6 +16,7 @@ import { FavoritesComponent } from './favorites/favorites.component';
 import { PastOrdersComponent } from './past-orders/past-orders.component';
 import { CurrentOrderComponent } from './current-order.component';
 import { PastOrderDetailComponent } from './past-orders/past-order-detail/past-order-detail/past-order-detail.component';
+import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { PastOrderDetailComponent } from './past-orders/past-order-detail/past-o
     FavoritesComponent,
     PastOrdersComponent,
     CurrentOrderComponent,
-    PastOrderDetailComponent
+    PastOrderDetailComponent,
+    DeleteModalComponent
   ],
   imports: [
     BrowserModule,

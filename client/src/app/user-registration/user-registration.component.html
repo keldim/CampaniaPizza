@@ -1,7 +1,24 @@
-
 <div class="container box-form">
   <div class="contact-info-header">New User</div>
   <form [formGroup]="newUserInfo" class="contact-info-form">
+    <span class="row contact-info-row">
+      <span *ngIf="newUserInfo.get('username').hasError('required')" class="col col-center"
+        style="font-size: 12px; color: #b80000; margin-left: 10px">
+        This field is required
+      </span>
+      <!-- <span *ngIf="creditCardForm.get('cardNumber').hasError('pattern')" class="col col-center"
+        style="font-size: 12px; color: #b80000; margin-left: 10px">
+        Enter valid card number, only enter numbers
+      </span> -->
+      <span *ngIf="newUserInfo.get('password').hasError('required')" class="col col-center"
+        style="font-size: 12px; color: #b80000; margin-left: 10px">
+        This field is required
+      </span>
+      <!-- <span *ngIf="creditCardForm.get('expMonth').hasError('pattern')" class="col col-center"
+        style="font-size: 12px; color: #b80000; margin-left: 10px">
+        Enter valid month: 01, 02, 03... 12
+      </span> -->
+    </span>
     <div class="row contact-info-row">
       <div class="col col-center">
         Username:
@@ -16,6 +33,24 @@
         <input type="text" formControlName="password">
       </div>
     </div>
+    <span class="row contact-info-row">
+      <!-- <span *ngIf="newUserInfo.get('username').hasError('required')" class="col col-center"
+        style="font-size: 12px; color: #b80000; margin-left: 10px">
+        This field is required
+      </span> -->
+      <!-- <span *ngIf="creditCardForm.get('cardNumber').hasError('pattern')" class="col col-center"
+        style="font-size: 12px; color: #b80000; margin-left: 10px">
+        Enter valid card number, only enter numbers
+      </span> -->
+      <span *ngIf="newUserInfo.get('email').hasError('required')" class="col col-center"
+        style="font-size: 12px; color: #b80000; margin-left: 10px">
+        This field is required
+      </span>
+      <span *ngIf="newUserInfo.get('email').hasError('pattern')" class="col col-center"
+        style="font-size: 12px; color: #b80000; margin-left: 10px">
+        Enter valid email address
+      </span>
+    </span>
     <div class="row contact-info-row">
       <div class="col col-center">
         PasswordConf:
@@ -35,7 +70,7 @@
 </div>
 
 <div class="place-order-button">
-  <a class="btn btn-outline-success" href="#" [routerLink]="['/home']" (click)="addNewUser()"
-    role="button">Place Order</a>
-  <!--  -->
+  <button type="button" class="btn btn-outline-success" (click)="addNewUser()" [disabled]="!newUserInfo.valid">Sign
+    Up</button>
+  <!-- place navigation inside the method, not need to worry about click, it is used for both <button> and <a> -->
 </div>
