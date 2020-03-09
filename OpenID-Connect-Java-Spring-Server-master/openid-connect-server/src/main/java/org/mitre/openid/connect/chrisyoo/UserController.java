@@ -65,4 +65,14 @@ public class UserController {
 		return "{\"status\":\"OK\"}";
     }
 	
+	@RequestMapping(value = "/username-duplicate", method = RequestMethod.GET)
+	public @ResponseBody boolean usernameDuplicate(HttpServletRequest request) {
+		User result = userService.findByUsername(request.getHeader("username"));
+		if (result == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 }

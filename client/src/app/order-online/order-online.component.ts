@@ -17,6 +17,7 @@ import { DeleteModalComponent } from './delete-modal/delete-modal.component';
   styleUrls: ['./order-online.component.css']
 })
 export class OrderOnlineComponent implements OnInit {
+  currentTime: Date = new Date();
   closeResult: string;
   selectedUser: User;
   clickedMenu: string = "Build Your Own Pizza";
@@ -145,6 +146,10 @@ export class OrderOnlineComponent implements OnInit {
     this.orderOnlineForm = this.fb.group({
       location: [this.pickupLocation, Validators.required]
     });
+
+    setInterval(() => {
+      this.currentTime = new Date();
+    }, 1000);
 
   }
 

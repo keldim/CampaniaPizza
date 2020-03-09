@@ -94,6 +94,27 @@
         <dt class="dt-for-location-bar">Accepted Cards:</dt>
         <dd class="dd-for-location-bar">Mastercard, Visa, American Express, Discover</dd>
       </dl>
+
+      <span *ngIf="location.value != '' && currentTime.getHours() >= 1 && currentTime.getHours() < 11">
+        <!-- <dt class="dt-for-location-bar"> -->
+          <span style="font-size: 12px; color: #b80000; margin-top: 5px; float: left">
+            The store is currently closed. Your order will be ready for pickup today at 11am.
+          </span>
+        <!-- </dt> -->
+        <!-- {{ currentTime }}
+        {{ currentTime.getHours() }}
+        {{ currentTime.getMinutes() }} -->
+        </span>
+
+      <span *ngIf="location.value != '' && currentTime.getHours() == 0 && currentTime.getMinutes() < 31">
+        <span style="font-size: 12px; color: #b80000; margin-top: 5px; float: left">
+          The last order for the kitchen is 12:30am. Orders after that will be available for pickup today at 11am
+        </span>
+      </span>
+
+    <!-- simply use Date? returns the internet service area time zone?
+             use the time from angular and send it to spring for past order? no need to worry about daylight savings? -->
+
     </div>
     <div class="menu-area">
       <ul class="nav flex-column category-list">
