@@ -15,11 +15,6 @@ public class UserDAOJpaImpl implements UserDAO {
 	
 	@PersistenceContext
 	private EntityManager entityManager;
-//	
-//	@Autowired
-//	public UserDAOJpaImpl(EntityManager theEntityManager) {
-//		entityManager = theEntityManager;
-//	}
 
 	@Override
 	@Transactional

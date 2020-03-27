@@ -14,10 +14,4 @@ public interface UserService {
 
 	public void deleteByUsername(String theUsername);
 	
-	// there is no User? use UserInfo?
-	// create user, use one to one uni to connect with userinfo?
-	// no need to use one to one? just add user and userinfo separately? through different repositories?
-	// use getByUsername to get userinfo of an user?
-	// create your own repositories for user and userinfo? do not use spring boot?
-	// openid-connect-common => interface, openid-connect-server => jpa repository impl?
 }

@@ -15,7 +15,6 @@
               <span style="font-size: 12px; color: #b80000; margin-left: 10px">Please choose a location.</span>
             </span>
           </dd>
-          <!-- pickupLocation== -->
           <span *ngIf="location.value=='Midtown'">
             <dt class="dt-for-location-bar"></dt>
             <dd class="dd-for-location-bar">
@@ -82,38 +81,26 @@
           </span>
         </ng-template>
         <dt class="dt-for-location-bar">Pickup Hours:</dt>
-        <!-- And Delivery  -->
         <dd class="dd-for-location-bar"><a [ngbPopover]="popContent" triggers="mouseenter:mouseleave"
             data-placement="bottom"><span class="link-for-hours">Open Today 11am - 1am</span></a></dd>
       </dl>
-      <!-- <dl class="dl-for-location-bar">
-        <dt class="dt-for-location-bar">Delivery Fee:</dt>
-        <dd class="dd-for-location-bar">$1.99 (Free Delivery For Orders Over $15)<br></dd>
-      </dl> -->
       <dl class="dl-for-location-bar">
         <dt class="dt-for-location-bar">Accepted Cards:</dt>
         <dd class="dd-for-location-bar">Mastercard, Visa, American Express, Discover</dd>
       </dl>
 
       <span *ngIf="location.value != '' && currentTime.getHours() >= 1 && currentTime.getHours() < 11">
-        <!-- <dt class="dt-for-location-bar"> -->
           <span style="font-size: 12px; color: #b80000; margin-top: 5px; float: left">
-            The store is currently closed. Your order will be ready for pickup today at 11am.
+            The store is currently closed. Your order will be ready for pickup after 11 am today.
           </span>
-        <!-- </dt> -->
-        <!-- {{ currentTime }}
-        {{ currentTime.getHours() }}
-        {{ currentTime.getMinutes() }} -->
         </span>
 
-      <span *ngIf="location.value != '' && currentTime.getHours() == 0 && currentTime.getMinutes() < 31">
+      <span *ngIf="location.value != '' && currentTime.getHours() == 0">
         <span style="font-size: 12px; color: #b80000; margin-top: 5px; float: left">
-          The last order for the kitchen is 12:30am. Orders after that will be available for pickup today at 11am
+          The last order for the kitchen is 12:30 am and the last pickup time is 1 am. Orders between 12:31 am and 1 am
+          will be ready for pickup after 11 am today.
         </span>
       </span>
-
-    <!-- simply use Date? returns the internet service area time zone?
-             use the time from angular and send it to spring for past order? no need to worry about daylight savings? -->
 
     </div>
     <div class="menu-area">
@@ -410,28 +397,6 @@
       </div>
     </div>
 
-  <!-- <div class="shopping-cart">
-    <div class="order-contents">
-      <h2 class="order-contents-text">Order Contents</h2>
-    </div>
-    <div *ngFor="let pizzaItem of pizzaModalComponent.pizzaItems; let i = index;" class="cart-item">
-      <span class="quantity">{{ pizzaItem.quantity }}x</span>
-      <span *ngIf="pizzaItem.type=='BUILD YOUR OWN PIZZA'" class="cart-item-name">{{ pizzaItem.type }}</span>
-      <span *ngIf="pizzaItem.type!='BUILD YOUR OWN PIZZA'" class="cart-item-name">{{ pizzaItem.type }}</span>
-      <span class="cart-item-price">${{ priceTimesQuantity(pizzaItem.quantity, pizzaItem.price) }}</span>
-      <div class="edit-delete"> -->
-        <!-- add the modal html code here? for delete? -->
-        <!-- <span>[ </span>
-        <a class="empty-link" (click)="pizzaModalComponent.valueBindingForEdit(i); openPizza(pizzaItem.type)"><span
-            class="empty-link-text">edit</span></a> | <a class="empty-link"><span class="empty-link-text"
-            (click)="pizzaModalComponent.deletePizzaItem(i)">delete</span></a>
-        <span> ]</span>
-      </div>
-      <div class="options-display">
-        {{ pizzaModalComponent.buildDisplayForCart(pizzaItem) }}
-      </div>
-    </div> -->
-
     <div *ngFor="let saladItem of saladItems; let i = index;" class="cart-item">
       <span class="quantity">{{ saladItem.quantity }}x</span>
       <span class="cart-item-name" *ngIf="saladItem.type=='BUILD YOUR OWN SALAD'">{{ saladItem.type }}</span>
@@ -449,23 +414,6 @@
       </div>
     </div>
 
-    <!-- <div *ngFor="let saladItem of saladModalComponent.saladItems; let i = index;" class="cart-item">
-      <span class="quantity">{{ saladItem.quantity }}x</span>
-      <span class="cart-item-name" *ngIf="saladItem.type=='BUILD YOUR OWN SALAD'">{{ saladItem.type }}</span>
-      <span class="cart-item-name" *ngIf="saladItem.type!='BUILD YOUR OWN SALAD'">{{ saladItem.type }}</span>
-      <span class="cart-item-price">${{ priceTimesQuantity(saladItem.quantity, saladItem.price) }}</span>
-      <div class="edit-delete">
-        <span>[ </span>
-        <a class="empty-link" (click)="saladModalComponent.valueBindingForEdit(i); openSalad(saladItem.type)"><span
-            class="empty-link-text">edit</span></a> | <a class="empty-link"><span class="empty-link-text"
-            (click)="saladModalComponent.deleteSaladItem(i)">delete</span></a>
-        <span> ]</span>
-      </div>
-      <div class="options-display">
-        {{ saladModalComponent.buildDisplayForCart(saladItem) }}
-      </div>
-    </div> -->
-
     <div *ngFor="let drinkItem of drinkItems; let i = index;" class="cart-item">
       <span class="quantity">{{ drinkItem.quantity }}x</span>
       <span class="cart-item-name">{{ drinkItem.type }}</span>
@@ -481,22 +429,6 @@
         {{ drinkModalComponent.buildDisplayForCart() }}
       </div>
     </div>
-
-    <!-- <div *ngFor="let drinkItem of drinkModalComponent.drinkItems; let i = index;" class="cart-item">
-      <span class="quantity">{{ drinkItem.quantity }}x</span>
-      <span class="cart-item-name">{{ drinkItem.type }}</span>
-      <span class="cart-item-price">${{ priceTimesQuantity(drinkItem.quantity, drinkItem.price) }}</span>
-      <div class="edit-delete">
-        <span>[ </span>
-        <a class="empty-link" (click)="drinkModalComponent.valueBindingForEdit(i); openDrink(drinkItem.type)"><span
-            class="empty-link-text">edit</span></a> | <a class="empty-link"><span class="empty-link-text"
-            (click)="drinkModalComponent.deleteDrinkItem(i)">delete</span></a>
-        <span> ]</span>
-      </div>
-      <div class="options-display">
-        {{ drinkModalComponent.buildDisplayForCart() }}
-      </div>
-    </div> -->
 
     <div *ngFor="let dessertItem of dessertItems; let i = index;" class="cart-item">
       <span class="quantity">{{ dessertItem.quantity }}x</span>
@@ -516,25 +448,6 @@
       </div>
     </div>
 
-
-    <!-- <div *ngFor="let dessertItem of dessertModalComponent.dessertItems; let i = index;" class="cart-item">
-      <span class="quantity">{{ dessertItem.quantity }}x</span>
-      <span *ngIf="dessertItem.type=='Cookies'" class="cart-item-name">{{ dessertItem.cookieChoice.toUpperCase() }}</span>
-      <span *ngIf="dessertItem.type=='Brownies'" class="cart-item-name">{{ dessertItem.brownieChoice.toUpperCase() }}</span>
-      <span class="cart-item-price">${{ priceTimesQuantity(dessertItem.quantity, dessertItem.price) }}</span>
-      <div class="edit-delete">
-        <span>[ </span>
-        <a class="empty-link"
-          (click)="dessertModalComponent.valueBindingForEdit(i); openDessert(dessertItem.type)"><span
-            class="empty-link-text">edit</span></a> | <a class="empty-link"><span class="empty-link-text"
-            (click)="dessertModalComponent.deleteDessertItem(i)">delete</span></a>
-        <span> ]</span>
-      </div>
-      <div class="options-display">
-        {{ dessertModalComponent.buildDisplayForCart() }}
-      </div>
-    </div> -->
-
     <div class="calculate-total-section">
       <div class="calculate-total-subsection">
         <span>Subtotal</span>
@@ -552,8 +465,6 @@
 
   <div class="button-area" *ngIf="calculateSubtotal() > 0">
     <button type="button" class="proceed-to-checkout" [routerLink]="['/checkout']" [disabled]="!orderOnlineForm.valid">
-      <!-- !orderOnlineForm.valid -->
-      <!-- class="proceed-to-checkout" -->
       Proceed to Checkout
     </button>
   </div>

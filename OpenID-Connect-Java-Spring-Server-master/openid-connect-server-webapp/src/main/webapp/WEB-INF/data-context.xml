@@ -43,9 +43,9 @@
 		<property name="driverClassName"
 			value="com.mysql.jdbc.Driver" />
 		<property name="jdbcUrl"
-			value="jdbc:mysql://127.0.0.1:3306/mitre-openid-connect?useSSL=false&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC" />
-		<property name="username" value="mitre-openid-connect" />
-		<property name="password" value="mitre-55555" />
+			value="jdbc:mysql://portfolio-database.cunqexssas50.us-east-2.rds.amazonaws.com:3306/mitre-openid-connect?useSSL=false&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC" />
+		<property name="username" value="" />
+		<property name="password" value="" />
 	</bean>
 
 	<bean id="jpaAdapter"

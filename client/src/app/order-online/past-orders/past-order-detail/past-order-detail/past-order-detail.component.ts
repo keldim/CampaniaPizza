@@ -47,8 +47,10 @@ export class PastOrderDetailComponent implements OnInit {
       'Authorization': `Bearer ` + this._authService.getAccessToken()
     });
     console.log("sending request for past order");
-    return this.http.get<IPastOrder>(`http://localhost:8181/registered-user/past-order/${id}`, { headers: headers });
+    return this.http.get<IPastOrder>(`http://campania-pizza-server.us-east-2.elasticbeanstalk.com/registered-user/past-order/${id}`, { headers: headers });
   }
+  //    localhost:5000
+  //        CampaniaPizzaServer-env-3.eba-igwhis5n.us-east-2.elasticbeanstalk.com
 
   jsonArrayToArray(jsonArray: string) {
     // console.log(this.pastOrder.pizzaItems);

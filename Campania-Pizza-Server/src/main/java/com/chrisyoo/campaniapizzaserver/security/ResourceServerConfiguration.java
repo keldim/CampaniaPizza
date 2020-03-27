@@ -10,28 +10,18 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 
 @Configuration
 @EnableResourceServer
-public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
-
-    
+public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {	
+	
     public ResourceServerConfiguration() {
         super();
     }
 
-//  @Order(1)
     @Override
     public void configure(HttpSecurity http) throws Exception {
          http
-//            .antMatcher("/**")
             .antMatcher("/registered-user/**")
             .authorizeRequests()
-//            .antMatchers(HttpMethod.GET, "/charge").permitAll()
-//            .antMatchers("/**").authenticated();
             .anyRequest().authenticated();
-
-//         http
-//         .requestMatchers()
-//             .antMatchers("/past-orders/**")
-//         .authorizeRequests()
-//             .anyRequest().authenticated();
     }
+    
 }

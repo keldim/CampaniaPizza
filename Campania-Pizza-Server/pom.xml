@@ -12,6 +12,7 @@
 	<groupId>com.chrisyoo</groupId>
 	<artifactId>campania-pizza-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<!-- <packaging>war</packaging> -->
 	<name>campania-pizza-server</name>
 	<description>Demo project for Spring Boot</description>
 
@@ -20,6 +21,9 @@
 	</properties>
 
 	<dependencies>
+		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-tomcat</artifactId> 
+			<scope>provided</scope> </dependency> -->
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
@@ -96,7 +100,6 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-jwt</artifactId>
 			<version>1.0.11.RELEASE</version>
-			-->
 		</dependency>
 		<dependency>
 			<groupId>org.mitre</groupId>
@@ -140,6 +143,37 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>prepare</id>
+						<phase>package</phase>
+						<configuration>
+							<tasks>
+								<unzip
+									src="${project.build.directory}/${project.build.finalName}.jar"
+									dest="${project.build.directory}/${project.build.finalName}" />
+								<copy
+									todir="${project.build.directory}/${project.build.finalName}/"
+									overwrite="false">
+									<fileset dir="./" includes=".ebextensions/**" />
+								</copy>
+								<!-- <jar jarfile="${project.build.directory}/${project.build.finalName}.jar" 
+									basedir="${project.build.directory}/${project.build.finalName}"/> -->
+								<zip compress="false"
+									destfile="${project.build.directory}/${project.build.finalName}.jar"
+									basedir="${project.build.directory}/${project.build.finalName}" />
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

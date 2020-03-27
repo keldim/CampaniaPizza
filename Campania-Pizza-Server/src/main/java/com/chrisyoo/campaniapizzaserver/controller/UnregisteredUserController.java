@@ -34,8 +34,9 @@ import com.stripe.model.Charge;
 //@CrossOrigin
 //"/payment"
 //PaymentController
+//@CrossOrigin(origins = "http://campania-pizza-client.s3-website.us-east-2.amazonaws.com")
 @RestController
-@RequestMapping("unregistered-user")
+@RequestMapping("/unregistered-user")
 public class UnregisteredUserController {
 
 	private StripeClient stripeClient;
@@ -52,7 +53,8 @@ public class UnregisteredUserController {
 		this.pastOrderService = pastOrderService;
 	}
 
-	@PostMapping("/charge")
+//	@PostMapping("/charge")
+	@RequestMapping(value = "/charge", method = RequestMethod.GET)
 	public Charge chargeCard(HttpServletRequest request, Model theModel) throws Exception {
 
 		// changed

@@ -37,8 +37,9 @@ import com.chrisyoo.campaniapizzaserver.service.PastOrderService;
 import com.stripe.model.Charge;
 
 //MainController
+//@CrossOrigin(origins = "http://campania-pizza-client.s3-website.us-east-2.amazonaws.com")
 @RestController // changed from @Controller
-@RequestMapping("registered-user")
+@RequestMapping("/registered-user")
 public class RegisteredUserController {
 	
 	private StripeClient stripeClient;
@@ -114,7 +115,8 @@ public class RegisteredUserController {
 //      return "hello";
 //    }
 	
-	@PostMapping("/charge")
+//	@PostMapping("/charge")
+	@RequestMapping(value = "/charge", method = RequestMethod.GET)
 	public Charge chargeCard(HttpServletRequest request, Model theModel) throws Exception {
 
 		JSONParser parser = new JSONParser();

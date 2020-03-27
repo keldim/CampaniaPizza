@@ -127,12 +127,17 @@ export class CheckoutComponent implements OnInit {
       });
       console.log(headers);
 
-      this.http.post('http://localhost:8181/registered-user/charge', {}, { headers: headers }).subscribe(resp => {
+      // this.http.post
+      this.http.get('http://campania-pizza-server.us-east-2.elasticbeanstalk.com/registered-user/charge', { headers: headers }).subscribe(resp => {
+        //       localhost:5000
+        // {},
         console.log(resp);
       });
     } else {
       // changed
       const headers = new HttpHeaders({
+        // 'Access-Control-Allow-Origin': '*',
+        // 'Cache-Control': 'no-cache',
         'token': token,
         'amount': this.orderOnlineComponent.showTotal().toString(),
         'pickupLocation': this.pickupLocation,
@@ -148,7 +153,10 @@ export class CheckoutComponent implements OnInit {
       });
       console.log(headers);
 
-      this.http.post('http://localhost:8181/unregistered-user/charge', {}, { headers: headers }).subscribe(resp => {
+      // this.http.post
+      this.http.get('http://campania-pizza-server.us-east-2.elasticbeanstalk.com/unregistered-user/charge', { headers: headers }).subscribe(resp => {
+        //       localhost:5000
+        // {},
         console.log(resp);
       });
     }

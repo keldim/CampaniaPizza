@@ -15,14 +15,16 @@ export class AuthService {
 
   constructor(private http: HttpClient) {
     var config = {
-      authority: 'http://localhost:8080/openid-connect-server-webapp/',
+      authority: 'http://mitre-openid.us-east-2.elasticbeanstalk.com/',
       client_id: 'client',
-      redirect_uri: 'http://localhost:4200/assets/oidc-login-redirect.html',
+      redirect_uri: 'http://campania-pizza-client.s3-website.us-east-2.amazonaws.com/assets/oidc-login-redirect.html',
+      // http://localhost:4200/
       scope: 'openid',
       response_type: 'id_token token',
       // projects-api profile
       // prompt: 'none',
-      post_logout_redirect_uri: 'http://localhost:4200/?postLogout=true',
+      post_logout_redirect_uri: 'http://campania-pizza-client.s3-website.us-east-2.amazonaws.com/?postLogout=true',
+      // http://localhost:4200/
       userStore: new WebStorageStateStore({ store: window.localStorage })
     };
 
