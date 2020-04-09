@@ -34,7 +34,7 @@ export class PastOrdersComponent implements OnInit {
 
 
     console.log("sending request for past orders");
-    return this.http.get('http://campania-pizza-server.us-east-2.elasticbeanstalk.com/registered-user/past-orders', { headers: headers });
+    return this.http.get('http://new-campania-server-env.eba-igwhis5n.us-east-2.elasticbeanstalk.com/registered-user/past-orders', { headers: headers });
   }
   //      localhost:5000
   //      CampaniaPizzaServer-env-3.eba-igwhis5n.us-east-2.elasticbeanstalk.com

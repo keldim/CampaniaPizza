@@ -85,18 +85,26 @@ public class StripeClient {
           
         byte[] decodedBytes = Base64.getMimeDecoder().decode(request.getHeader("invoiceImg"));
         
-        try(FileOutputStream imageOutFile = new FileOutputStream("./src/main/resources/invoice.png")) {
-            imageOutFile.write(decodedBytes);
+        try {
+//        	try(FileOutputStream imageOutFile = new FileOutputStream("./src/main/resources/invoice.png")) {}
+//        	imageOutFile.write(decodedBytes);
+        	File temp = File.createTempFile("invoice", ".png");
+        	FileOutputStream imageOutFile = new FileOutputStream(temp);
+        	imageOutFile.write(decodedBytes);
+        	helper.addAttachment("OrderInvoice.png", temp);
+//        	emailSender.send(message);
+        	temp.deleteOnExit();
         } catch (Exception e) {
             System.out.println("Error in creating image file: " + e);
         }
         
         // from documentation => Note that the InputStream returned by the DataSource implementation needs to be a fresh one on each call, 
         // as JavaMail will invoke getInputStream() multiple times. => need to create a fresh FileDataSource
-        FileDataSource attachment = new FileDataSource("./src/main/resources/invoice.png");
-        helper.addAttachment("OrderInvoice.png", attachment);
+//        FileDataSource attachment = new FileDataSource("./src/main/resources/invoice.png");
+//        helper.addAttachment("OrderInvoice.png", attachment);
         
         emailSender.send(message);
+        
     }
     
     public Charge chargeCreditCard(String token, double amount, HttpServletRequest request) throws Exception {

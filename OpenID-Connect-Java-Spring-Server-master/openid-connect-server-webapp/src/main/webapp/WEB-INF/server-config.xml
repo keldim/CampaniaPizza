@@ -33,7 +33,7 @@
 	<bean id="configBean" class="org.mitre.openid.connect.config.ConfigurationPropertiesBean">
 	    
 	    <!-- This property sets the root URL of the server, known as the issuer -->
-		<property name="issuer" value="http://mitre-openid.us-east-2.elasticbeanstalk.com/" />
+		<property name="issuer" value="http://new-mitreid-env.eba-ppwpqerk.us-east-2.elasticbeanstalk.com/" />
 		
 		<!-- http://localhost:8080/openid-connect-server-webapp/ -->
 		

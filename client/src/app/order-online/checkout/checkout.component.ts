@@ -128,7 +128,7 @@ export class CheckoutComponent implements OnInit {
       console.log(headers);
 
       // this.http.post
-      this.http.get('http://campania-pizza-server.us-east-2.elasticbeanstalk.com/registered-user/charge', { headers: headers }).subscribe(resp => {
+      this.http.get('http://new-campania-server-env.eba-igwhis5n.us-east-2.elasticbeanstalk.com/registered-user/charge', { headers: headers }).subscribe(resp => {
         //       localhost:5000
         // {},
         console.log(resp);
@@ -154,7 +154,7 @@ export class CheckoutComponent implements OnInit {
       console.log(headers);
 
       // this.http.post
-      this.http.get('http://campania-pizza-server.us-east-2.elasticbeanstalk.com/unregistered-user/charge', { headers: headers }).subscribe(resp => {
+      this.http.get('http://new-campania-server-env.eba-igwhis5n.us-east-2.elasticbeanstalk.com/unregistered-user/charge', { headers: headers }).subscribe(resp => {
         //       localhost:5000
         // {},
         console.log(resp);

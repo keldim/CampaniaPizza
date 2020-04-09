@@ -43,7 +43,7 @@
 		<property name="driverClassName"
 			value="com.mysql.jdbc.Driver" />
 		<property name="jdbcUrl"
-			value="jdbc:mysql://portfolio-database.cunqexssas50.us-east-2.rds.amazonaws.com:3306/mitre-openid-connect?useSSL=false&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC" />
+			value="jdbc:mysql://new-portfolio-database.cunqexssas50.us-east-2.rds.amazonaws.com:3306/mitre-openid-connect?useSSL=false&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC" />
 		<property name="username" value="" />
 		<property name="password" value="" />
 	</bean>

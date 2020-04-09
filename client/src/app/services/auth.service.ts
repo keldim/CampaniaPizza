@@ -15,7 +15,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) {
     var config = {
-      authority: 'http://mitre-openid.us-east-2.elasticbeanstalk.com/',
+      authority: 'http://new-mitreid-env.eba-ppwpqerk.us-east-2.elasticbeanstalk.com/',
       client_id: 'client',
       redirect_uri: 'http://campania-pizza-client.s3-website.us-east-2.amazonaws.com/assets/oidc-login-redirect.html',
       // http://localhost:4200/

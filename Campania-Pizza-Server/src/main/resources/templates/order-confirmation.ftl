@@ -27,7 +27,7 @@
 			New York, NY 10011<br><br>
 		</span> 
 	</#if> 
-	<#if pickupLocation=='EastVillage'> 
+	<#if pickupLocation=='East Village'> 
 		<span> 
 			Campania Pizza, East Village<br> 
 			32 St Marks Pl<br> 

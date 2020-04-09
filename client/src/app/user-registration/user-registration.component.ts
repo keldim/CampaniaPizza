@@ -34,7 +34,7 @@ export class UserRegistrationComponent implements OnInit {
       'username': this.newUserInfo.controls.username.value
     });
 
-    this.http.get('http://mitre-openid.us-east-2.elasticbeanstalk.com/username-duplicate', { headers: header1 }).subscribe((response: boolean) => {
+    this.http.get('http://new-mitreid-env.eba-ppwpqerk.us-east-2.elasticbeanstalk.com/username-duplicate', { headers: header1 }).subscribe((response: boolean) => {
       if (response === true) {
         console.log("reached");
         this.alert = true;
@@ -50,7 +50,7 @@ export class UserRegistrationComponent implements OnInit {
 
         console.log(header2);
 
-        this.http.get('http://mitre-openid.us-east-2.elasticbeanstalk.com/add-user', { headers: header2 }).subscribe(resp => {
+        this.http.get('http://new-mitreid-env.eba-ppwpqerk.us-east-2.elasticbeanstalk.com/add-user', { headers: header2 }).subscribe(resp => {
           console.log(resp);
         });
 
