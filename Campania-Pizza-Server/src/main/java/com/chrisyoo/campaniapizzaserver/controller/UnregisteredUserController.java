@@ -31,20 +31,14 @@ import com.chrisyoo.campaniapizzaserver.service.PastOrderService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stripe.model.Charge;
 
-//@CrossOrigin
-//"/payment"
-//PaymentController
-//@CrossOrigin(origins = "http://campania-pizza-client.s3-website.us-east-2.amazonaws.com")
 @RestController
 @RequestMapping("/unregistered-user")
 public class UnregisteredUserController {
 
 	private StripeClient stripeClient;
-	// private OpenIdUserRepository openIdUserRepository;
 	private OpenIdUserService openIdUserService;
 	private PastOrderService pastOrderService;
 
-	// OpenIdUserRepository openIdUserRepository
 	@Autowired
 	UnregisteredUserController(StripeClient stripeClient, OpenIdUserService openIdUserService,
 			PastOrderService pastOrderService) {
@@ -53,38 +47,16 @@ public class UnregisteredUserController {
 		this.pastOrderService = pastOrderService;
 	}
 
-//	@PostMapping("/charge")
-	@RequestMapping(value = "/charge", method = RequestMethod.GET)
-	public Charge chargeCard(HttpServletRequest request, Model theModel) throws Exception {
-
-		// changed
-		System.out.println(request.getHeader("token"));
-		System.out.println(request.getHeader("amount"));
-		System.out.println(request.getHeader("Authorization"));
-		System.out.println(request.getHeader("pizzaItems"));
-		System.out.println(request.getHeader("saladItems"));
-		System.out.println(request.getHeader("drinkItems"));
-		System.out.println(request.getHeader("dessertItems"));
-
-		String token = request.getHeader("token");
-		// with toggle, simply run the application, if the error occurs, then enter
-		// debug perspective
-
-		Double amount = Double.parseDouble(request.getHeader("amount"));
-
-		return this.stripeClient.chargeCreditCard(token, amount, request);
-
+	@PostMapping("/charge")
+	public Charge chargeCard(HttpServletRequest request, Model theModel) {
+		try {
+			String token = request.getHeader("token");
+			Double amount = Double.parseDouble(request.getHeader("amount"));
+			return this.stripeClient.chargeCreditCard(token, amount, request);
+		} catch (Exception e) {
+			System.out.println("Error in unregistered-user, /charge: " + e);
+			return null;
+		}
 	}
-	
-	
-	// whitelist this website
-	// send request to "/token" for admin token, using admin id and pass
-	// when you recieve admin token, use that to send request for registering a new client
-	
-	
 
-	@RequestMapping(value = "/whoareyou", method = RequestMethod.GET)
-	public @ResponseBody String whoareyou(String sub) {
-		return "{\"status\":\"OK\"}";
-	}
 }

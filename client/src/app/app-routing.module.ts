@@ -5,6 +5,7 @@ import { LocationComponent } from './locations/locations.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
       { path: 'locations', component: LocationComponent },
       { path: 'about-us', component: AboutUsComponent },
       { path: 'new-user', component: UserRegistrationComponent },
+      { path: 'error-page', component: ErrorPageComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: '**', component: PageNotFoundComponent }
     ], {scrollPositionRestoration: 'enabled'})

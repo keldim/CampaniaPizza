@@ -10,22 +10,26 @@
       <!-- change pickup to location?
       change time (est) to time or time (est/edt)? -->
     </tr>
-    <tr *ngFor="let pastOrder of pastOrders">
-      <td>{{ pastOrder.ordered_at | date: 'mediumDate' }}</td>
-      <!-- displayDate(pastOrder) -->
-      <!-- *ngIf="isDstObserved(pastOrder.ordered_at)" -->
-      <!-- *ngIf="!isDstObserved(pastOrder.ordered_at)" -->
-      <td>{{ pastOrder.ordered_at | date: 'mediumTime' }}</td>
-      <!-- datepipe uses local timezone by default, will just use this -->
 
-      <!-- : 'EDT' -->
-      <!-- <td>{{ pastOrder.ordered_at | date: 'mediumTime'}}</td> -->
-      <!-- : 'EST' -->
-      <!-- displayTime(pastOrder) -->
-      <td>{{ pastOrder.location }}</td>
-      <!-- {{ pastOrder.ordered_at }} -->
-      <td><a [routerLink]="['/order-online/past-order-detail', pastOrder.id]">View Order</a></td>
-    </tr>
+    <span *ngIf="pastOrders != null">
+      <tr *ngFor="let pastOrder of pastOrders">
+        <td>{{ pastOrder.ordered_at | date: 'mediumDate' }}</td>
+        <!-- displayDate(pastOrder) -->
+        <!-- *ngIf="isDstObserved(pastOrder.ordered_at)" -->
+        <!-- *ngIf="!isDstObserved(pastOrder.ordered_at)" -->
+        <td>{{ pastOrder.ordered_at | date: 'mediumTime' }}</td>
+        <!-- datepipe uses local timezone by default, will just use this -->
+
+        <!-- : 'EDT' -->
+        <!-- <td>{{ pastOrder.ordered_at | date: 'mediumTime'}}</td> -->
+        <!-- : 'EST' -->
+        <!-- displayTime(pastOrder) -->
+        <td>{{ pastOrder.location }}</td>
+        <!-- {{ pastOrder.ordered_at }} -->
+        <td><a [routerLink]="['/order-online/past-order-detail', pastOrder.id]">View Order</a></td>
+      </tr>
+    </span>
+
 
     <!-- <tr>
       <td>Eve</td>

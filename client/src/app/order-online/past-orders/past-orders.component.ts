@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { IPastOrder } from './past-order';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'past-orders',
@@ -12,7 +13,7 @@ import { IPastOrder } from './past-order';
 export class PastOrdersComponent implements OnInit {
   pastOrders: IPastOrder[] = [];
 
-  constructor(private http: HttpClient, private _authService: AuthService) {
+  constructor(private http: HttpClient, private _authService: AuthService, private router: Router) {
 
   }
 
@@ -22,9 +23,13 @@ export class PastOrdersComponent implements OnInit {
       .subscribe(
         (pastOrdersReceived: IPastOrder[]) => this.pastOrders = pastOrdersReceived,
         (err: any) => console.log(err),
-        () => console.log("all past orders successfully loaded")
+        () => console.log("received response from the server")
       );
 
+      if(this.pastOrders == null) {
+        console.log("error in parsing JSON in the server");
+        this.router.navigate(['/error-page']);
+      }
   }
 
   getPastOrders(): Observable<Object> {
@@ -34,8 +39,9 @@ export class PastOrdersComponent implements OnInit {
 
 
     console.log("sending request for past orders");
-    return this.http.get('http://new-campania-server-env.eba-igwhis5n.us-east-2.elasticbeanstalk.com/registered-user/past-orders', { headers: headers });
+    return this.http.post('http://new-campania-server-env.eba-igwhis5n.us-east-2.elasticbeanstalk.com/registered-user/past-orders', {}, { headers: headers });
   }
+
   //      localhost:5000
   //      CampaniaPizzaServer-env-3.eba-igwhis5n.us-east-2.elasticbeanstalk.com
 

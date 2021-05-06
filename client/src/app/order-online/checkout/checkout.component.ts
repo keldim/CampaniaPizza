@@ -104,7 +104,6 @@ export class CheckoutComponent implements OnInit {
 
   chargeCard(token: string) {
     if (this.currentOrderComponent.isLoggedIn()) {
-      // changed
       const headers = new HttpHeaders({
         'Authorization': `Bearer ` + this._authService.getAccessToken(),
         'token': token,
@@ -115,11 +114,6 @@ export class CheckoutComponent implements OnInit {
         'email': this.contactInfo.controls.email.value,
         'phoneNumber': this.contactInfo.controls.phoneNumber.value,
         'invoiceImg': this.inoviceImg,
-        // this part only shows as [object]
-        // 'pizzaItems': this.pizzaItems,
-        // 'saladItems': this.saladItems,
-        // 'drinkItems': this.drinkItems,
-        // 'dessertItems': this.dessertItems
         'pizzaItems': localStorage.getItem("pizzaItems"),
         'saladItems': localStorage.getItem("saladItems"),
         'drinkItems': localStorage.getItem("drinkItems"),
@@ -127,17 +121,14 @@ export class CheckoutComponent implements OnInit {
       });
       console.log(headers);
 
-      // this.http.post
-      this.http.get('http://new-campania-server-env.eba-igwhis5n.us-east-2.elasticbeanstalk.com/registered-user/charge', { headers: headers }).subscribe(resp => {
-        //       localhost:5000
-        // {},
+      this.http.post('http://new-campania-server-env.eba-igwhis5n.us-east-2.elasticbeanstalk.com/registered-user/charge', {}, { headers: headers }).subscribe(resp => {
         console.log(resp);
+        if (resp == null) {
+          this.router.navigate(['/error-page']);
+        }
       });
     } else {
-      // changed
       const headers = new HttpHeaders({
-        // 'Access-Control-Allow-Origin': '*',
-        // 'Cache-Control': 'no-cache',
         'token': token,
         'amount': this.orderOnlineComponent.showTotal().toString(),
         'pickupLocation': this.pickupLocation,
@@ -153,14 +144,13 @@ export class CheckoutComponent implements OnInit {
       });
       console.log(headers);
 
-      // this.http.post
-      this.http.get('http://new-campania-server-env.eba-igwhis5n.us-east-2.elasticbeanstalk.com/unregistered-user/charge', { headers: headers }).subscribe(resp => {
-        //       localhost:5000
-        // {},
+      this.http.post('http://new-campania-server-env.eba-igwhis5n.us-east-2.elasticbeanstalk.com/unregistered-user/charge', {}, { headers: headers }).subscribe(resp => {
         console.log(resp);
+        if (resp == null) {
+          this.router.navigate(['/error-page']);
+        }
       });
     }
-
 
     this.storageService.clear();
   }

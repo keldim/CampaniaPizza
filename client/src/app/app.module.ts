@@ -19,6 +19,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AgmCoreModule } from '@agm/core';
+import { ErrorPageComponent } from './error-page/error-page.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { AgmCoreModule } from '@agm/core';
     LocationComponent,
     AboutUsComponent,
     UserRegistrationComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,7 @@ import { AgmCoreModule } from '@agm/core';
     ReactiveFormsModule,
     AppRoutingModule,
     AgmCoreModule.forRoot({
-      apiKey: ''
+      apiKey: 'AIzaSyAefz-lASwxlkPcroXE7GJhaB3RuFL_qeU'
     })
   ],
   // providers: [

@@ -36,7 +36,7 @@ public class StripeClient {
 	
     @Autowired
     StripeClient() {
-        Stripe.apiKey = "";
+        Stripe.apiKey = "sk_test_sNRgiABeNS8kXXYcb5TRKHQr008iLlQrVZ";
     }
  
     public void sendSimpleMessage(
