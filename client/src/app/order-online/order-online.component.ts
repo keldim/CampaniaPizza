@@ -10,6 +10,7 @@ import { LocalStorage } from 'ngx-store';
 import { Observable, Subscription, of } from 'rxjs';
 import { StorageService } from '../services/storage.service';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'order-online',
@@ -17,7 +18,6 @@ import { DeleteModalComponent } from './delete-modal/delete-modal.component';
   styleUrls: ['./order-online.component.css']
 })
 export class OrderOnlineComponent implements OnInit {
-  currentTime: Date = new Date();
   closeResult: string;
   selectedUser: User;
   clickedMenu: string = "Build Your Own Pizza";
@@ -35,7 +35,7 @@ export class OrderOnlineComponent implements OnInit {
   @ViewChild(DeleteModalComponent) deleteModalComponent;
 
   // private modalService: NgbModal,
-  constructor(private fb: FormBuilder, private storageService: StorageService) {
+  constructor(private fb: FormBuilder, private storageService: StorageService, private http: HttpClient) {
     this.storageService.watchPizzaItems().subscribe(pizzaItems => {
       this.pizzaItems = pizzaItems;
     });
@@ -142,15 +142,9 @@ export class OrderOnlineComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.orderOnlineForm = this.fb.group({
       location: [this.pickupLocation, Validators.required]
     });
-
-    setInterval(() => {
-      this.currentTime = new Date();
-    }, 1000);
-
   }
 
   save() {
