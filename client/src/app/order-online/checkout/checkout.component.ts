@@ -6,14 +6,15 @@ import { DessertModalComponent } from './../dessert-modal/dessert-modal.componen
 import { SaladModalComponent } from './../salad-modal/salad-modal.component';
 import { DrinkModalComponent } from './../drink-modal/drink-modal.component';
 import { LocalStorage, LocalStorageService } from 'ngx-store';
-import { OrderOnlineComponent } from '../order-online.component';
 import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { StorageService } from 'src/app/services/storage.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { CurrentOrderComponent } from '../current-order.component';
 import { Router } from '@angular/router';
+import { BackendService } from 'src/app/services/backend.service';
+import { OrderOnlineComponent } from '../order-online.component';
+import { CurrentOrderComponent } from '../current-order.component';
 
 @Component({
   templateUrl: './checkout.component.html',
@@ -43,7 +44,7 @@ export class CheckoutComponent implements OnInit {
 
   // changed
   constructor(private http: HttpClient, private fb: FormBuilder, public storageService: StorageService,
-    private _authService: AuthService, private router: Router) {
+    private _authService: AuthService, private router: Router, private backendService: BackendService) {
     this.storageService.watchPizzaItems().subscribe(pizzaItems => {
       this.pizzaItems = pizzaItems;
     });
@@ -103,11 +104,11 @@ export class CheckoutComponent implements OnInit {
   }
 
   chargeCard(token: string) {
-    if (this.currentOrderComponent.isLoggedIn()) {
+    if (this.orderOnlineComponent.isLoggedIn) {
       const headers = new HttpHeaders({
         'Authorization': `Bearer ` + this._authService.getAccessToken(),
         'token': token,
-        'amount': this.orderOnlineComponent.showTotal().toString(),
+        'amount': this.currentOrderComponent.showTotal().toString(),
         'pickupLocation': this.pickupLocation,
         'firstName': this.contactInfo.controls.firstName.value.trim(),
         'lastName': this.contactInfo.controls.lastName.value.trim(),
@@ -121,7 +122,7 @@ export class CheckoutComponent implements OnInit {
       });
       console.log(headers);
 
-      this.http.post('http://new-campania-server-env.eba-igwhis5n.us-east-2.elasticbeanstalk.com/registered-user/charge', {}, { headers: headers }).subscribe(resp => {
+      this.http.post(this.backendService.getBackendURL() + 'registered-user/charge', {}, { headers: headers }).subscribe(resp => {
         console.log(resp);
         if (resp == null) {
           this.router.navigate(['/error-page']);
@@ -130,7 +131,7 @@ export class CheckoutComponent implements OnInit {
     } else {
       const headers = new HttpHeaders({
         'token': token,
-        'amount': this.orderOnlineComponent.showTotal().toString(),
+        'amount': this.currentOrderComponent.showTotal().toString(),
         'pickupLocation': this.pickupLocation,
         'firstName': this.contactInfo.controls.firstName.value.trim(),
         'lastName': this.contactInfo.controls.lastName.value.trim(),
@@ -144,7 +145,7 @@ export class CheckoutComponent implements OnInit {
       });
       console.log(headers);
 
-      this.http.post('http://new-campania-server-env.eba-igwhis5n.us-east-2.elasticbeanstalk.com/unregistered-user/charge', {}, { headers: headers }).subscribe(resp => {
+      this.http.post(this.backendService.getBackendURL() + 'unregistered-user/charge', {}, { headers: headers }).subscribe(resp => {
         console.log(resp);
         if (resp == null) {
           this.router.navigate(['/error-page']);

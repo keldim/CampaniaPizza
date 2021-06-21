@@ -12,21 +12,6 @@
   <div class="checkout-subheader">Pickup Location</div>
   <div class="row checkout-row-1">
     <div class="col">
-      <!-- <span *ngIf="orderOnlineComponent.pickupLocation=='Midtown'">
-        Campania Pizza, Midtown<br>
-        31 W 46th St<br>
-        New York, NY 10036
-      </span>
-      <span *ngIf="orderOnlineComponent.pickupLocation=='Chelsea'">
-        Campania Pizza, Chelsea<br>
-        601 6th Ave<br>
-        New York, NY 10011
-      </span>
-      <span *ngIf="orderOnlineComponent.pickupLocation=='East Village'">
-        Campania Pizza, East Village<br>
-        32 St Marks Pl<br>
-        New York, NY 10003
-      </span> -->
       <span *ngIf="pickupLocation=='Midtown'">
         Campania Pizza, Midtown<br>
         31 W 46th St<br>
@@ -124,7 +109,7 @@
         Subtotal
       </div>
       <div class="col product-price">
-        ${{ orderOnlineComponent.showSubtotal() }}
+        ${{ currentOrderComponent.showSubtotal() }}
       </div>
     </div>
     <div class="row">
@@ -132,7 +117,7 @@
         TAX
       </div>
       <div class="col product-price">
-        ${{ orderOnlineComponent.showLocalTax() }}
+        ${{ currentOrderComponent.showLocalTax() }}
       </div>
     </div>
     <div class="row total-row">
@@ -140,7 +125,7 @@
         Total
       </div>
       <div class="col product-price">
-        ${{ orderOnlineComponent.showTotal() }}
+        ${{ currentOrderComponent.showTotal() }}
       </div>
     </div>
   </div>
@@ -304,7 +289,7 @@
     </div>
     <div class="place-order-button">
       <button type="button" class="btn btn-outline-success" (click)="chargeCreditCard()"
-        [disabled]="!contactInfo.valid || !creditCardForm.valid || pickupLocation == '' || orderOnlineComponent.showTotal() == '0.00'">Place Order</button>
+        [disabled]="!contactInfo.valid || !creditCardForm.valid || pickupLocation == '' || currentOrderComponent.showTotal() == '0.00'">Place Order</button>
       <!-- navigate to the link inside chargeCreditCard()? -->
       <!-- do not show the page until the method is completed? see kurata angular course? -->
     </div>

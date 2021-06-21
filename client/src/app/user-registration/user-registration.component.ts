@@ -4,6 +4,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { variable } from '@angular/compiler/src/output/output_ast';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from '../services/auth.service';
 
 
 function passwordMatcher(c: AbstractControl): { [key: string]: boolean } | null {
@@ -25,7 +26,7 @@ export class UserRegistrationComponent implements OnInit {
   newUserInfo: FormGroup;
   alert: boolean;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private authService: AuthService) {
 
   }
 
@@ -34,7 +35,7 @@ export class UserRegistrationComponent implements OnInit {
       'username': this.newUserInfo.controls.username.value
     });
 
-    this.http.post('http://new-mitreid-env.eba-ppwpqerk.us-east-2.elasticbeanstalk.com/username-duplicate', {}, { headers: header1 }).subscribe((response: boolean) => {
+    this.http.post(this.authService.getAuthorityURL() + 'username-duplicate', {}, { headers: header1 }).subscribe((response: boolean) => {
       if (response === true) {
         console.log("reached");
         this.alert = true;
@@ -50,7 +51,7 @@ export class UserRegistrationComponent implements OnInit {
 
         console.log(header2);
 
-        this.http.post('http://new-mitreid-env.eba-ppwpqerk.us-east-2.elasticbeanstalk.com/add-user', {}, { headers: header2 }).subscribe(resp => {
+        this.http.post(this.authService.getAuthorityURL() + 'add-user', {}, { headers: header2 }).subscribe(resp => {
           console.log(resp);
         });
 

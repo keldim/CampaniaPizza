@@ -1,4 +1,4 @@
-import { OrderOnlineComponent } from "./order-online.component";
+import { CurrentOrderComponent } from './current-order.component';
 import { PizzaModalComponent } from './pizza-modal/pizza-modal.component';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -12,8 +12,8 @@ import { DessertModalComponent } from './dessert-modal/dessert-modal.component';
 
 
 
-describe('OrderOnlineComponent', () => {
-  let fixture: ComponentFixture<OrderOnlineComponent>;
+describe('CurrentOrderComponent', () => {
+  let fixture: ComponentFixture<CurrentOrderComponent>;
   let fixture2: ComponentFixture<PizzaModalComponent>;
   // let mockUserService;
   // let mockModalService;
@@ -40,11 +40,11 @@ describe('OrderOnlineComponent', () => {
     // mockUserService,
     // mockModalService,
     // mockFormBuilder = jasmine.createSpyObj(['group']);
-    // component = new OrderOnlineComponent(mockFormBuilder);
+    // component = new CurrentOrderComponent(mockFormBuilder);
 
       TestBed.configureTestingModule({
         declarations: [
-          OrderOnlineComponent,
+          CurrentOrderComponent,
           PizzaModalComponent,
           SaladModalComponent,
           DrinkModalComponent,
@@ -63,7 +63,7 @@ describe('OrderOnlineComponent', () => {
           ]
       });
 
-      fixture = TestBed.createComponent(OrderOnlineComponent);
+      fixture = TestBed.createComponent(CurrentOrderComponent);
       fixture2 = TestBed.createComponent(PizzaModalComponent);
   });
 

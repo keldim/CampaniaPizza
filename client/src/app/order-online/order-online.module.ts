@@ -3,7 +3,6 @@ import { PizzaModalComponent } from './pizza-modal/pizza-modal.component';
 import { SaladModalComponent } from './salad-modal/salad-modal.component';
 import { DrinkModalComponent } from './drink-modal/drink-modal.component';
 import { DessertModalComponent } from './dessert-modal/dessert-modal.component';
-import { OrderOnlineComponent } from './order-online.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
@@ -14,9 +13,12 @@ import { WebStorageModule } from 'ngx-store';
 import { ThankYouComponent } from './thank-you/thank-you.component';
 import { FavoritesComponent } from './favorites/favorites.component';
 import { PastOrdersComponent } from './past-orders/past-orders.component';
-import { CurrentOrderComponent } from './current-order.component';
 import { PastOrderDetailComponent } from './past-orders/past-order-detail/past-order-detail/past-order-detail.component';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
+import { OrderOnlineComponent } from './order-online.component';
+import { CurrentOrderComponent } from './current-order.component';
+import { SigninRedirectCallbackComponent } from './signin-redirect-callback.component';
+import { SignoutRedirectCallbackComponent } from './signout-redirect-callback.component';
 
 
 @NgModule({
@@ -32,7 +34,9 @@ import { DeleteModalComponent } from './delete-modal/delete-modal.component';
     PastOrdersComponent,
     CurrentOrderComponent,
     PastOrderDetailComponent,
-    DeleteModalComponent
+    DeleteModalComponent,
+    SigninRedirectCallbackComponent,
+    SignoutRedirectCallbackComponent
   ],
   imports: [
     BrowserModule,

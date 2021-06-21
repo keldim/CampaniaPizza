@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { IPastOrder } from './past-order';
 import { Router } from '@angular/router';
+import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
   selector: 'past-orders',
@@ -13,7 +14,7 @@ import { Router } from '@angular/router';
 export class PastOrdersComponent implements OnInit {
   pastOrders: IPastOrder[] = [];
 
-  constructor(private http: HttpClient, private _authService: AuthService, private router: Router) {
+  constructor(private http: HttpClient, private _authService: AuthService, private router: Router, private backendService: BackendService) {
 
   }
 
@@ -39,7 +40,7 @@ export class PastOrdersComponent implements OnInit {
 
 
     console.log("sending request for past orders");
-    return this.http.post('http://new-campania-server-env.eba-igwhis5n.us-east-2.elasticbeanstalk.com/registered-user/past-orders', {}, { headers: headers });
+    return this.http.post(this.backendService.getBackendURL() + 'registered-user/past-orders', {}, { headers: headers });
   }
 
   //      localhost:5000

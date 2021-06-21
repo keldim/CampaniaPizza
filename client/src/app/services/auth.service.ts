@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { UserManager, User, WebStorageStateStore } from 'oidc-client';
 import { NONE_TYPE } from '@angular/compiler/src/output/output_ast';
@@ -10,29 +10,29 @@ import { NONE_TYPE } from '@angular/compiler/src/output/output_ast';
 })
 export class AuthService {
   // authenticated = false;
+  // http://new-mitreid-env.eba-ppwpqerk.us-east-2.elasticbeanstalk.com/
+  private authorityURL = "http://localhost:8080/openid-connect-server-webapp/"
+  // http://campania-pizza-client.s3-website.us-east-2.amazonaws.com/assets/oidc-login-redirect.html
+  // http://campania-pizza-client.s3-website.us-east-2.amazonaws.com/?postLogout=true
+  private frontendURL = "http://localhost:4200/"
   private _userManager : UserManager;
   private _user : User;
+  private _loginChangedSubject = new Subject<boolean>();
+  loginChanged = this._loginChangedSubject.asObservable();
 
   constructor(private http: HttpClient) {
     var config = {
-      authority: 'http://new-mitreid-env.eba-ppwpqerk.us-east-2.elasticbeanstalk.com/',
+      authority: this.authorityURL,
       client_id: 'client',
-      redirect_uri: 'http://campania-pizza-client.s3-website.us-east-2.amazonaws.com/assets/oidc-login-redirect.html',
-      // http://localhost:4200/
+      redirect_uri: this.frontendURL + 'signin-callback',
       scope: 'openid',
       response_type: 'id_token token',
-      // projects-api profile
-      // prompt: 'none',
-      post_logout_redirect_uri: 'http://campania-pizza-client.s3-website.us-east-2.amazonaws.com/?postLogout=true',
-      // http://localhost:4200/
-      userStore: new WebStorageStateStore({ store: window.localStorage })
+      post_logout_redirect_uri: this.frontendURL + 'signout-callback',
     };
 
     this._userManager = new UserManager(config);
-    this._userManager.getUser().then(user => {
-      if (user && !user.expired) {
-        this._user = user;
-      }
+    this._userManager.events.addAccessTokenExpired(_ => {
+      this._loginChangedSubject.next(false);
     });
   }
 
@@ -44,53 +44,44 @@ export class AuthService {
     return this._userManager.signoutRedirect();
   }
 
-  isLoggedIn(): boolean {
-    return this._user && this._user.access_token && !this._user.expired;
+  completeLogin() {
+    return this._userManager.signinRedirectCallback().then(user => {
+      this._user = user;
+      this._loginChangedSubject.next(!!user && !user.expired);
+      return user;
+    });
   }
 
-  getAccessToken(): string {
-    return this._user ? this._user.access_token : '';
-  }
-
-  // getAccessToken() {
-  //   return this._userManager.getUser().then(user => {
-  //     if (!!user && !user.expired) {
-  //       return user.access_token;
-  //     }
-  //     else {
-  //       return null;
-  //     }
-  //   });
-  // }
-
-  signoutRedirectCallback(): Promise<any> {
+  completeLogout() {
+    this._user = null;
+    this._loginChangedSubject.next(false);
     return this._userManager.signoutRedirectCallback();
   }
 
+  isLoggedIn(): Promise<boolean> {
+    return this._userManager.getUser().then(user => {
+      const userCurrent = !!user && !user.expired;
+      if (this._user !== user) {
+        this._loginChangedSubject.next(userCurrent);
+      }
+      this._user = user;
+      return userCurrent;
+    });
+  }
 
+  getAccessToken() {
+    return this._userManager.getUser().then(user => {
+      if (!!user && !user.expired) {
+        return user.access_token;
+      }
+      else {
+        return null;
+      }
+    });
+  }
 
-  // getUserByUsername(username: string): Observable<User> {
-  //   return this.http.get<User>(`http://localhost:8080/users/${username}`, {
-  //     headers: new HttpHeaders({
-  //       'Accept': 'application/json'
-  //     })
-  //   });
-  // }
+  getAuthorityURL() {
+    return this.authorityURL;
+  }
 
-  // authenticate(credentials, callback) {
-
-  //   const headers = new HttpHeaders(credentials ? {
-  //     authorization: 'Basic ' + btoa(credentials.username + ':' + credentials.password)
-  //   } : {});
-
-  //   this.http.get('user', { headers: headers }).subscribe(response => {
-  //     if (response['name']) {
-  //       this.authenticated = true;
-  //     } else {
-  //       this.authenticated = false;
-  //     }
-  //     return callback && callback();
-  //   });
-
-  // }
 }

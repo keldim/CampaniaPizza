@@ -11,6 +11,7 @@ import { getCurrencySymbol } from '@angular/common';
 import { StorageService } from 'src/app/services/storage.service';
 import { DrinkModalComponent } from 'src/app/order-online/drink-modal/drink-modal.component';
 import { DessertModalComponent } from 'src/app/order-online/dessert-modal/dessert-modal.component';
+import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
   selector: 'app-past-order-detail',
@@ -28,7 +29,7 @@ export class PastOrderDetailComponent implements OnInit {
 
 
   pastOrder: IPastOrder;                                                                                  // trial                               // trial
-  constructor(private route: ActivatedRoute, private http: HttpClient, private _authService: AuthService, public storageService: StorageService, private router: Router) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private _authService: AuthService, public storageService: StorageService, private router: Router, private backendService: BackendService) {
   }
 
   ngOnInit() {
@@ -47,7 +48,7 @@ export class PastOrderDetailComponent implements OnInit {
       'Authorization': `Bearer ` + this._authService.getAccessToken()
     });
     console.log("sending request for past order");
-    return this.http.post<IPastOrder>(`http://new-campania-server-env.eba-igwhis5n.us-east-2.elasticbeanstalk.com/registered-user/past-order/${id}`, {}, { headers: headers });
+    return this.http.post<IPastOrder>(`${this.backendService.getBackendURL()}registered-user/past-order/${id}`, {}, { headers: headers });
   }
   //    localhost:5000
   //        CampaniaPizzaServer-env-3.eba-igwhis5n.us-east-2.elasticbeanstalk.com

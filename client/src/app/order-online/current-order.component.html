@@ -1,26 +1,466 @@
 <div class="container">
-  <ul class="nav justify-content-center subNavbar">
-    <li class="nav-item submenu-button-tweak">
-      <a class="nav-link linkColor " href="#" [routerLink]="['/order-online/current-order']"
-        routerLinkActive="clicked-link">Current Order</a>
-    </li>
-    <li class="nav-item submenu-button-tweak" *ngIf="isLoggedIn()">
-      <a class="nav-link linkColor" href="#" [routerLink]="['/order-online/past-orders']"
-        routerLinkActive="clicked-link">Past Orders</a>
-    </li>
-    <li class="nav-item submenu-button-tweak" *ngIf="isLoggedIn()">
-      <a class="nav-link linkColor" href="#" [routerLink]="['/order-online/favorites']"
-        routerLinkActive="clicked-link">Favorites</a>
-    </li>
-    <li class="nav-item submenu-button-tweak">
-      <button type="button" class="btn btn-outline-danger" *ngIf="!isLoggedIn()" (click)="login()">Login</button>
-      <button type="button" class="btn btn-outline-danger" *ngIf="isLoggedIn()" (click)="logout()">Logout</button>
-    </li>
-    <li class="nav-item submenu-button-tweak">
-      <button type="button" class="btn btn-outline-danger" *ngIf="!isLoggedIn()" [routerLink]="['/new-user']">Sign Up</button>
-    </li>
-  </ul>
-</div>
-<div>
-  <router-outlet></router-outlet>
+  <div class="location-menu">
+    <div class="location-bar">
+      <dl class="dl-for-location-bar">
+        <form novalidate (ngSubmit)="save()" [formGroup]="orderOnlineForm">
+          <dt class="dt-for-location-bar">Location:</dt>
+          <dd class="dd-for-location-bar">
+            <select formControlName="location">
+              <option value="">Choose...</option>
+              <option value="Midtown">Midtown{{ assignLocation() }}</option>
+              <option value="Chelsea">Chelsea{{ assignLocation() }}</option>
+              <option value="East Village">East Village{{ assignLocation() }}</option>
+            </select>
+            <span *ngIf="location.hasError('required')">
+              <span style="font-size: 12px; color: #b80000; margin-left: 10px">Please choose a location.</span>
+            </span>
+          </dd>
+          <span *ngIf="location.value=='Midtown'">
+            <dt class="dt-for-location-bar"></dt>
+            <dd class="dd-for-location-bar">
+              Campania Pizza, Midtown<br>
+              31 W 46th St<br>
+              New York, NY 10036
+            </dd>
+          </span>
+          <span *ngIf="location.value=='Chelsea'">
+            <dt class="dt-for-location-bar"></dt>
+            <dd class="dd-for-location-bar">
+              Campania Pizza, Chelsea<br>
+              601 6th Ave<br>
+              New York, NY 10011
+            </dd>
+          </span>
+          <span *ngIf="location.value=='East Village'">
+            <dt class="dt-for-location-bar"></dt>
+            <dd class="dd-for-location-bar">
+              Campania Pizza, East Village<br>
+              32 St Marks Pl<br>
+              New York, NY 10003
+            </dd>
+          </span>
+        </form>
+      </dl>
+      <dl class="dl-for-location-bar">
+        <ng-template #popContent>
+          <span class="business-hours-text">
+            <div class="business-hours-heading">
+              <span>
+                <strong>Business Hours<br>
+                </strong>
+              </span>
+            </div>
+            <dl class="dl-for-location-bar">
+                <dt class="dt-for-location-bar">Monday:</dt>
+                <dd class="dd-for-location-bar">11am-1am</dd>
+            </dl>
+            <dl class="dl-for-location-bar">
+                <dt class="dt-for-location-bar">Tuesday:</dt>
+                <dd class="dd-for-location-bar">11am-1am</dd>
+            </dl>
+            <dl class="dl-for-location-bar">
+                <dt class="dt-for-location-bar">Wednesday:</dt>
+                <dd class="dd-for-location-bar">11am-1am</dd>
+            </dl>
+            <dl class="dl-for-location-bar">
+                <dt class="dt-for-location-bar">Thursday:</dt>
+                <dd class="dd-for-location-bar">11am-1am</dd>
+            </dl>
+            <dl class="dl-for-location-bar">
+                <dt class="dt-for-location-bar">Friday:</dt>
+                <dd class="dd-for-location-bar">11am-1am</dd>
+            </dl>
+            <dl class="dl-for-location-bar">
+                <dt class="dt-for-location-bar">Saturday:</dt>
+                <dd class="dd-for-location-bar">11am-1am</dd>
+            </dl>
+            <dl class="dl-for-location-bar">
+                <dt class="dt-for-location-bar">Sunday:</dt>
+                <dd class="dd-for-location-bar">11am-1am</dd>
+            </dl>
+          </span>
+        </ng-template>
+        <dt class="dt-for-location-bar">Pickup Hours:</dt>
+        <dd class="dd-for-location-bar"><a [ngbPopover]="popContent" triggers="mouseenter:mouseleave"
+            data-placement="bottom"><span class="link-for-hours">Open Today 11am - 1am</span></a></dd>
+      </dl>
+      <dl class="dl-for-location-bar">
+        <dt class="dt-for-location-bar">Accepted Cards:</dt>
+        <dd class="dd-for-location-bar">Mastercard, Visa, American Express, Discover</dd>
+      </dl>
+
+      <span *ngIf="location.value != ''">
+        <span style="font-size: 12px; color: #b80000; margin-top: 5px; float: left">
+          The last order for the kitchen is 12:30 am and the last pickup time is 1 am. Orders between 12:31 am and 1 am
+          will be ready for pickup after 11 am today.
+        </span>
+      </span>
+
+    </div>
+    <div class="menu-area">
+      <ul class="nav flex-column category-list">
+        <li class="nav-item">
+          <a class="nav-link active empty-link" (click)="clickedVerticalNavbar('Build Your Own Pizza')">
+            <span class="empty-link-text">Build Your Own</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active empty-link" (click)="clickedVerticalNavbar('Specialty Pizzas')">
+            <span class="empty-link-text">Specialty Pizzas</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active empty-link" (click)="clickedVerticalNavbar('Salads')">
+            <span class="empty-link-text">Salads</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active empty-link" (click)="clickedVerticalNavbar('Drinks')">
+            <span class="empty-link-text">Drinks</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active empty-link" (click)="clickedVerticalNavbar('Desserts')">
+            <span class="empty-link-text">Desserts</span>
+          </a>
+        </li>
+      </ul>
+
+
+      <pizza-modal></pizza-modal>
+      <salad-modal></salad-modal>
+      <drink-modal></drink-modal>
+      <dessert-modal></dessert-modal>
+      <delete-modal></delete-modal>
+
+      <div class="product-list">
+        <ul class="nav flex-column">
+          <li *ngIf="clickedMenu=='Build Your Own Pizza'" class="nav-item item-bar">
+            <a class="nav-link active empty-link" (click)="openPizza('BUILD YOUR OWN PIZZA')">
+              <img src="../../assets/images/1954163.jpg" class="img-for-item-bar" />
+              <span class="empty-link-text">BUILD YOUR OWN PIZZA</span>
+            </a>
+            <p class="item-bar-text">$8.65</p>
+          </li>
+          <li *ngIf="clickedMenu=='Specialty Pizzas'" class="nav-item item-bar">
+            <a class="nav-link active empty-link" (click)="openPizza('CLASSIC MARGHERITA')">
+              <img src="../../assets/images/margherita.png" class="img-for-item-bar" />
+              <span class="empty-link-text">CLASSIC MARGHERITA</span>
+            </a>
+            <p class="item-bar-text">
+              $8.65<br>
+              Marinara, extra virgin olive oil, fresh mozzarella, fresh basil, and
+              oregano.
+            </p>
+          </li>
+          <li *ngIf="clickedMenu=='Specialty Pizzas'" class="nav-item item-bar">
+            <a class="nav-link active empty-link" (click)="openPizza('CLASSIC NEW YORKER')">
+              <img src="../../assets/images/new-yorker.png" class="img-for-item-bar" />
+              <span class="empty-link-text">CLASSIC NEW YORKER</span>
+            </a>
+            <p class="item-bar-text">
+              $8.65<br>
+              Marinara, shredded mozzarella, and oregano.
+            </p>
+          </li>
+          <li *ngIf="clickedMenu=='Specialty Pizzas'" class="nav-item item-bar">
+            <a class="nav-link active empty-link" (click)="openPizza('TONY PEPPERONI')">
+              <img src="../../assets/images/tony-pepperoni.png" class="img-for-item-bar" />
+              <span class="empty-link-text">TONY PEPPERONI</span>
+            </a>
+            <p class="item-bar-text">
+              $8.65<br>
+              Marinara, shredded mozzarella, pepperoni, and oregano.
+            </p>
+          </li>
+          <li *ngIf="clickedMenu=='Specialty Pizzas'" class="nav-item item-bar">
+            <a class="nav-link active empty-link" (click)="openPizza('JOHNNY THE MEATBALL')">
+              <img src="../../assets/images/johnny-the-meatball.png" class="img-for-item-bar" />
+              <span class="empty-link-text">JOHNNY THE MEATBALL</span>
+            </a>
+            <p class="item-bar-text">
+              $8.65<br>
+              Marinara, shredded mozzarella, and crumbled meatballs.
+            </p>
+          </li>
+          <li *ngIf="clickedMenu=='Specialty Pizzas'" class="nav-item item-bar">
+            <a class="nav-link active empty-link" (click)="openPizza('QUATTRO FORMAGGIO')">
+              <img src="../../assets/images/4-cheese.png" class="img-for-item-bar" />
+              <span class="empty-link-text">QUATTRO FORMAGGIO</span>
+            </a>
+            <p class="item-bar-text">
+              $8.65<br>
+              Marinara, mozzarella, Asiago, Parmesan, ricotta, and oregano.
+            </p>
+          </li>
+          <li *ngIf="clickedMenu=='Specialty Pizzas'" class="nav-item item-bar">
+            <a class="nav-link active empty-link" (click)="openPizza('BUFFALO CHICKEN')">
+              <img src="../../assets/images/buffalo-chicken.png" class="img-for-item-bar" />
+              <span class="empty-link-text">BUFFALO CHICKEN</span></a>
+            <p class="item-bar-text">
+              $8.65<br>
+              Buffalo sauce, shredded mozzarella, blue cheese chunks, and grilled
+              chicken.
+            </p>
+          </li>
+          <li *ngIf="clickedMenu=='Specialty Pizzas'" class="nav-item item-bar">
+            <a class="nav-link active empty-link" (click)="openPizza('TUSCAN CHICKEN')">
+              <img src="../../assets/images/tascan.png" class="img-for-item-bar" />
+              <span class="empty-link-text">TUSCAN CHICKEN</span>
+            </a>
+            <p class="item-bar-text">
+              $8.65<br>
+              Shredded mozzarella, asiago, chicken, spinach, and marinated
+              balsamic sun dried tomatoes.
+            </p>
+          </li>
+          <li *ngIf="clickedMenu=='Specialty Pizzas'" class="nav-item item-bar">
+            <a class="nav-link active empty-link" (click)="openPizza('THE WHITE OUT')">
+              <img src="../../assets/images/white-out1.png" class="img-for-item-bar" />
+              <span class="empty-link-text">THE WHITE OUT</span>
+            </a>
+            <p class="item-bar-text">
+              $8.65<br>
+              Extra virgin olive oil, shredded mozzarella, parmesan, fresh
+              mushrooms, and garlic.
+            </p>
+          </li>
+          <li *ngIf="clickedMenu=='Specialty Pizzas'" class="nav-item item-bar">
+            <a class="nav-link active empty-link" (click)="openPizza('HAWAIIAN FIRE')">
+              <img src="../../assets/images/h-fire.png" class="img-for-item-bar" />
+              <span class="empty-link-text">HAWAIIAN FIRE</span>
+            </a>
+            <p class="item-bar-text">
+              $8.65<br>
+              Spicy sriracha marinara, shredded mozzarella, Canadian bacon, banana
+              peppers, and pineapple.
+            </p>
+          </li>
+          <li *ngIf="clickedMenu=='Specialty Pizzas'" class="nav-item item-bar">
+            <a class="nav-link active empty-link" (click)="openPizza('THE PHILLY')">
+              <img src="../../assets/images/the-philly.png" class="img-for-item-bar" />
+              <span class="empty-link-text">THE PHILLY</span>
+            </a>
+            <p class="item-bar-text">
+              $8.65<br>
+              Balsamic onions, mozzarella, and thinly sliced rib-eye.
+            </p>
+          </li>
+          <li *ngIf="clickedMenu=='Specialty Pizzas'" class="nav-item item-bar">
+            <a class="nav-link active empty-link" (click)="openPizza('SMOKEY POLLO')">
+              <img src="../../assets/images/smoky-pollo.png" class="img-for-item-bar" />
+              <span class="empty-link-text">SMOKEY POLLO</span>
+            </a>
+            <p class="item-bar-text">
+              $8.65<br>
+              Sweet and Smokey Bourbon Barbecue Sauce, Roasted Chicken, Bacon, Red
+              Onion, Red Peppers, Pineapple, Shredded Mozzarella & Blue cheese.
+            </p>
+          </li>
+          <li *ngIf="clickedMenu=='Specialty Pizzas'" class="nav-item item-bar">
+            <a class="nav-link active empty-link" (click)="openPizza('SAUSAGE & PEPPERS')">
+              <img src="../../assets/images/sausage-peppers1.png" class="img-for-item-bar" />
+              <span class="empty-link-text">SAUSAGE & PEPPERS</span>
+            </a>
+            <p class="item-bar-text">
+              $8.65<br>
+              Marinara, shredded mozzarella, Italian sausage, red and green
+              peppers, and red onions.
+            </p>
+          </li>
+          <li *ngIf="clickedMenu=='Specialty Pizzas'" class="nav-item item-bar">
+            <a class="nav-link active empty-link" (click)="openPizza('TRENTON TOMATO PIE')">
+              <img src="../../assets/images/trenton-tomato-pie.png" class="img-for-item-bar" />
+              <span class="empty-link-text">TRENTON TOMATO PIE</span>
+            </a>
+            <p class="item-bar-text">
+              $8.65<br>
+              Marinara generously spread on top of shredded mozzarella, and
+              oregano.
+            </p>
+          </li>
+          <li *ngIf="clickedMenu=='Specialty Pizzas'" class="nav-item item-bar">
+            <a class="nav-link active empty-link" (click)="openPizza('THE MEATZA')">
+              <img src="../../assets/images/meatza1.png" class="img-for-item-bar" />
+              <span class="empty-link-text">THE MEATZA</span>
+            </a>
+            <p class="item-bar-text">
+              $8.65<br>
+              Marinara, mozzarella, pepperoni, bacon, Italian sausage, and
+              crumbled meatballs.
+            </p>
+          </li>
+          <li *ngIf="clickedMenu=='Salads'" class="nav-item item-bar">
+            <a class="nav-link active empty-link" (click)="openSalad('CHICKEN CAESAR SALAD')">
+              <img src="../../assets/images/Grilled-Chicken-Caesar-Salad-550x393.jpg" class="img-for-item-bar" />
+              <span class="empty-link-text">CHICKEN CAESAR SALAD</span>
+            </a>
+            <p class="item-bar-text">
+              Side = $3.95, Entree = $6.95<br>
+              Romaine, All-Natural Chicken, Croutons, Parmesan Cheese, Caesar
+              Dressing</p>
+          </li>
+          <li *ngIf="clickedMenu=='Salads'" class="nav-item item-bar">
+            <a class="nav-link active empty-link" (click)="openSalad('GREEK SALAD')">
+              <img src="../../assets/images/Greek-Salad-500x500.jpg" class="img-for-item-bar" />
+              <span class="empty-link-text">GREEK SALAD</span>
+            </a>
+            <p class="item-bar-text">
+              Side = $3.95, Entree = $6.95<br>
+              Romaine, Cucumbers, Grape Tomatoes, Red Onions, Black Olives, Feta
+              Cheese, Greek Dressing</p>
+          </li>
+          <li *ngIf="clickedMenu=='Salads'" class="nav-item item-bar">
+            <a class="nav-link active empty-link" (click)="openSalad('BUILD YOUR OWN SALAD')">
+              <img src="../../assets/images/images.jpeg" class="img-for-item-bar" />
+              <span class="empty-link-text">BUILD YOUR OWN SALAD</span>
+              <p class="item-bar-text">
+                $8.65
+              </p>
+            </a>
+          </li>
+          <li *ngIf="clickedMenu=='Drinks'" class="nav-item item-bar">
+            <a class="nav-link active empty-link" (click)="openDrink('FOUNTAIN DRINK')">
+              <img src="../../assets/images/fdrink-min.jpg" class="img-for-item-bar" />
+              <span class="empty-link-text">FOUNTAIN DRINK</span>
+            </a>
+            <p class="item-bar-text">
+              $1.85
+            </p>
+          </li>
+          <li *ngIf="clickedMenu=='Drinks'" class="nav-item item-bar">
+            <a class="nav-link active empty-link" (click)="openDrink('IZZE GLASS BOTTLE')">
+              <img src="../../assets/images/sparkling-water-izze-juice.jpg" class="img-for-item-bar" />
+              <span class="empty-link-text">IZZE GLASS BOTTLE</span>
+            </a>
+            <p class="item-bar-text">
+              $1.85
+            </p>
+          </li>
+          <li *ngIf="clickedMenu=='Drinks'" class="nav-item item-bar">
+            <a class="nav-link active empty-link" (click)="openDrink('BOTTLED WATER')">
+              <img src="../../assets/images/resized-ew_1l_vert_onwhite_color_fulllabel_digital_t118.jpg"
+                class="img-for-item-bar" />
+              <span class="empty-link-text">BOTTLED WATER</span>
+            </a>
+            <p class="item-bar-text">
+              $1.85
+            </p>
+          </li>
+          <li *ngIf="clickedMenu=='Desserts'" class="nav-item item-bar">
+            <a class="nav-link active empty-link" (click)="openDessert('Cookies')">
+              <img src="../../assets/images/146208lrg.jpg" class="img-for-item-bar" />
+              <span class="empty-link-text">COOKIES</span>
+            </a>
+            <p class="item-bar-text">
+              $1.99
+            </p>
+          </li>
+          <li *ngIf="clickedMenu=='Desserts'" class="nav-item item-bar">
+            <a class="nav-link active empty-link" (click)="openDessert('Brownies')">
+              <img src="../../assets/images/coconut-flour-brownies-2.jpg" class="img-for-item-bar" />
+              <span class="empty-link-text">BROWNIES</span>
+            </a>
+            <p class="item-bar-text">
+              $1.99
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="shopping-cart">
+    <div class="order-contents">
+      <h2 class="order-contents-text">Order Contents</h2>
+    </div>
+    <div *ngFor="let pizzaItem of pizzaItems; let i = index;" class="cart-item">
+      <span class="quantity">{{ pizzaItem.quantity }}x</span>
+      <span *ngIf="pizzaItem.type=='BUILD YOUR OWN PIZZA'" class="cart-item-name">{{ pizzaItem.type }}</span>
+      <span *ngIf="pizzaItem.type!='BUILD YOUR OWN PIZZA'" class="cart-item-name">{{ pizzaItem.type }}</span>
+      <span class="cart-item-price">${{ priceTimesQuantity(pizzaItem.quantity, pizzaItem.price) }}</span>
+      <div class="edit-delete">
+        <span>[ </span>
+        <a class="empty-link" (click)="pizzaModalComponent.valueBindingForEdit(i); openPizza(pizzaItem.type)"><span
+            class="empty-link-text">edit</span></a> | <a class="empty-link">
+              <span class="empty-link-text" (click)="openDelete(i, 'pizza')">delete</span></a>
+              <span> ]</span>
+      </div>
+      <div class="options-display">
+        {{ pizzaModalComponent.buildDisplayForCart(pizzaItem) }}
+      </div>
+    </div>
+
+    <div *ngFor="let saladItem of saladItems; let i = index;" class="cart-item">
+      <span class="quantity">{{ saladItem.quantity }}x</span>
+      <span class="cart-item-name" *ngIf="saladItem.type=='BUILD YOUR OWN SALAD'">{{ saladItem.type }}</span>
+      <span class="cart-item-name" *ngIf="saladItem.type!='BUILD YOUR OWN SALAD'">{{ saladItem.type }}</span>
+      <span class="cart-item-price">${{ priceTimesQuantity(saladItem.quantity, saladItem.price) }}</span>
+      <div class="edit-delete">
+        <span>[ </span>
+        <a class="empty-link" (click)="saladModalComponent.valueBindingForEdit(i); openSalad(saladItem.type)"><span
+            class="empty-link-text">edit</span></a> | <a class="empty-link">
+              <span class="empty-link-text" (click)="openDelete(i, 'salad')">delete</span></a>
+        <span> ]</span>
+      </div>
+      <div class="options-display">
+        {{ saladModalComponent.buildDisplayForCart(saladItem) }}
+      </div>
+    </div>
+
+    <div *ngFor="let drinkItem of drinkItems; let i = index;" class="cart-item">
+      <span class="quantity">{{ drinkItem.quantity }}x</span>
+      <span class="cart-item-name">{{ drinkItem.type }}</span>
+      <span class="cart-item-price">${{ priceTimesQuantity(drinkItem.quantity, drinkItem.price) }}</span>
+      <div class="edit-delete">
+        <span>[ </span>
+        <a class="empty-link" (click)="drinkModalComponent.valueBindingForEdit(i); openDrink(drinkItem.type)"><span
+            class="empty-link-text">edit</span></a> | <a class="empty-link"><span class="empty-link-text"
+            (click)="openDelete(i, 'drink')">delete</span></a>
+        <span> ]</span>
+      </div>
+      <div class="options-display">
+        {{ drinkModalComponent.buildDisplayForCart() }}
+      </div>
+    </div>
+
+    <div *ngFor="let dessertItem of dessertItems; let i = index;" class="cart-item">
+      <span class="quantity">{{ dessertItem.quantity }}x</span>
+      <span *ngIf="dessertItem.type=='Cookies'" class="cart-item-name">{{ dessertItem.cookieChoice.toUpperCase() }}</span>
+      <span *ngIf="dessertItem.type=='Brownies'" class="cart-item-name">{{ dessertItem.brownieChoice.toUpperCase() }}</span>
+      <span class="cart-item-price">${{ priceTimesQuantity(dessertItem.quantity, dessertItem.price) }}</span>
+      <div class="edit-delete">
+        <span>[ </span>
+        <a class="empty-link"
+          (click)="dessertModalComponent.valueBindingForEdit(i); openDessert(dessertItem.type)"><span
+            class="empty-link-text">edit</span></a> | <a class="empty-link"><span class="empty-link-text"
+            (click)="openDelete(i, 'dessert')">delete</span></a>
+        <span> ]</span>
+      </div>
+      <div class="options-display">
+        {{ dessertModalComponent.buildDisplayForCart() }}
+      </div>
+    </div>
+
+    <div class="calculate-total-section">
+      <div class="calculate-total-subsection">
+        <span>Subtotal</span>
+        <span class="total-number">${{ showSubtotal() }}</span>
+      </div>
+      <div class="calculate-total-subsection">
+        <span>Tax</span>
+        <span class="total-number">${{ showLocalTax() }}</span>
+      </div>
+      <div class="calculate-total-subsection">
+        <span>Total</span>
+        <span class="total-number">${{ showTotal() }}</span>
+      </div>
+    </div>
+
+  <div class="button-area" *ngIf="calculateSubtotal() > 0">
+    <button type="button" class="proceed-to-checkout" [routerLink]="['/checkout']" [disabled]="!orderOnlineForm.valid">
+      Proceed to Checkout
+    </button>
+  </div>
+
 </div>
