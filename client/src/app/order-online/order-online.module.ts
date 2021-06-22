@@ -19,6 +19,8 @@ import { OrderOnlineComponent } from './order-online.component';
 import { CurrentOrderComponent } from './current-order.component';
 import { SigninRedirectCallbackComponent } from './signin-redirect-callback.component';
 import { SignoutRedirectCallbackComponent } from './signout-redirect-callback.component';
+import { ContactInfoAndPaymentComponent } from './contact-info-and-payment/contact-info-and-payment.component';
+import { UserRegistrationComponent } from './user-registration/user-registration.component';
 
 
 @NgModule({
@@ -36,7 +38,9 @@ import { SignoutRedirectCallbackComponent } from './signout-redirect-callback.co
     PastOrderDetailComponent,
     DeleteModalComponent,
     SigninRedirectCallbackComponent,
-    SignoutRedirectCallbackComponent
+    SignoutRedirectCallbackComponent,
+    ContactInfoAndPaymentComponent,
+    UserRegistrationComponent
   ],
   imports: [
     BrowserModule,

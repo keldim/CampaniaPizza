@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { LocationComponent } from './locations/locations.component';
 import { AboutUsComponent } from './about-us/about-us.component';
-import { UserRegistrationComponent } from './user-registration/user-registration.component';
+import { UserRegistrationComponent } from './order-online/user-registration/user-registration.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 
@@ -13,7 +13,6 @@ import { ErrorPageComponent } from './error-page/error-page.component';
       { path: 'home', component: HomeComponent },
       { path: 'locations', component: LocationComponent },
       { path: 'about-us', component: AboutUsComponent },
-      { path: 'new-user', component: UserRegistrationComponent },
       { path: 'error-page', component: ErrorPageComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: '**', component: PageNotFoundComponent }

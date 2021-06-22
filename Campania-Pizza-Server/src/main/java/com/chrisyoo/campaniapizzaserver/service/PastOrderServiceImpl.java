@@ -27,16 +27,12 @@ public class PastOrderServiceImpl implements PastOrderService {
 
 	@Override
 	public PastOrder findById(int theId) {
-		// "Optional"
-		// Different pattern instead of having to check for nulls
-		// Feature introduced in Java 8
 		Optional<PastOrder> result = pastOrderRepository.findById(theId);
 
 		PastOrder thePastOrder = null;
 		if (result.isPresent()) {
 			thePastOrder = result.get();
 		} else {
-			// we didn't find the past order
 			throw new RuntimeException("Did not find past order id - " + theId);
 		}
 

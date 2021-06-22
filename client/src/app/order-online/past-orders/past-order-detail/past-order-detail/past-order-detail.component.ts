@@ -1,13 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { PastOrdersComponent } from '../../past-orders.component';
 import { AuthService } from 'src/app/services/auth.service';
-import { Observable } from 'rxjs';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { IPastOrder } from '../../past-order';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PizzaModalComponent } from 'src/app/order-online/pizza-modal/pizza-modal.component';
 import { SaladModalComponent } from 'src/app/order-online/salad-modal/salad-modal.component';
-import { getCurrencySymbol } from '@angular/common';
 import { StorageService } from 'src/app/services/storage.service';
 import { DrinkModalComponent } from 'src/app/order-online/drink-modal/drink-modal.component';
 import { DessertModalComponent } from 'src/app/order-online/dessert-modal/dessert-modal.component';
@@ -28,28 +24,39 @@ export class PastOrderDetailComponent implements OnInit {
   @ViewChild(DessertModalComponent) dessertModalComponent;
 
 
-  pastOrder: IPastOrder;                                                                                  // trial                               // trial
+  pastOrder: Object;                                                                                  // trial                               // trial
   constructor(private route: ActivatedRoute, private http: HttpClient, private _authService: AuthService, public storageService: StorageService, private router: Router, private backendService: BackendService) {
   }
 
   ngOnInit() {
     let pastOrderId: number = parseInt(this.route.snapshot.params['id']);
     console.log(pastOrderId);
-    this.getPastOrder(pastOrderId)
-      .subscribe(
-        (pastOrderReceived: IPastOrder) => this.pastOrder = pastOrderReceived,
-        (err: any) => console.log(err),
+    this._authService.getAccessToken().then(accessToken => {
+      const headers = new HttpHeaders({
+        'Authorization': `Bearer ` + accessToken
+      });
+      console.log("sending request for past order");
+      this.http.post(`${this.backendService.getBackendURL()}registered-user/past-order/${pastOrderId}`, {}, { headers: headers }).subscribe(
+        (pastOrderReceived: Object) => {
+          this.pastOrder = pastOrderReceived;
+          if (this.pastOrder == null) {
+            this.router.navigate(['/error-page']);
+          } else if (this.pastOrder['location'] == "Not Found") {
+            this.router.navigate(['/**']);
+          }
+        },
+        (err: any) => {
+          console.log(err);
+          if(err.error.error == "invalid_token") {
+            this.router.navigate(['/**']);
+          }
+        },
         () => console.log("past order successfully loaded")
       );
+    });
   }
 
-  getPastOrder(id: number): Observable<IPastOrder> {
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ` + this._authService.getAccessToken()
-    });
-    console.log("sending request for past order");
-    return this.http.post<IPastOrder>(`${this.backendService.getBackendURL()}registered-user/past-order/${id}`, {}, { headers: headers });
-  }
+
   //    localhost:5000
   //        CampaniaPizzaServer-env-3.eba-igwhis5n.us-east-2.elasticbeanstalk.com
 
@@ -93,20 +100,6 @@ export class PastOrderDetailComponent implements OnInit {
       return parsedItem;
     }
 
-
-    // console.log("pizza cheese: " + pizzaItem.cheese);
-    // pizzaItem.cheese = this.jsonArrayToArray(pizzaItem.cheese);
-
-    // console.log("pizza veggies: " + pizzaItem.veggies);
-    // pizzaItem.veggies = this.jsonArrayToArray(pizzaItem.veggies);
-
-    // console.log("pizza meats: " + pizzaItem.meats);
-    // pizzaItem.meats = this.jsonArrayToArray(pizzaItem.meats);
-
-    // console.log("pizza finishes: " + pizzaItem.finishes);
-    // pizzaItem.finishes = this.jsonArrayToArray(pizzaItem.finishes);
-
-
   }
 
   saladItemParse(saladItem) {
@@ -136,40 +129,20 @@ const parsedItem = {
       return parsedItem;
     }
 
-
-    // console.log("greens: " + saladItem.greens);
-    // saladItem.greens = this.jsonArrayToArray(saladItem.greens);
-
-    // console.log("cheese: " + saladItem.cheese);
-    // saladItem.cheese = this.jsonArrayToArray(saladItem.cheese);
-
-    // console.log("freshProduce: " + saladItem.freshProduce);
-    // saladItem.freshProduce = this.jsonArrayToArray(saladItem.freshProduce);
-
-    // console.log("meats: " + saladItem.meats);
-    // saladItem.meats = this.jsonArrayToArray(saladItem.meats);
-
-    // console.log("topItOff: " + saladItem.topItOff);
-    // saladItem.topItOff = this.jsonArrayToArray(saladItem.topItOff);
-
-    // console.log("dressings: " + saladItem.dressings);
-    // saladItem.dressings = this.jsonArrayToArray(saladItem.dressings);
-
-
   }
 
   calculateSubtotal() {
     let subtotal = 0;
-    for(let pizzaItem of this.pastOrder.pizzaItems) {
+    for(let pizzaItem of this.pastOrder["pizzaItems"]) {
       subtotal += pizzaItem.quantity * pizzaItem.price;
     }
-    for(let saladItem of this.pastOrder.saladItems) {
+    for(let saladItem of this.pastOrder["saladItems"]) {
       subtotal += saladItem.quantity * saladItem.price;
     }
-    for(let drinkItem of this.pastOrder.drinkItems) {
+    for(let drinkItem of this.pastOrder["drinkItems"]) {
       subtotal += drinkItem.quantity * drinkItem.price;
     }
-    for(let dessertItem of this.pastOrder.dessertItems) {
+    for(let dessertItem of this.pastOrder["dessertItems"]) {
       subtotal += dessertItem.quantity * dessertItem.price;
     }
     return subtotal;
@@ -199,29 +172,29 @@ const parsedItem = {
   reorder() {
     this.storageService.clear();
 
-    for(let pizzaItem of this.pastOrder.pizzaItems) {
+    for(let pizzaItem of this.pastOrder["pizzaItems"]) {
       console.log(pizzaItem);
       this.pizzaModalComponent.pastOrderDetailForm(pizzaItem);
       this.pizzaModalComponent.createTempForm();
       // use resetForm or create a new method for value patch in pizza modal?
     }
-    for(let saladItem of this.pastOrder.saladItems) {
+    for(let saladItem of this.pastOrder["saladItems"]) {
       console.log(saladItem);
       this.saladModalComponent.pastOrderDetailForm(saladItem);
       this.saladModalComponent.createTempForm();
     }
-    for(let drinkItem of this.pastOrder.drinkItems) {
+    for(let drinkItem of this.pastOrder["drinkItems"]) {
       console.log(drinkItem);
       this.drinkModalComponent.pastOrderDetailForm(drinkItem);
       this.drinkModalComponent.createTempForm();
     }
-    for(let dessertItem of this.pastOrder.dessertItems) {
+    for(let dessertItem of this.pastOrder["dessertItems"]) {
       console.log(dessertItem);
       this.dessertModalComponent.pastOrderDetailForm(dessertItem);
       this.dessertModalComponent.createTempForm();
     }
 
-    this.storageService.updatePickupLocation("pickupLocation", this.pastOrder.location);
+    this.storageService.updatePickupLocation("pickupLocation", this.pastOrder["location"]);
 
     this.router.navigate(['order-online/current-order']);
   }

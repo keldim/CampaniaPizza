@@ -33,28 +33,19 @@ public class PastOrder {
 	
 	@Column(name="location")
 	private String location;
-	
-//	@ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-//	@JoinColumn(name="openiduser_id")
-//	@JsonIgnoreProperties("pastOrders")
-//	private OpenIdUser openIdUser;
-	
-//	mappedBy="pastOrder", 
+	 
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="past_order_id")
 	private List<Pizza> PizzaItems;
-	
-//	mappedBy="past_orders", 
+	 
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="past_order_id")
 	private List<Salad> SaladItems;
 	
-//	mappedBy="past_orders", 
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="past_order_id")
 	private List<Drink> DrinkItems;
-	
-//	mappedBy="past_orders", 
+	 
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="past_order_id")
 	private List<Dessert> DessertItems;		
@@ -83,14 +74,6 @@ public class PastOrder {
 	public void setOrdered_at(Timestamp ordered_at) {
 		this.ordered_at = ordered_at;
 	}
-	
-//	public OpenIdUser getOpenIdUser() {
-//		return openIdUser;
-//	}
-//
-//	public void setOpenIdUser(OpenIdUser openIdUser) {
-//		this.openIdUser = openIdUser;
-//	}
 
 	public List<Pizza> getPizzaItems() {
 		return PizzaItems;
@@ -107,7 +90,6 @@ public class PastOrder {
 		}
 
 		PizzaItems.add(pizza);
-//		pizza.setPastOrder(this);
 	}
 
 	public String getLocation() {
@@ -133,7 +115,6 @@ public class PastOrder {
 		}
 
 		SaladItems.add(salad);
-//		pizza.setPastOrder(this);
 	}
 
 	public List<Drink> getDrinkItems() {
@@ -151,7 +132,6 @@ public class PastOrder {
 		}
 
 		DrinkItems.add(drink);
-//		pizza.setPastOrder(this);
 	}
 	
 	public List<Dessert> getDessertItems() {
@@ -169,7 +149,6 @@ public class PastOrder {
 		}
 
 		DessertItems.add(dessert);
-//		pizza.setPastOrder(this);
 	}
 	
 }

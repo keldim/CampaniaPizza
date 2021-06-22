@@ -1,44 +1,73 @@
-<div class="container">
-  <!-- pickup-location -->
+<!-- <tr>
+      <td>Eve</td>
+      <td>Jackson</td>
+      <td>94</td>
+    </tr> -->
 
-  <table style="width:100%">
-    <tr>
-      <th>Date</th>
-      <th>Time</th>
-      <th>Location</th>
-      <th>Action</th>
+    <!-- date time pickup-location view-order -->
+  <!-- reorder entire thing in detail page, user can change the details once in the cart page -->
+
+<!-- pickup-location -->
+
       <!-- change pickup to location?
       change time (est) to time or time (est/edt)? -->
-    </tr>
 
-    <span *ngIf="pastOrders != null">
-      <tr *ngFor="let pastOrder of pastOrders">
-        <td>{{ pastOrder.ordered_at | date: 'mediumDate' }}</td>
-        <!-- displayDate(pastOrder) -->
+
+<!-- displayDate(pastOrder) -->
         <!-- *ngIf="isDstObserved(pastOrder.ordered_at)" -->
         <!-- *ngIf="!isDstObserved(pastOrder.ordered_at)" -->
-        <td>{{ pastOrder.ordered_at | date: 'mediumTime' }}</td>
+
         <!-- datepipe uses local timezone by default, will just use this -->
 
         <!-- : 'EDT' -->
         <!-- <td>{{ pastOrder.ordered_at | date: 'mediumTime'}}</td> -->
         <!-- : 'EST' -->
         <!-- displayTime(pastOrder) -->
+
+<!-- {{ pastOrder.ordered_at }} -->
+
+
+<!-- <div class="container">
+  <table style="width:100%">
+    <tr>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Location</th>
+      <th>Action</th>
+    </tr>
+    <span *ngIf="pastOrders != null">
+      <tr *ngFor="let pastOrder of pastOrders.reverse()">
+        <td>{{ pastOrder.ordered_at | date: 'mediumDate' }}</td>
+        <td>{{ pastOrder.ordered_at | date: 'mediumTime' }}</td>
         <td>{{ pastOrder.location }}</td>
-        <!-- {{ pastOrder.ordered_at }} -->
         <td><a [routerLink]="['/order-online/past-order-detail', pastOrder.id]">View Order</a></td>
       </tr>
     </span>
-
-
-    <!-- <tr>
-      <td>Eve</td>
-      <td>Jackson</td>
-      <td>94</td>
-    </tr> -->
   </table>
+</div> -->
 
-  <!-- date time pickup-location view-order -->
-  <!-- reorder entire thing in detail page, user can change the details once in the cart page -->
 
+<span *ngIf="pastOrders.length == 0" class="page-text">
+  <h1>
+    There are no past orders
+  </h1>
+</span>
+
+
+
+<div class="container" *ngIf="pastOrders != null">
+  <div *ngFor="let pastOrder of pastOrders.reverse()" class="row cart-row">
+    <div class="col-6 col-sm-4">
+      {{ pastOrder['ordered_at'] | date: 'mediumDate' }}<br>
+      <small>date</small>
+    </div>
+    <div class="col-6 col-sm-4">
+      {{ pastOrder['ordered_at'] | date: 'mediumTime' }}<br>
+      <small>time (UTC)</small>
+    </div>
+    <div class="col-12 col-sm-4">
+      <a [routerLink]="['/order-online/past-order-detail', pastOrder['id']]">View Order</a><br>
+      <small>action</small>
+    </div>
+  </div>
 </div>

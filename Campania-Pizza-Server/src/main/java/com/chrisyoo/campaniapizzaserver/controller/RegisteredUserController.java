@@ -83,8 +83,21 @@ public class RegisteredUserController {
 	}
 	
 	@PostMapping("/past-order/{id}")
-	public PastOrder getPastOrder(@PathVariable int id) {
-		return pastOrderService.findById(id);
+	public PastOrder getPastOrder(@PathVariable int id, HttpServletRequest request) {
+		List<PastOrder> allPastOrdersForUser = this.getPastOrders(request);
+		PastOrder pastOrderNotFound = new PastOrder();
+		pastOrderNotFound.setLocation("Not Found");
+		
+		try {
+			PastOrder pastOrder = pastOrderService.findById(id);
+			if (allPastOrdersForUser.contains(pastOrder)) {
+				return pastOrder;
+			} else {
+				return pastOrderNotFound;
+			}
+		} catch (Exception e) {
+			return pastOrderNotFound;
+		}
 	}
 	
 	@PostMapping("/charge")

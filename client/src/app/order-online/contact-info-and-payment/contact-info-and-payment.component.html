@@ -1,0 +1,114 @@
+<div class="container space-for-top">
+
+  <div *ngIf="contactInfoAndPaymentData != null">
+    <h4 class="mb-3">Shipping</h4>
+    <form [formGroup]="contactInfoAndPaymentForm">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="firstName">First name</label>
+
+          <input type="text" class="form-control" id="firstName" formControlName="firstName">
+          <span *ngIf="contactInfoAndPaymentForm.get('firstName').hasError('required')" style="font-size: 12px; color: #b80000; margin-left: 10px">
+            This field is required
+          </span>
+          <span *ngIf="contactInfoAndPaymentForm.get('firstName').hasError('pattern')" style="font-size: 12px; color: #b80000; margin-left: 10px">
+            Enter valid name, at least two characters are required
+          </span>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="lastName">Last name</label>
+          <input type="text" class="form-control" id="lastName" formControlName="lastName">
+          <span *ngIf="contactInfoAndPaymentForm.get('lastName').hasError('required')" style="font-size: 12px; color: #b80000; margin-left: 10px">
+            This field is required
+          </span>
+          <span *ngIf="contactInfoAndPaymentForm.get('lastName').hasError('pattern')" style="font-size: 12px; color: #b80000; margin-left: 10px">
+            Enter valid name, at least two characters are required
+          </span>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" id="email" formControlName="email">
+          <span *ngIf="contactInfoAndPaymentForm.get('email').hasError('required')" style="font-size: 12px; color: #b80000; margin-left: 10px">
+            This field is required
+          </span>
+          <span *ngIf="contactInfoAndPaymentForm.get('email').hasError('pattern')" style="font-size: 12px; color: #b80000; margin-left: 10px">
+            Enter valid email address
+          </span>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="phoneNumber">Phone Number</label>
+            <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber">
+            <span *ngIf="contactInfoAndPaymentForm.get('phoneNumber').hasError('required')" style="font-size: 12px; color: #b80000; margin-left: 10px">
+              This field is required
+            </span>
+            <span *ngIf="contactInfoAndPaymentForm.get('phoneNumber').hasError('pattern')" style="font-size: 12px; color: #b80000; margin-left: 10px">
+              Enter valid 10 digit phone number, only enter numbers
+            </span>
+        </div>
+      </div>
+
+      <hr class="mb-4">
+
+      <h4 class="mb-3">Payment</h4>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="cc-number">Credit card number <span class="text-muted">(Visa, Mastercard, American Express, Discover)</span></label>
+          <input type="text" class="form-control" id="cc-number" formControlName="cardNumber">
+          <span *ngIf="contactInfoAndPaymentForm.get('cardNumber').hasError('required')" style="font-size: 12px; color: #b80000; margin-left: 10px">
+            This field is required
+          </span>
+          <span *ngIf="contactInfoAndPaymentForm.get('cardNumber').hasError('pattern')" style="font-size: 12px; color: #b80000; margin-left: 10px">
+            Enter valid card number, only enter numbers
+          </span>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="cc-cvc">CVC</label>
+          <input type="text" class="form-control" id="cc-cvc" formControlName="cvc">
+          <span *ngIf="contactInfoAndPaymentForm.get('cvc').hasError('required')" style="font-size: 12px; color: #b80000; margin-left: 10px">
+            This field is required
+          </span>
+          <span *ngIf="contactInfoAndPaymentForm.get('cvc').hasError('pattern')" style="font-size: 12px; color: #b80000; margin-left: 10px">
+            Enter valid cvc
+          </span>
+        </div>
+      </div>
+      <div class="row" formGroupName="expGroup">
+        <div class="col-md-6 mb-3">
+          <label for="cc-month">Expiration Month</label>
+          <input type="text" class="form-control" id="cc-month" formControlName="expMonth">
+          <span *ngIf="contactInfoAndPaymentForm.get('expGroup').get('expMonth').hasError('required')" style="font-size: 12px; color: #b80000; margin-left: 10px">
+            This field is required
+          </span>
+          <span *ngIf="contactInfoAndPaymentForm.get('expGroup').get('expMonth').hasError('pattern')" style="font-size: 12px; color: #b80000; margin-left: 10px">
+            Enter valid month: 01, 02, 03... 12
+          </span>
+          <span *ngIf="contactInfoAndPaymentForm.get('expGroup').hasError('expired')" style="font-size: 12px; color: #b80000; margin-left: 10px">
+            The card is expired
+          </span>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="cc-year">Expiration Year</label>
+          <input type="text" class="form-control" id="cc-year" formControlName="expYear">
+          <span *ngIf="contactInfoAndPaymentForm.get('expGroup').get('expYear').hasError('required')" style="font-size: 12px; color: #b80000; margin-left: 10px">
+            This field is required
+          </span>
+          <span *ngIf="contactInfoAndPaymentForm.get('expGroup').get('expYear').hasError('pattern')" style="font-size: 12px; color: #b80000; margin-left: 10px">
+            Enter valid four digit year
+          </span>
+          <span *ngIf="contactInfoAndPaymentForm.get('expGroup').hasError('expired')" style="font-size: 12px; color: #b80000; margin-left: 10px">
+            The card is expired
+          </span>
+        </div>
+      </div>
+      <hr class="mb-4">
+      <span class="d-flex justify-content-center">
+        <button class="btn btn-danger btn-lg left-button" type="submit" (click)="cancelAndCleanUp()">Cancel</button>
+        <button class="btn btn-primary btn-lg right-button" type="submit" (click)="sendData()" [disabled]="!contactInfoAndPaymentForm.valid">Continue</button>
+      </span>
+    </form>
+  </div>
+</div>

@@ -16,10 +16,11 @@ import { WebStorageModule } from 'ngx-store';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './interceptor/interceptor.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { UserRegistrationComponent } from './user-registration/user-registration.component';
+import { UserRegistrationComponent } from './order-online/user-registration/user-registration.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AgmCoreModule } from '@agm/core';
 import { ErrorPageComponent } from './error-page/error-page.component';
+import { ContactInfoAndPaymentComponent } from './order-online/contact-info-and-payment/contact-info-and-payment.component';
 
 
 @NgModule({
@@ -28,7 +29,6 @@ import { ErrorPageComponent } from './error-page/error-page.component';
     HomeComponent,
     LocationComponent,
     AboutUsComponent,
-    UserRegistrationComponent,
     PageNotFoundComponent,
     ErrorPageComponent
   ],

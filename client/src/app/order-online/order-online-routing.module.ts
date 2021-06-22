@@ -9,6 +9,8 @@ import { OrderOnlineComponent } from './order-online.component';
 import { CurrentOrderComponent } from './current-order.component';
 import { SigninRedirectCallbackComponent } from './signin-redirect-callback.component';
 import { SignoutRedirectCallbackComponent } from './signout-redirect-callback.component';
+import { UserRegistrationComponent } from './user-registration/user-registration.component';
+import { ContactInfoAndPaymentComponent } from './contact-info-and-payment/contact-info-and-payment.component';
 
 
 
@@ -25,7 +27,9 @@ import { SignoutRedirectCallbackComponent } from './signout-redirect-callback.co
       { path: 'checkout', component: CheckoutComponent },
       { path: 'thank-you', component: ThankYouComponent },
       { path: 'signin-callback', component: SigninRedirectCallbackComponent },
-      { path: 'signout-callback', component: SignoutRedirectCallbackComponent }
+      { path: 'signout-callback', component: SignoutRedirectCallbackComponent },
+      { path: 'new-user', component: UserRegistrationComponent },
+      { path: 'contact-info-and-payment', component: ContactInfoAndPaymentComponent },
     ])
   ],
   exports: [
