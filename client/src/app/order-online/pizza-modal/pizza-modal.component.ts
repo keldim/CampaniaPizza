@@ -197,6 +197,45 @@ export class PizzaModalComponent {
     return listOfChoices;
   }
 
+  buildDisplayForEmail(currentItem) {
+    var listOfChoices: any[] = [];
+    if (currentItem.hasOwnProperty("cheese")) {
+      listOfChoices.push(currentItem.size);
+      listOfChoices.push(currentItem.crust);
+      listOfChoices.push(currentItem.sauce);
+      for (let oneCheese in currentItem.cheese) {
+        if (currentItem.cheese[oneCheese] != this.pizzaCheckboxes.cheese[oneCheese].selected) {
+          listOfChoices.push(this.pizzaCheckboxes.cheese[oneCheese].name);
+        }
+      }
+      for (let veggie in currentItem.veggies) {
+        if (currentItem.veggies[veggie] != this.pizzaCheckboxes.veggies[veggie].selected) {
+          listOfChoices.push(this.pizzaCheckboxes.veggies[veggie].name);
+        }
+      }
+      for (let meat in currentItem.meats) {
+        if (currentItem.meats[meat] != this.pizzaCheckboxes.meats[meat].selected) {
+          listOfChoices.push(this.pizzaCheckboxes.meats[meat].name);
+        }
+      }
+      for (let finish in currentItem.finishes) {
+        if (currentItem.finishes[finish] != this.pizzaCheckboxes.finishes[finish].selected) {
+          listOfChoices.push(this.pizzaCheckboxes.finishes[finish].name);
+        }
+      }
+    } else {
+      listOfChoices.push(currentItem.size);
+      listOfChoices.push(currentItem.crust);
+      for (let finish in currentItem.finishes) {
+        if (currentItem.finishes[finish] != this.pizzaCheckboxes.finishes[finish].selected) {
+          listOfChoices.push(this.pizzaCheckboxes.finishes[finish].name);
+        }
+      }
+    }
+    currentItem["emailDisplay"] = listOfChoices;
+    return currentItem;
+  }
+
   buildCheese() {
     const arr = this.pizzaCheckboxes.cheese.map(oneCheese => {
       return this.fb.control(oneCheese.selected);

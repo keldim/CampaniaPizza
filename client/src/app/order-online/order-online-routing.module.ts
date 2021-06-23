@@ -22,10 +22,10 @@ import { ContactInfoAndPaymentComponent } from './contact-info-and-payment/conta
         { path: '', redirectTo: 'current-order', pathMatch: 'full'},
         { path: 'past-orders', component: PastOrdersComponent},
         { path: 'past-order-detail/:id', component: PastOrderDetailComponent},
+        { path: 'thank-you', component: ThankYouComponent },
         { path: 'favorites', component: FavoritesComponent}
       ] },
       { path: 'checkout', component: CheckoutComponent },
-      { path: 'thank-you', component: ThankYouComponent },
       { path: 'signin-callback', component: SigninRedirectCallbackComponent },
       { path: 'signout-callback', component: SignoutRedirectCallbackComponent },
       { path: 'new-user', component: UserRegistrationComponent },

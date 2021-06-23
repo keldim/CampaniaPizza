@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chrisyoo.campaniapizzaserver.dao.OpenIdUserRepository;
+import com.chrisyoo.campaniapizzaserver.entity.ConfirmationEmail;
 import com.chrisyoo.campaniapizzaserver.entity.OpenIdUser;
 import com.chrisyoo.campaniapizzaserver.entity.PastOrder;
 import com.chrisyoo.campaniapizzaserver.entity.Pizza;
@@ -36,15 +37,12 @@ import com.stripe.model.Charge;
 public class UnregisteredUserController {
 
 	private StripeClient stripeClient;
-	private OpenIdUserService openIdUserService;
-	private PastOrderService pastOrderService;
-
+	private ConfirmationEmail confirmationEmail;
+	
 	@Autowired
-	UnregisteredUserController(StripeClient stripeClient, OpenIdUserService openIdUserService,
-			PastOrderService pastOrderService) {
+	UnregisteredUserController(StripeClient stripeClient, ConfirmationEmail confirmationEmail) {
 		this.stripeClient = stripeClient;
-		this.openIdUserService = openIdUserService;
-		this.pastOrderService = pastOrderService;
+		this.confirmationEmail = confirmationEmail;
 	}
 
 	@PostMapping("/charge")
@@ -52,11 +50,22 @@ public class UnregisteredUserController {
 		try {
 			String token = request.getHeader("token");
 			Double amount = Double.parseDouble(request.getHeader("amount"));
-			return this.stripeClient.chargeCreditCard(token, amount, request);
+			Charge charge = this.stripeClient.chargeCreditCard(token, amount, request);
+			
+			try {
+	        	this.confirmationEmail.sendEmail(request);
+	            System.out.println("Email Sent!");
+	        } catch (Exception ex) {
+	        	System.out.println("Error in sending email: " + ex);
+	        	throw ex;
+	        }
+			
+			return charge;
 		} catch (Exception e) {
 			System.out.println("Error in unregistered-user, /charge: " + e);
 			return null;
 		}
 	}
-
+	
 }
+

@@ -7,7 +7,21 @@
   <current-order></current-order>
 </div>
 
-<div class="container pickup-location">
+<span *ngIf="loading" class="page-text">
+  <h1>
+    Your order is being processed...
+  </h1>
+  <h3 class="subheader">
+    Please do not press the refresh or back button
+  </h3>
+</span>
+
+
+
+
+
+
+<div *ngIf="!loading" class="container pickup-location">
   <div class="checkout-header">Checkout</div>
   <div class="checkout-subheader">Pickup Location</div>
   <div class="row checkout-row-1">
@@ -34,8 +48,7 @@
   </div>
 </div>
 
-<span #content>
-  <div class="container box-form">
+  <div *ngIf="!loading" class="container box-form">
     <div class="row">
       <div class="col name-column">
         Order Details
@@ -129,174 +142,54 @@
       </div>
     </div>
   </div>
-</span>
 
-<div class="container box-form">
-  <div class="contact-info-header">Contact Info</div>
-  <form [formGroup]="contactInfo" class="contact-info-form">
-    <!-- <span *ngIf="contactInfo.get('firstName').hasError('required') || contactInfo.get('lastName').hasError('required')
-    || contactInfo.get('email').hasError('required') || contactInfo.get('phoneNumber').hasError('required')">
-      <span style="font-size: 12px; color: #b80000; margin-left: 10px">Please fill all boxes.</span>
-    </span> -->
 
-    <span class="row contact-info-row">
-      <span *ngIf="contactInfo.get('firstName').hasError('required')" class="col col-center"
-        style="font-size: 12px; color: #b80000; margin-left: 10px">
-        This field is required
-      </span>
-      <span *ngIf="contactInfo.get('firstName').hasError('pattern')" class="col col-center"
-        style="font-size: 12px; color: #b80000; margin-left: 10px">
-        Enter valid name, at least two characters are required
-      </span>
-      <span *ngIf="contactInfo.get('lastName').hasError('required')" class="col col-center"
-        style="font-size: 12px; color: #b80000; margin-left: 10px">
-        This field is required
-      </span>
-      <span *ngIf="contactInfo.get('lastName').hasError('pattern')" class="col col-center"
-        style="font-size: 12px; color: #b80000; margin-left: 10px">
-        Enter valid name, at least two characters are required
-      </span>
-    </span>
-    <div class="row contact-info-row">
-      <div class="col col-center">
-        First Name:
-      </div>
-      <div class="col col-center">
-        <input type="text" formControlName="firstName">
-      </div>
-      <div class="col col-center">
-        Last Name:
-      </div>
-      <div class="col col-center">
-        <input type="text" formControlName="lastName">
-      </div>
-    </div>
-    <span class="row contact-info-row">
-      <span *ngIf="contactInfo.get('email').hasError('required')" class="col col-center"
-        style="font-size: 12px; color: #b80000; margin-left: 10px">
-        This field is required
-      </span>
-      <span *ngIf="contactInfo.get('email').hasError('pattern')" class="col col-center"
-        style="font-size: 12px; color: #b80000; margin-left: 10px">
-        Enter valid email address
-      </span>
-      <!-- <span class="col col-center hide-order-online">
-        empty space
-      </span>
-      <span class="col col-center hide-order-online">
-        empty space
-      </span> -->
-      <span *ngIf="contactInfo.get('phoneNumber').hasError('required')" class="col col-center"
-        style="font-size: 12px; color: #b80000; margin-left: 10px">
-        This field is required
-      </span>
-      <span *ngIf="contactInfo.get('phoneNumber').hasError('pattern')" class="col col-center"
-        style="font-size: 12px; color: #b80000; margin-left: 10px">
-        Enter valid 10 digit phone number, only enter numbers
-      </span>
-    </span>
-    <div class="row contact-info-row">
-      <div class="col col-center">
-        Email:
-      </div>
-      <div class="col col-center">
-        <input type="text" formControlName="email">
-      </div>
-      <div class="col col-center">
-        Phone Number:
-      </div>
-      <div class="col col-center">
-        <input type="text" formControlName="phoneNumber">
-      </div>
-    </div>
-  </form>
+
+
+
+
+<div *ngIf="!loading" class="container">
+  <div class="mb-4">
+    <h4 class="d-flex justify-content-between align-items-center mb-3">
+      <span class="text-muted">Contact Info</span>
+      <span class="badge badge-secondary badge-pill previous-page" (click)="backToContactInfoAndPayment()">edit</span>
+    </h4>
+    <ul class="list-group mb-3">
+      <li class="list-group-item d-flex justify-content-between lh-condensed">
+        <span *ngIf="contactInfoAndPaymentData != null">
+          {{ contactInfoAndPaymentData['firstName'] }} {{ contactInfoAndPaymentData['lastName'] }}<br>
+          {{ formatPhoneNumber(contactInfoAndPaymentData['phoneNumber']) }}<br>
+          {{ contactInfoAndPaymentData['email'] }}
+        </span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="mb-4">
+    <h4 class="d-flex justify-content-between align-items-center mb-3">
+      <span class="text-muted">Credit Card Info</span>
+      <span class="badge badge-secondary badge-pill previous-page" (click)="backToContactInfoAndPayment()">edit</span>
+    </h4>
+    <ul class="list-group mb-3">
+      <li class="list-group-item d-flex justify-content-between lh-condensed">
+        <span *ngIf="contactInfoAndPaymentData != null">
+          {{ getCreditCardType(contactInfoAndPaymentData['cardNumber']) }}<br>
+          {{ showOnlyLastFourNumbers(contactInfoAndPaymentData['cardNumber']) }}
+        </span>
+      </li>
+    </ul>
+  </div>
+
+
+
+  <span class="d-flex justify-content-center" *ngIf="contactInfoAndPaymentData != null">
+    <!-- (click)="sendInfo()" [disabled]="!shippingAndPaymentForm.valid" -->
+    <button class="btn btn-danger btn-lg left-button" type="submit" (click)="cancelAndCleanUp()">Cancel</button>
+    <button class="btn btn-primary btn-lg right-button" type="submit"
+    [disabled]="contactInfoAndPaymentData['cardNumber'] == '' || contactInfoAndPaymentData['firstName'] == '' || currentOrderComponent.showTotal() == 0"
+    (click)="chargeCreditCard()">Place Order</button>
+  </span>
 </div>
 
-<div class="container box-form">
-  <div class="payment-header">Payment</div>
-  <form [formGroup]="creditCardForm" class="payment-form">
-    <div class="row payment-row">
-      <div class="col payment-subheader">
-        Accepted Credit Cards:
-      </div>
-      <div class="col col-center">
-        <img src="../../../assets/images/credit_card_logos_10.gif">
-      </div>
-    </div>
-    <span class="row contact-info-row">
-      <span *ngIf="creditCardForm.get('cardNumber').hasError('required')" class="col col-center"
-        style="font-size: 12px; color: #b80000; margin-left: 10px">
-        This field is required
-      </span>
-      <span *ngIf="creditCardForm.get('cardNumber').hasError('pattern')" class="col col-center"
-        style="font-size: 12px; color: #b80000; margin-left: 10px">
-        Enter valid card number, only enter numbers
-      </span>
-      <span *ngIf="creditCardForm.get('expMonth').hasError('required')" class="col col-center"
-        style="font-size: 12px; color: #b80000; margin-left: 10px">
-        This field is required
-    </span>
-      <span *ngIf="creditCardForm.get('expMonth').hasError('pattern')" class="col col-center"
-        style="font-size: 12px; color: #b80000; margin-left: 10px">
-        Enter valid month: 01, 02, 03... 12
-      </span>
-    </span>
-    <div class="row payment-row">
-      <div class="col col-center">
-        Card Number:
-      </div>
-      <div class="col col-center">
-        <input type="text" formControlName="cardNumber">
-      </div>
-      <div class="col col-center">
-        Expiration Month:
-      </div>
-      <div class="col col-center">
-        <input type="text" formControlName="expMonth">
-      </div>
-    </div>
-    <span class="row contact-info-row">
-      <span *ngIf="creditCardForm.get('expYear').hasError('required')" class="col col-center"
-        style="font-size: 12px; color: #b80000; margin-left: 10px">
-        This field is required
-      </span>
-      <span *ngIf="creditCardForm.get('expYear').hasError('pattern')" class="col col-center"
-        style="font-size: 12px; color: #b80000; margin-left: 10px">
-        Enter valid year
-      </span>
-      <span *ngIf="creditCardForm.get('cvc').hasError('required')" class="col col-center"
-        style="font-size: 12px; color: #b80000; margin-left: 10px">
-        This field is required
-      </span>
-      <span *ngIf="creditCardForm.get('cvc').hasError('pattern')" class="col col-center"
-        style="font-size: 12px; color: #b80000; margin-left: 10px">
-        Enter valid cvc
-      </span>
-    </span>
-    <div class="row payment-row">
-      <div class="col col-center">
-        Expiration Year:
-      </div>
-      <div class="col col-center">
-        <input type="text" formControlName="expYear">
-      </div>
-      <div class="col col-center">
-        CVC:
-      </div>
-      <div class="col col-center">
-        <input type="text" formControlName="cvc">
-      </div>
-    </div>
-    <div class="place-order-button">
-      <button type="button" class="btn btn-outline-success" (click)="chargeCreditCard()"
-        [disabled]="!contactInfo.valid || !creditCardForm.valid || pickupLocation == '' || currentOrderComponent.showTotal() == '0.00'">Place Order</button>
-      <!-- navigate to the link inside chargeCreditCard()? -->
-      <!-- do not show the page until the method is completed? see kurata angular course? -->
-    </div>
-  </form>
-</div>
 
-<div id="download" class="imgCapture">
-  <img #canvas>
-  <a #downloadLink></a>
-</div>
+
