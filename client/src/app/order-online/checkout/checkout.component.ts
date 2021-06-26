@@ -20,7 +20,6 @@ import { CurrentOrderComponent } from '../current-order.component';
 })
 export class CheckoutComponent implements OnInit {
   contactInfoAndPaymentData: Object;
-  isLoggedIn = false;
   loading = false;
 
   @ViewChild(OrderOnlineComponent) orderOnlineComponent;
@@ -56,9 +55,6 @@ export class CheckoutComponent implements OnInit {
     this.storageService.watchPickupLocation().subscribe(pickupLocation => {
       this.pickupLocation = pickupLocation;
     });
-    this._authService.loginChanged.subscribe(loggedIn => {
-      this.isLoggedIn = loggedIn;
-    });
   }
 
   ngOnInit() {
@@ -67,9 +63,6 @@ export class CheckoutComponent implements OnInit {
       (err: any) => console.log(err),
       () => console.log("received response from the server 2")
     );
-    this._authService.isLoggedIn().then(loggedIn => {
-      this.isLoggedIn = loggedIn;
-    });
   }
 
   getContactInfoAndPaymentData() {

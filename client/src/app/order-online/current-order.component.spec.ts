@@ -1,238 +1,339 @@
-import { CurrentOrderComponent } from './current-order.component';
-import { PizzaModalComponent } from './pizza-modal/pizza-modal.component';
-import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder, FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { By } from '@angular/platform-browser';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { By } from '@angular/platform-browser';
+import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { of } from 'rxjs';
+import { LocalStorageStub } from '../services/local-storage-stub';
+import { StorageService } from '../services/storage.service';
+import { CurrentOrderComponent } from './current-order.component';
+
+import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 import { SaladModalComponent } from './salad-modal/salad-modal.component';
 import { DrinkModalComponent } from './drink-modal/drink-modal.component';
 import { DessertModalComponent } from './dessert-modal/dessert-modal.component';
-
-
+import { PizzaModalComponent } from './pizza-modal/pizza-modal.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 
 describe('CurrentOrderComponent', () => {
+  let component: CurrentOrderComponent;
   let fixture: ComponentFixture<CurrentOrderComponent>;
-  let fixture2: ComponentFixture<PizzaModalComponent>;
-  // let mockUserService;
-  // let mockModalService;
-  // let mockFormBuilder;
-  const formBuilder: FormBuilder = new FormBuilder();
-  const formControl: FormControl = new FormControl();
-  const formGroup: FormGroup = formBuilder.group({
-    type: null,
-    size: null,
-    crust: null,
-    sauce: null,
-    cheese: null,
-    veggies: null,
-    meats: null,
-    finishes: null,
-    price: null,
-    quantity: null
-    });
-  // const formArray: FormArray = new FormArray();
+  let mockStorageService;
 
   beforeEach(() => {
-    // mockUserService = jasmine.createSpyObj(['getUserByUsername']);
-    // mockModalService = jasmine.createSpyObj([]);
-    // mockUserService,
-    // mockModalService,
-    // mockFormBuilder = jasmine.createSpyObj(['group']);
-    // component = new CurrentOrderComponent(mockFormBuilder);
-
-      TestBed.configureTestingModule({
-        declarations: [
-          CurrentOrderComponent,
-          PizzaModalComponent,
-          SaladModalComponent,
-          DrinkModalComponent,
-          DessertModalComponent
-        ],
-          imports: [
-            NgbModule.forRoot(),
-            ReactiveFormsModule
-            // FormArray,
-            // FormControl
-          ],
-          providers: [
-            { provide: FormBuilder, useValue: formBuilder },
-            { provide: FormControl, useValue: formControl },
-            { provide: FormGroup, useValue: formGroup }
-          ]
-      });
-
-      fixture = TestBed.createComponent(CurrentOrderComponent);
-      fixture2 = TestBed.createComponent(PizzaModalComponent);
+    mockStorageService = jasmine.createSpyObj(['watchPizzaItems', 'watchSaladItems', 'watchDrinkItems', 'watchDessertItems', 'watchPickupLocation',
+      'getPizzaItems', 'getSaladItems', 'getDrinkItems', 'getDessertItems', 'getPickupLocation', 'updatePizzaItems', 'updatePickupLocation']);
+    TestBed.configureTestingModule({
+      declarations: [CurrentOrderComponent],
+      imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        NgbModule.forRoot(),
+        HttpClientTestingModule
+      ],
+      providers: [
+        { provide: StorageService, useValue: mockStorageService }
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
+    })
   });
 
+  it('should add the "BUILD YOUR OWN PIZZA" item to the cart', () => {
+    const pizzaToBeAdded = {
+      type: "BUILD YOUR OWN PIZZA",
+      size: "10 Inch",
+      crust: "Traditional Crust",
+      sauce: "Signature Marinara",
+      cheese: [
+        true, false, false, false, false, false, false, false
+      ],
+      veggies: [
+        false, true, false, false, false, false, false, false, false, false, false, false, false, false, false
+      ],
+      meats: [
+        false, false, true, false, false, false, false,
+      ],
+      finishes: [
+        false, false, false, true, false, false, false, false
+      ],
+      price: 8.65,
+      quantity: 1
+    };
+    mockStorageService.watchPizzaItems.and.returnValue(of([]));
+    mockStorageService.watchSaladItems.and.returnValue(of([]));
+    mockStorageService.watchDrinkItems.and.returnValue(of([]));
+    mockStorageService.watchDessertItems.and.returnValue(of([]));
+    mockStorageService.watchPickupLocation.and.returnValue(of([]));
+    mockStorageService.getPizzaItems.and.returnValue([]);
+    mockStorageService.updatePizzaItems.and.returnValue(LocalStorageStub.mockLocalStorage.setItem("pizzaItems", JSON.stringify(new Array(pizzaToBeAdded))));
 
-
-  // have to check if open lg was called
-
-  it('should open the custom pizza modal', () => {
-    spyOn(fixture.componentInstance, 'openPizza');
-    fixture.componentInstance.clickedMenu = "Build Your Own Pizza";
+    fixture = TestBed.createComponent(CurrentOrderComponent);
+    component = fixture.componentInstance;
+    component.pizzaModalComponent = new PizzaModalComponent(TestBed.get(NgbModal), new FormBuilder, mockStorageService);
     fixture.detectChanges();
+    component.pizzaModalComponent.pizzaForm = new FormBuilder().group({
+      type: "BUILD YOUR OWN PIZZA",
+      size: "10 Inch",
+      crust: "Traditional Crust",
+      sauce: "Signature Marinara",
+      cheese: [[
+        true, false, false, false, false, false, false, false
+      ]],
+      veggies: [[
+        false, true, false, false, false, false, false, false, false, false, false, false, false, false, false
+      ]],
+      meats: [[
+        false, false, true, false, false, false, false,
+      ]],
+      finishes: [[
+        false, false, false, true, false, false, false, false
+      ]],
+      price: 8.65,
+      quantity: 1
+    })
+    component.pizzaModalComponent.createTempForm();
 
-    const pizzaModal = fixture.debugElement.queryAll(By.css('.empty-link'))[5];
+    expect(JSON.parse(LocalStorageStub.mockLocalStorage.getItem("pizzaItems"))[0]).toEqual(pizzaToBeAdded);
 
-    pizzaModal.triggerEventHandler('click', null);
-    fixture.detectChanges();
-
-    expect(fixture.componentInstance.openPizza).toHaveBeenCalled();
+      // pizzamodal
+    // updatetempform
+    // deletepizzaitem
+    // createtempform
   });
 
-  it('should open the speicalty pizza modal', () => {
-    spyOn(fixture.componentInstance, 'openPizza');
-    fixture.componentInstance.clickedMenu = "Specialty Pizzas";
+  it('should update the "BUILD YOUR OWN PIZZA" item in the cart', () => {
+    const originalPizza = {
+      type: "BUILD YOUR OWN PIZZA",
+      size: "10 Inch",
+      crust: "Traditional Crust",
+      sauce: "Signature Marinara",
+      cheese: [
+        true, false, false, false, false, false, false, false
+      ],
+      veggies: [
+        false, true, false, false, false, false, false, false, false, false, false, false, false, false, false
+      ],
+      meats: [
+        false, false, true, false, false, false, false,
+      ],
+      finishes: [
+        false, false, false, true, false, false, false, false
+      ],
+      price: 8.65,
+      quantity: 1
+    };
+    const updatedPizza = {
+      type: "BUILD YOUR OWN PIZZA",
+      size: "10 Inch",
+      crust: "Traditional Crust",
+      sauce: "Signature Marinara",
+      cheese: [
+        true, false, false, false, false, false, false, false
+      ],
+      veggies: [
+        false, true, false, false, false, false, false, false, false, false, false, false, false, false, false
+      ],
+      meats: [
+        false, false, true, false, false, false, false,
+      ],
+      finishes: [
+        false, false, true, true, false, false, false, false
+      ],
+      price: 8.65,
+      quantity: 1
+    };
+    mockStorageService.watchPizzaItems.and.returnValue(of([]));
+    mockStorageService.watchSaladItems.and.returnValue(of([]));
+    mockStorageService.watchDrinkItems.and.returnValue(of([]));
+    mockStorageService.watchDessertItems.and.returnValue(of([]));
+    mockStorageService.watchPickupLocation.and.returnValue(of([]));
+    mockStorageService.getPizzaItems.and.returnValue([originalPizza]);
+    mockStorageService.updatePizzaItems.and.returnValue(LocalStorageStub.mockLocalStorage.setItem("pizzaItems", JSON.stringify(new Array(updatedPizza))));
+    mockStorageService.updatePickupLocation.and.returnValue(null);
+
+    fixture = TestBed.createComponent(CurrentOrderComponent);
+    component = fixture.componentInstance;
+    component.pizzaModalComponent = new PizzaModalComponent(TestBed.get(NgbModal), new FormBuilder, mockStorageService);
     fixture.detectChanges();
+    component.pizzaModalComponent.indexForEdit = 0;
+    component.pizzaModalComponent.pizzaForm = new FormBuilder().group({
+      type: "BUILD YOUR OWN PIZZA",
+      size: "10 Inch",
+      crust: "Traditional Crust",
+      sauce: "Signature Marinara",
+      cheese: [[
+        true, false, false, false, false, false, false, false
+      ]],
+      veggies: [[
+        false, true, false, false, false, false, false, false, false, false, false, false, false, false, false
+      ]],
+      meats: [[
+        false, false, true, false, false, false, false,
+      ]],
+      finishes: [[
+        false, false, true, true, false, false, false, false
+      ]],
+      price: 8.65,
+      quantity: 1
+    })
+    component.pizzaModalComponent.updateTempForm();
 
-    const pizzaModal = fixture.debugElement.queryAll(By.css('.empty-link'))[5];
-
-    pizzaModal.triggerEventHandler('click', null);
-    fixture.detectChanges();
-
-    expect(fixture.componentInstance.openPizza).toHaveBeenCalled();
+    expect(JSON.parse(LocalStorageStub.mockLocalStorage.getItem("pizzaItems"))[0]).toEqual(updatedPizza);
   });
 
-  // custom, specialty?
-  it('should open the salad modal', () => {
-    spyOn(fixture.componentInstance, 'openSalad');
-    fixture.componentInstance.clickedMenu = "Salads";
+  it('should remove the "BUILD YOUR OWN PIZZA" item from the cart', () => {
+    const pizzaToBeDeleted = {
+      type: "BUILD YOUR OWN PIZZA",
+      size: "10 Inch",
+      crust: "Traditional Crust",
+      sauce: "Signature Marinara",
+      cheese: [
+        true, false, false, false, false, false, false, false
+      ],
+      veggies: [
+        false, true, false, false, false, false, false, false, false, false, false, false, false, false, false
+      ],
+      meats: [
+        false, false, true, false, false, false, false,
+      ],
+      finishes: [
+        false, false, false, true, false, false, false, false
+      ],
+      price: 8.65,
+      quantity: 1
+    };
+    mockStorageService.watchPizzaItems.and.returnValue(of([]));
+    mockStorageService.watchSaladItems.and.returnValue(of([]));
+    mockStorageService.watchDrinkItems.and.returnValue(of([]));
+    mockStorageService.watchDessertItems.and.returnValue(of([]));
+    mockStorageService.watchPickupLocation.and.returnValue(of([]));
+    mockStorageService.getPizzaItems.and.returnValue([pizzaToBeDeleted]);
+    mockStorageService.updatePizzaItems.and.returnValue(LocalStorageStub.mockLocalStorage.setItem("pizzaItems", JSON.stringify(new Array())));
+
+    fixture = TestBed.createComponent(CurrentOrderComponent);
+    component = fixture.componentInstance;
+    component.pizzaModalComponent = new PizzaModalComponent(TestBed.get(NgbModal), new FormBuilder, mockStorageService);
     fixture.detectChanges();
+    component.pizzaModalComponent.deletePizzaItem(0);
 
-    const saladModal = fixture.debugElement.queryAll(By.css('.empty-link'))[5];
-
-    saladModal.triggerEventHandler('click', null);
-    fixture.detectChanges();
-
-    expect(fixture.componentInstance.openSalad).toHaveBeenCalled();
+    expect(JSON.parse(LocalStorageStub.mockLocalStorage.getItem("pizzaItems"))).toEqual([]);
   });
 
-  it('should open the drink modal', () => {
-    spyOn(fixture.componentInstance, 'openDrink');
-    fixture.componentInstance.clickedMenu = "Drinks";
+  it('should add the "SPECIALTY PIZZA" item to the cart', () => {
+    const pizzaToBeAdded = {
+      type: "BUFFALO CHICKEN",
+      size: "10 Inch",
+      crust: "Traditional Crust",
+      finishes: [
+        false, false, false, true, false, false, false, false
+      ],
+      price: 8.65,
+      quantity: 1
+    };
+    mockStorageService.watchPizzaItems.and.returnValue(of([]));
+    mockStorageService.watchSaladItems.and.returnValue(of([]));
+    mockStorageService.watchDrinkItems.and.returnValue(of([]));
+    mockStorageService.watchDessertItems.and.returnValue(of([]));
+    mockStorageService.watchPickupLocation.and.returnValue(of([]));
+    mockStorageService.getPizzaItems.and.returnValue([]);
+    mockStorageService.updatePizzaItems.and.returnValue(LocalStorageStub.mockLocalStorage.setItem("pizzaItems", JSON.stringify(new Array(pizzaToBeAdded))));
+
+    fixture = TestBed.createComponent(CurrentOrderComponent);
+    component = fixture.componentInstance;
+    component.pizzaModalComponent = new PizzaModalComponent(TestBed.get(NgbModal), new FormBuilder, mockStorageService);
     fixture.detectChanges();
+    component.pizzaModalComponent.pizzaForm = new FormBuilder().group({
+      type: "BUFFALO CHICKEN",
+      size: "10 Inch",
+      crust: "Traditional Crust",
+      finishes: [
+        false, false, false, true, false, false, false, false
+      ],
+      price: 8.65,
+      quantity: 1
+    })
+    component.pizzaModalComponent.createTempForm();
 
-    const drinkModal = fixture.debugElement.queryAll(By.css('.empty-link'))[5];
-
-    drinkModal.triggerEventHandler('click', null);
-    fixture.detectChanges();
-
-    expect(fixture.componentInstance.openDrink).toHaveBeenCalled();
+    expect(JSON.parse(LocalStorageStub.mockLocalStorage.getItem("pizzaItems"))[0]).toEqual(pizzaToBeAdded);
   });
 
-  it('should open the dessert modal', () => {
-    spyOn(fixture.componentInstance, 'openDessert');
-    fixture.componentInstance.clickedMenu = "Desserts";
+  it('should update the "SPECIALTY PIZZA" item in the cart', () => {
+    const originalPizza = {
+      type: "BUFFALO CHICKEN",
+      size: "10 Inch",
+      crust: "Traditional Crust",
+      finishes: [
+        false, false, false, true, false, false, false, false
+      ],
+      price: 8.65,
+      quantity: 1
+    };
+    const updatedPizza = {
+      type: "BUFFALO CHICKEN",
+      size: "10 Inch",
+      crust: "Traditional Crust",
+      finishes: [
+        false, false, false, true, true, false, false, false
+      ],
+      price: 8.65,
+      quantity: 1
+    };
+    mockStorageService.watchPizzaItems.and.returnValue(of([]));
+    mockStorageService.watchSaladItems.and.returnValue(of([]));
+    mockStorageService.watchDrinkItems.and.returnValue(of([]));
+    mockStorageService.watchDessertItems.and.returnValue(of([]));
+    mockStorageService.watchPickupLocation.and.returnValue(of([]));
+    mockStorageService.getPizzaItems.and.returnValue([originalPizza]);
+    mockStorageService.updatePizzaItems.and.returnValue(LocalStorageStub.mockLocalStorage.setItem("pizzaItems", JSON.stringify(new Array(updatedPizza))));
+    mockStorageService.updatePickupLocation.and.returnValue(null);
+
+    fixture = TestBed.createComponent(CurrentOrderComponent);
+    component = fixture.componentInstance;
+    component.pizzaModalComponent = new PizzaModalComponent(TestBed.get(NgbModal), new FormBuilder, mockStorageService);
     fixture.detectChanges();
+    component.pizzaModalComponent.indexForEdit = 0;
+    component.pizzaModalComponent.pizzaForm = new FormBuilder().group({
+      type: "BUFFALO CHICKEN",
+      size: "10 Inch",
+      crust: "Traditional Crust",
+      finishes: [
+        false, false, false, true, true, false, false, false
+      ],
+      price: 8.65,
+      quantity: 1
+    })
+    component.pizzaModalComponent.updateTempForm();
 
-    const dessertModal = fixture.debugElement.queryAll(By.css('.empty-link'))[5];
-
-    dessertModal.triggerEventHandler('click', null);
-    fixture.detectChanges();
-
-    expect(fixture.componentInstance.openDessert).toHaveBeenCalled();
+    expect(JSON.parse(LocalStorageStub.mockLocalStorage.getItem("pizzaItems"))[0]).toEqual(updatedPizza);
   });
 
-  it('should present location address when midtown is selected', () => {
+  it('should remove the "SPECIALTY PIZZA" item from the cart', () => {
+    const pizzaToBeDeleted = {
+      type: "BUFFALO CHICKEN",
+      size: "10 Inch",
+      crust: "Traditional Crust",
+      finishes: [
+        false, false, false, true, false, false, false, false
+      ],
+      price: 8.65,
+      quantity: 1
+    };
+    mockStorageService.watchPizzaItems.and.returnValue(of([]));
+    mockStorageService.watchSaladItems.and.returnValue(of([]));
+    mockStorageService.watchDrinkItems.and.returnValue(of([]));
+    mockStorageService.watchDessertItems.and.returnValue(of([]));
+    mockStorageService.watchPickupLocation.and.returnValue(of([]));
+    mockStorageService.getPizzaItems.and.returnValue([pizzaToBeDeleted]);
+    mockStorageService.updatePizzaItems.and.returnValue(LocalStorageStub.mockLocalStorage.setItem("pizzaItems", JSON.stringify(new Array())));
+
+    fixture = TestBed.createComponent(CurrentOrderComponent);
+    component = fixture.componentInstance;
+    component.pizzaModalComponent = new PizzaModalComponent(TestBed.get(NgbModal), new FormBuilder, mockStorageService);
     fixture.detectChanges();
+    component.pizzaModalComponent.deletePizzaItem(0);
 
-    fixture.componentInstance.orderOnlineForm.patchValue({location: 'Midtown'});
-    fixture.detectChanges();
-
-    expect(fixture.debugElement.queryAll(By.css('span'))[0].nativeElement.textContent).toContain('Midtown');
-  });
-
-  it('should present location address when chelsea is selected', () => {
-    fixture.detectChanges();
-
-    fixture.componentInstance.orderOnlineForm.patchValue({location: 'Chelsea'});
-    fixture.detectChanges();
-
-    expect(fixture.debugElement.queryAll(By.css('span'))[0].nativeElement.textContent).toContain('Chelsea');
-  });
-
-  it('should present location address when east village is selected', () => {
-    fixture.detectChanges();
-
-    fixture.componentInstance.orderOnlineForm.patchValue({location: 'East Village'});
-    fixture.detectChanges();
-
-    expect(fixture.debugElement.queryAll(By.css('span'))[0].nativeElement.textContent).toContain('East Village');
-  });
-
-  //??
-  it('should present business hours when the mouse cursor enters', () => {
-    const mouseEnterTest = fixture.debugElement.queryAll(By.css("a"))[0];
-
-    mouseEnterTest.triggerEventHandler('mouseover', null);
-    fixture.detectChanges();
-
-    // console.log(fixture.debugElement.queryAll(By.css(".dl-for-location-bar")));
-
-    expect(true).toBe(true);
-  });
-
-  it('should present byo pizza item when vertical byo pizza menu is clicked', () => {
-    fixture.componentInstance.clickedMenu = "Build Your Own Pizza";
-    fixture.detectChanges();
-
-    expect(fixture.debugElement.queryAll(By.css('.empty-link'))[5].nativeElement.textContent).toContain("BUILD YOUR OWN PIZZA");
-  });
-
-  it('should present specialty pizza item when vertical specialty pizza menu is clicked', () => {
-    fixture.componentInstance.clickedMenu = "Specialty Pizzas";
-    fixture.detectChanges();
-
-    expect(fixture.debugElement.queryAll(By.css('.empty-link'))[5].nativeElement.textContent).toContain("CLASSIC MARGHERITA");
-  });
-
-  it('should present salad items when vertical salad menu is clicked', () => {
-    fixture.componentInstance.clickedMenu = "Salads";
-    fixture.detectChanges();
-
-    expect(fixture.debugElement.queryAll(By.css('.empty-link'))[5].nativeElement.textContent).toContain("CHICKEN CAESAR SALAD");
-  });
-
-  it('should present drink items when vertical drink menu is clicked', () => {
-    fixture.componentInstance.clickedMenu = "Drinks";
-    fixture.detectChanges();
-
-    expect(fixture.debugElement.queryAll(By.css('.empty-link'))[5].nativeElement.textContent).toContain("FOUNTAIN DRINK");
-  });
-
-  it('should present dessert items when vertical dessert menu is clicked', () => {
-    fixture.componentInstance.clickedMenu = "Desserts";
-    fixture.detectChanges();
-
-    expect(fixture.debugElement.queryAll(By.css('.empty-link'))[5].nativeElement.textContent).toContain("COOKIES");
-  });
-
-  it('should add item to the shopping cart with selected features', () => {
-    fixture.componentInstance.clickedMenu = "Build Your Own Pizza";
-    fixture.detectChanges();
-
-    const pizzaModal = fixture.debugElement.queryAll(By.css('.empty-link'))[5];
-
-    pizzaModal.triggerEventHandler('click', null);
-    fixture.detectChanges();
-
-    console.log(fixture2.debugElement.queryAll(By.css('.label-for-choice')));
-    expect(true).toBe(true);
-    // expect(fixture.componentInstance.openPizza).toHaveBeenCalled();
+    expect(JSON.parse(LocalStorageStub.mockLocalStorage.getItem("pizzaItems"))).toEqual([]);
   });
 
 });
-
-// do the modals appear?
-// does the location address appear when a choice is selected?
-// do business hours appear when the mouse cursor is hovering?
-// do the menu items appear when you click the button on vertical navbar?
-// do the checkboxes appear?
-// do the radio buttons appear?
-// do the item get added to the shopping cart?
-// do the item get deleted in the shopping cart?
-// can you update the item in the shopping cart?

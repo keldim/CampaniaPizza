@@ -17,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import com.chrisyoo.campaniapizzaserver.entity.ConfirmationEmail;
 import com.chrisyoo.campaniapizzaserver.entity.OpenIdUser;
 import com.chrisyoo.campaniapizzaserver.entity.PastOrder;
 import com.chrisyoo.campaniapizzaserver.entity.StripeClient;
@@ -48,7 +49,7 @@ public class TestRegisteredUserController {
 		when(openIdUserService.findByUsername(any())).thenReturn(null);
 		
 		mockMvc.perform(post("/registered-user/past-orders").header("Authorization", randomBearerToken))
-		.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
+		.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 		verify(openIdUserService).findByUsername(any());
 	}
 	
@@ -60,7 +61,7 @@ public class TestRegisteredUserController {
 		when(openIdUserService.findByUsername(any())).thenReturn(null);
 		
 		mockMvc.perform(post("/registered-user/past-orders").header("Authorization", randomBearerToken))
-		.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
+		.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 		.andExpect(MockMvcResultMatchers.jsonPath("$").isEmpty());
 	}
 	
@@ -70,32 +71,37 @@ public class TestRegisteredUserController {
 				+ "gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
 		OpenIdUser user = new OpenIdUser();
 		PastOrder userPastOrder1 = new PastOrder();
-		userPastOrder1.setAddress1("3887  Yorkie Lane");
+		userPastOrder1.setLocation("Little Italy");
 		PastOrder userPastOrder2 = new PastOrder();
-		userPastOrder2.setAddress1("1896  Wright Court");
+		userPastOrder2.setLocation("Chinatown");
 		user.addPastOrder(userPastOrder1);
 		user.addPastOrder(userPastOrder2);
 		
 		when(openIdUserService.findByUsername(any())).thenReturn(user);
-			
+		
 		mockMvc.perform(post("/registered-user/past-orders").header("Authorization", randomBearerToken))
-		.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
-		.andExpect(MockMvcResultMatchers.jsonPath("$[0].address1").value("3887  Yorkie Lane"))
-		.andExpect(MockMvcResultMatchers.jsonPath("$[1].address1").value("1896  Wright Court"));
+		.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+		.andExpect(MockMvcResultMatchers.jsonPath("$[0].location").value("Little Italy"))
+		.andExpect(MockMvcResultMatchers.jsonPath("$[1].location").value("Chinatown"));
 	}
 
 	@Test
 	public void should_return_past_order_by_id() throws Exception {
+		String randomBearerToken = "empty eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4"
+				+ "gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
+		OpenIdUser user = new OpenIdUser();
 		PastOrder result = new PastOrder();
 		result.setId(5);
-		result.setAddress1("3887  Yorkie Lane");
+		result.setLocation("Little Italy");
+		user.addPastOrder(result);
 		
+		when(openIdUserService.findByUsername(any())).thenReturn(user);
 		when(pastOrderService.findById(5)).thenReturn(result);
 		
-		mockMvc.perform(post("/registered-user/past-order/5")).andExpect(status().isOk())
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(5))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.address1").value("3887  Yorkie Lane"));
+		mockMvc.perform(post("/registered-user/past-order/5").header("Authorization", randomBearerToken))
+		.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(5))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.location").value("Little Italy"));
 	}
 
 	@Test
@@ -111,7 +117,7 @@ public class TestRegisteredUserController {
 		doNothing().when(pastOrderService).save(any());
 
 		mockMvc.perform(post("/registered-user/charge").header("token", "any()").header("amount", "0.00"))
-				.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.amount").value("55"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.currency").value("dollar"));
 	}
@@ -127,7 +133,7 @@ public class TestRegisteredUserController {
 		doNothing().when(pastOrderService).save(any());
 
 		mockMvc.perform(post("/registered-user/charge").header("token", "any()").header("amount", "0.00"))
-				.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
+				.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 		verify(confirmationEmail).sendEmail(any());
 	}
 	
@@ -142,7 +148,7 @@ public class TestRegisteredUserController {
 		doNothing().when(pastOrderService).save(any());
 
 		mockMvc.perform(post("/registered-user/charge").header("token", "any()").header("amount", "0.00"))
-				.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
+				.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 		verify(pastOrderService).createPastOrder(any());
 		verify(openIdUserService).addPastOrderToExistingUserOrNewUser(any(), any());
 		verify(pastOrderService).save(any());

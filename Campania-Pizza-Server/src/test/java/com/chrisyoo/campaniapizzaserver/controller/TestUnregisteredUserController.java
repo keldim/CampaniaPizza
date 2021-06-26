@@ -2,18 +2,31 @@ package com.chrisyoo.campaniapizzaserver.controller;
 
 import static org.junit.Assert.*;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyDouble;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import com.chrisyoo.campaniapizzaserver.entity.ConfirmationEmail;
 import com.chrisyoo.campaniapizzaserver.entity.StripeClient;
 import com.chrisyoo.campaniapizzaserver.service.OpenIdUserService;
 import com.chrisyoo.campaniapizzaserver.service.PastOrderService;
+import com.stripe.model.Charge;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest
@@ -42,7 +55,7 @@ public class TestUnregisteredUserController {
 		doNothing().when(confirmationEmail).sendEmail(any());
 
 		mockMvc.perform(post("/unregistered-user/charge").header("token", "any()").header("amount", "0.00"))
-				.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.amount").value("55"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.currency").value("dollar"));
 	}
@@ -55,7 +68,7 @@ public class TestUnregisteredUserController {
 		doNothing().when(confirmationEmail).sendEmail(any());
 
 		mockMvc.perform(post("/unregistered-user/charge").header("token", "any()").header("amount", "0.00"))
-				.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
+				.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 		verify(confirmationEmail).sendEmail(any());
 	}
 }
