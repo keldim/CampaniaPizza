@@ -41,7 +41,6 @@ export class ContactInfoAndPaymentComponent implements OnInit {
       (data) => this.contactInfoAndPaymentData = data,
       (err: any) => console.log(err),
       () => {
-        console.log("received response from the server 1");
         this.contactInfoAndPaymentForm = this.fb.group({
           firstName: [this.contactInfoAndPaymentData['firstName'], [Validators.required, Validators.pattern(this.namePattern)]],
           lastName: [this.contactInfoAndPaymentData['lastName'], [Validators.required, Validators.pattern(this.namePattern)]],
@@ -79,7 +78,6 @@ export class ContactInfoAndPaymentComponent implements OnInit {
       'cvc': this.contactInfoAndPaymentForm.controls.cvc.value
 
     });
-    console.log(headers);
 
     this.http.post(this.backendService.getBackendURL() + 'form-input/data', {}, { headers: headers }).subscribe(resp => {
       console.log(resp);

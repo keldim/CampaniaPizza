@@ -28,12 +28,10 @@ export class PastOrderDetailComponent implements OnInit {
 
   ngOnInit() {
     let pastOrderId: number = parseInt(this.route.snapshot.params['id']);
-    console.log(pastOrderId);
     this._authService.getAccessToken().then(accessToken => {
       const headers = new HttpHeaders({
         'Authorization': `Bearer ` + accessToken
       });
-      console.log("sending request for past order");
       this.http.post(`${this.backendService.getBackendURL()}registered-user/past-order/${pastOrderId}`, {}, { headers: headers }).subscribe(
         (pastOrderReceived: Object) => {
           this.pastOrder = pastOrderReceived;
@@ -60,8 +58,6 @@ export class PastOrderDetailComponent implements OnInit {
   }
 
   jsonParse(json) {
-    console.log(json);
-    console.log(JSON.parse(json));
     return JSON.parse(json);
   }
 
@@ -166,22 +162,18 @@ export class PastOrderDetailComponent implements OnInit {
     this.storageService.clear();
 
     for(let pizzaItem of this.pastOrder["pizzaItems"]) {
-      console.log(pizzaItem);
       this.pizzaModalComponent.pastOrderDetailForm(pizzaItem);
       this.pizzaModalComponent.createTempForm();
     }
     for(let saladItem of this.pastOrder["saladItems"]) {
-      console.log(saladItem);
       this.saladModalComponent.pastOrderDetailForm(saladItem);
       this.saladModalComponent.createTempForm();
     }
     for(let drinkItem of this.pastOrder["drinkItems"]) {
-      console.log(drinkItem);
       this.drinkModalComponent.pastOrderDetailForm(drinkItem);
       this.drinkModalComponent.createTempForm();
     }
     for(let dessertItem of this.pastOrder["dessertItems"]) {
-      console.log(dessertItem);
       this.dessertModalComponent.pastOrderDetailForm(dessertItem);
       this.dessertModalComponent.createTempForm();
     }

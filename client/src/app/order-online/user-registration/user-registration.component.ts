@@ -57,8 +57,7 @@ export class UserRegistrationComponent implements OnInit {
        this.failAlert = true;
         setTimeout(() => {
           this.failAlert = false;
-          console.log("settimeout reached 1");
-        }, 2000);
+        }, 3000);
 
 
       } else {
@@ -70,7 +69,7 @@ export class UserRegistrationComponent implements OnInit {
         });
 
         this.http.get(this.authService.getAuthorityURL() + 'add-user', { headers: header2 }).subscribe((response: boolean) => {
-          console.log(response);
+          console.log("add user successful: " + response);
         });
 
 
@@ -88,8 +87,7 @@ export class UserRegistrationComponent implements OnInit {
         this.successAlert = true;
         setTimeout(() => {
           this.successAlert = false;
-          console.log("settimeout reached 2");
-        }, 2000);
+        }, 3000);
 
 
 

@@ -58,7 +58,7 @@ export class CheckoutComponent implements OnInit {
     this.getContactInfoAndPaymentData().subscribe(
       (data) => this.contactInfoAndPaymentData = data,
       (err: any) => console.log(err),
-      () => console.log("received response from the server 2")
+      () => console.log("received response from the backend server")
     );
   }
 
@@ -175,7 +175,6 @@ export class CheckoutComponent implements OnInit {
         });
 
         this.http.post(this.backendService.getBackendURL() + 'registered-user/charge', {}, { headers: headers }).subscribe(resp => {
-          console.log(resp);
           if (resp == null) {
             this.zone.run(() => {
               this.router.navigate(['/error-page']);
@@ -212,7 +211,6 @@ export class CheckoutComponent implements OnInit {
       });
 
       this.http.post(this.backendService.getBackendURL() + 'unregistered-user/charge', {}, { headers: headers }).subscribe(resp => {
-        console.log(resp);
         if (resp == null) {
           this.zone.run(() => {
             this.router.navigate(['/error-page']);
