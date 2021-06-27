@@ -1,13 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from '../models/user';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PizzaModalComponent } from './pizza-modal/pizza-modal.component';
 import { DessertModalComponent } from './dessert-modal/dessert-modal.component';
 import { SaladModalComponent } from './salad-modal/salad-modal.component';
 import { DrinkModalComponent } from './drink-modal/drink-modal.component';
 import { FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
-import { LocalStorage } from 'ngx-store';
-import { Observable, Subscription, of } from 'rxjs';
 import { StorageService } from '../services/storage.service';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 import { HttpClient } from '@angular/common/http';
@@ -34,7 +31,6 @@ export class CurrentOrderComponent implements OnInit {
   @ViewChild(DrinkModalComponent) drinkModalComponent;
   @ViewChild(DeleteModalComponent) deleteModalComponent;
 
-  // private modalService: NgbModal,
   constructor(private fb: FormBuilder, private storageService: StorageService, private http: HttpClient) {
     this.storageService.watchPizzaItems().subscribe(pizzaItems => {
       this.pizzaItems = pizzaItems;

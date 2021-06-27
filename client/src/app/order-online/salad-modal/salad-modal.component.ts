@@ -1,9 +1,7 @@
 import { ViewChild, Component } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl, AbstractControl, Validators, Form } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, FormControl, AbstractControl, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BuildYourOwnCheckboxes } from '../build-your-own-checkboxes';
-import { LocalStorage } from 'ngx-store';
-import { Observable, Subscription } from 'rxjs';
 import { StorageService } from 'src/app/services/storage.service';
 
 

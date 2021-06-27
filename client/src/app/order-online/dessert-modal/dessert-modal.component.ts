@@ -1,8 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { LocalStorage } from 'ngx-store';
-import { Observable, Subscription } from 'rxjs';
 import { StorageService } from 'src/app/services/storage.service';
 
 @Component({

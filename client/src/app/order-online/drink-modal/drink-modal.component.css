@@ -9,3 +9,8 @@
 .quantity-input {
   width: 50px
 }
+
+.quantity-validator {
+  font-size: 12px;
+  color: #b80000;
+}

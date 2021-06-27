@@ -18,13 +18,11 @@ export class PastOrderDetailComponent implements OnInit {
 
   @ViewChild(PizzaModalComponent) pizzaModalComponent;
   @ViewChild(SaladModalComponent) saladModalComponent;
-
-// trial
   @ViewChild(DrinkModalComponent) drinkModalComponent;
   @ViewChild(DessertModalComponent) dessertModalComponent;
 
 
-  pastOrder: Object;                                                                                  // trial                               // trial
+  pastOrder: Object;
   constructor(private route: ActivatedRoute, private http: HttpClient, private _authService: AuthService, public storageService: StorageService, private router: Router, private backendService: BackendService) {
   }
 
@@ -57,11 +55,7 @@ export class PastOrderDetailComponent implements OnInit {
   }
 
 
-  //    localhost:5000
-  //        CampaniaPizzaServer-env-3.eba-igwhis5n.us-east-2.elasticbeanstalk.com
-
   jsonArrayToArray(jsonArray: string) {
-    // console.log(this.pastOrder.pizzaItems);
     return JSON.parse(jsonArray);
   }
 
@@ -119,7 +113,7 @@ export class PastOrderDetailComponent implements OnInit {
 
       return parsedItem;
     } else {
-const parsedItem = {
+      const parsedItem = {
         type: saladItem.type,
         size: saladItem.size,
         price: saladItem.price,
@@ -168,7 +162,6 @@ const parsedItem = {
     return this.calculateTotal().toFixed(2);
   }
 
-  // trial
   reorder() {
     this.storageService.clear();
 
@@ -176,7 +169,6 @@ const parsedItem = {
       console.log(pizzaItem);
       this.pizzaModalComponent.pastOrderDetailForm(pizzaItem);
       this.pizzaModalComponent.createTempForm();
-      // use resetForm or create a new method for value patch in pizza modal?
     }
     for(let saladItem of this.pastOrder["saladItems"]) {
       console.log(saladItem);

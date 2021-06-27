@@ -147,7 +147,7 @@
 
       <div class="quantity-box">
           <div *ngIf="quantity.hasError('min') || quantity.hasError('max') || quantity.hasError('required')">
-              <span style="font-size: 12px; color: #b80000">Please enter a valid quantity between 1 and 99 for this product.</span>
+              <span class="quantity-validator">Please enter a valid quantity between 1 and 99 for this product.</span>
           </div>
         <label for="qty">Quantity:</label>
         <input class="quantity-input" type="text" id="qty" maxlength=3 formControlName="quantity">

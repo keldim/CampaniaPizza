@@ -4,18 +4,13 @@
   padding: 0;
 }
 
+.navbar-brand {
+  padding: 0;
+}
+
 .mainArea {
   margin-top: 101px;
 }
-
-/* .navbar-nav li {
-  padding-top: 5px;
-  border-bottom: 5px solid transparent;
-}
-
-.navbar-nav li:hover {
-  border-bottom-color: red;
-} */
 
 .clicked-link {
   border-bottom: 5px solid red;

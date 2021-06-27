@@ -11,7 +11,7 @@
 
       <fieldset class="fieldset" *ngIf="type.value=='BUILD YOUR OWN SALAD'">
         <div *ngIf="greens.hasError('oneBox')">
-          <span style="font-size: 12px; color: #b80000">
+          <span class="quantity-validator">
             Choose at least one item in this section
           </span>
         </div>
@@ -47,7 +47,7 @@
 
       <fieldset class="fieldset" *ngIf="type.value=='BUILD YOUR OWN SALAD'">
         <div *ngIf="freshProduce.hasError('oneBox')">
-          <span style="font-size: 12px; color: #b80000">
+          <span class="quantity-validator">
             Choose at least one item in this section
           </span>
         </div>
@@ -129,7 +129,7 @@
       </fieldset>
       <div class="quantity-box">
         <div *ngIf="quantity.hasError('min') || quantity.hasError('max') || quantity.hasError('required')">
-          <span style="font-size: 12px; color: #b80000">Please enter a valid quantity between 1 and 99 for this
+          <span class="quantity-validator">Please enter a valid quantity between 1 and 99 for this
             product.</span>
         </div>
         <label for="qty">Quantity:</label>

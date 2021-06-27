@@ -12,7 +12,7 @@
               <option value="East Village">East Village{{ assignLocation() }}</option>
             </select>
             <span *ngIf="location.hasError('required')">
-              <span style="font-size: 12px; color: #b80000; margin-left: 10px">Please choose a location.</span>
+              <span class="location-validator">Please choose a location.</span>
             </span>
           </dd>
           <span *ngIf="location.value=='Midtown'">
@@ -90,7 +90,7 @@
       </dl>
 
       <span *ngIf="location.value != ''">
-        <span style="font-size: 12px; color: #b80000; margin-top: 5px; float: left">
+        <span class="location-message">
           The last order for the kitchen is 12:30 am, and the last pickup time is 1 am. Orders between 12:31 am and 1 am
           will be ready for pickup when the store reopens at 11 am.
         </span>

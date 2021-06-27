@@ -65,23 +65,6 @@
   border-radius: 5px;
 }
 
-.product-device-2 {
-  top: -25%;
-  right: auto;
-  bottom: 0;
-  left: 5%;
-  background-color: #e5e5e5;
-}
-
-
-/*
- * Extra utilities
- */
-
-.flex-equal > * {
-  -ms-flex: 1;
-  flex: 1;
-}
 @media (min-width: 768px) {
   .flex-md-equal > * {
     -ms-flex: 1;

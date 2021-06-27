@@ -1,12 +1,10 @@
-import { Component, OnInit, ViewChild, Input, ElementRef, ViewChildren, NgZone } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { PizzaModalComponent } from './../pizza-modal/pizza-modal.component';
 import { DessertModalComponent } from './../dessert-modal/dessert-modal.component';
 import { SaladModalComponent } from './../salad-modal/salad-modal.component';
 import { DrinkModalComponent } from './../drink-modal/drink-modal.component';
-import { LocalStorage, LocalStorageService } from 'ngx-store';
-import { BehaviorSubject, Observable, of } from 'rxjs';
 import { StorageService } from 'src/app/services/storage.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
@@ -37,7 +35,6 @@ export class CheckoutComponent implements OnInit {
 
 
 
-  // changed
   constructor(private http: HttpClient, private fb: FormBuilder, public storageService: StorageService,
     private _authService: AuthService, private router: Router, private backendService: BackendService, private zone: NgZone) {
     this.storageService.watchPizzaItems().subscribe(pizzaItems => {
@@ -85,9 +82,9 @@ export class CheckoutComponent implements OnInit {
       return "";
     }
 
-    let amex_regex = new RegExp('^3[47][0-9]{0,}$'); //34, 37
-    let visa_regex = new RegExp('^4[0-9]{0,}$'); //4
-    let mastercard_regex = new RegExp('^(5[1-5]|222[1-9]|22[3-9]|2[3-6]|27[01]|2720)[0-9]{0,}$'); //2221-2720, 51-55
+    let amex_regex = new RegExp('^3[47][0-9]{0,}$');
+    let visa_regex = new RegExp('^4[0-9]{0,}$');
+    let mastercard_regex = new RegExp('^(5[1-5]|222[1-9]|22[3-9]|2[3-6]|27[01]|2720)[0-9]{0,}$');
     let discover_regex = new RegExp('^(6011|65|64[4-9]|62212[6-9]|6221[3-9]|622[2-8]|6229[01]|62292[0-5])[0-9]{0,}$');
 
     var type = "unknown";

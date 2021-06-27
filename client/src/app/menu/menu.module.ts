@@ -1,7 +1,4 @@
 import { NgModule } from '@angular/core';
-
-
-
 import { MenuComponent } from './menu.component';
 import { BuildYourOwnComponent } from './build_your_own/build_your_own.component';
 import { SpecialtyPizzaComponent } from './specialty_pizzas/specialty_pizzas.component';

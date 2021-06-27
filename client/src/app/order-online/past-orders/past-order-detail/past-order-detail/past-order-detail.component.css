@@ -1,17 +1,9 @@
 .pickup-location {
-  /* 150px; */
-  /* margin-top: 10px; */
   margin-left: auto;
   margin-right: auto;
   width: 40%;
   border: 1px solid #ccc;
   border-bottom: 0;
-}
-
-.checkout-header {
-  font-size: 26px;
-  font-weight: 700;
-  text-align: center;
 }
 
 .checkout-subheader {
@@ -87,57 +79,6 @@
   background: #000;
   color: #fff;
   font-size: 16px;
-}
-
-.contact-info-header {
-  font-size: 26px;
-  font-weight: 700;
-  text-align: center;
-}
-
-.contact-info-form {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.contact-info-row {
-  margin-top: 10px;
-  margin-bottom: 20px;
-}
-
-.col-center {
-  text-align: center;
-}
-
-.payment-row {
-  margin-top: 10px;
-  margin-bottom: 20px;
-}
-
-.payment-header {
-  font-size: 26px;
-  font-weight: 700;
-  text-align: center;
-}
-
-.payment-form {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.payment-subheader {
-  text-align: center;
-  font-size: 18px;
-  font-weight: 700;
-}
-
-.place-order-button {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.imgCapture {
-  display: none;
 }
 
 .hide-order-online {

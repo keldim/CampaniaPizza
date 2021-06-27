@@ -1,26 +1,17 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
-
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LocationComponent } from './locations/locations.component';
 import { MenuModule } from './menu/menu.module';
 import { AppRoutingModule } from './app-routing.module';
-
 import { AboutUsComponent } from './about-us/about-us.component';
-
 import { OrderOnlineModule } from './order-online/order-online.module';
-import { WebStorageModule } from 'ngx-store';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AuthInterceptor } from './interceptor/interceptor.component';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { UserRegistrationComponent } from './order-online/user-registration/user-registration.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AgmCoreModule } from '@agm/core';
 import { ErrorPageComponent } from './error-page/error-page.component';
-import { ContactInfoAndPaymentComponent } from './order-online/contact-info-and-payment/contact-info-and-payment.component';
 
 
 @NgModule({
@@ -43,9 +34,6 @@ import { ContactInfoAndPaymentComponent } from './order-online/contact-info-and-
       apiKey: 'AIzaSyAefz-lASwxlkPcroXE7GJhaB3RuFL_qeU'
     })
   ],
-  // providers: [
-  //   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
-  // ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

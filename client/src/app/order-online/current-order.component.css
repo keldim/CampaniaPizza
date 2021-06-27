@@ -176,3 +176,16 @@
   margin: 10px 0 10px 0;
   text-align: center;
 }
+
+.location-validator {
+  font-size: 12px;
+  color: #b80000;
+  margin-left: 10px;
+}
+
+.location-message {
+  font-size: 12px;
+  color: #b80000;
+  margin-top: 5px;
+  float: left;
+}
