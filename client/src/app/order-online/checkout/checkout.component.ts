@@ -58,7 +58,7 @@ export class CheckoutComponent implements OnInit {
     this.getContactInfoAndPaymentData().subscribe(
       (data) => this.contactInfoAndPaymentData = data,
       (err: any) => console.log(err),
-      () => console.log("received response from the backend server")
+      () => console.log()
     );
   }
 
