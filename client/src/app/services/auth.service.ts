@@ -7,12 +7,13 @@ import { UserManager, User } from 'oidc-client';
   providedIn: 'root'
 })
 export class AuthService {
-  // authenticated = false;
-  // http://new-mitreid-env.eba-ppwpqerk.us-east-2.elasticbeanstalk.com/
-  private authorityURL = "http://localhost:8080/openid-connect-server-webapp/"
+  // http://localhost:8080/openid-connect-server-webapp/
   // http://campania-pizza-client.s3-website.us-east-2.amazonaws.com/assets/oidc-login-redirect.html
   // http://campania-pizza-client.s3-website.us-east-2.amazonaws.com/?postLogout=true
-  private frontendURL = "http://localhost:4200/"
+  // http://new-mitreid-env.eba-ppwpqerk.us-east-2.elasticbeanstalk.com/
+  // http://localhost:4200/
+  private authorityURL = "https://mitreid-backend.com/"
+  private frontendURL = "https://www.cy-campania-pizza.com/"
   private _userManager : UserManager;
   private _user : User;
   private _loginChangedSubject = new Subject<boolean>();
@@ -21,7 +22,7 @@ export class AuthService {
   constructor(private http: HttpClient) {
     var config = {
       authority: this.authorityURL,
-      client_id: 'client',
+      client_id: '',
       redirect_uri: this.frontendURL + 'signin-callback',
       scope: 'openid',
       response_type: 'id_token token',

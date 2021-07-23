@@ -32,31 +32,15 @@ public class Pizza {
 	@Column(name="sauce")
 	private String sauce;
 	
-//	@ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-//	@JoinColumn(name="past_order_id")
-//	private PastOrder pastOrder;
-	
-//	@OneToOne(cascade=CascadeType.ALL)
-//	@JoinColumn(name="pizza_cheese_id")
-//	private PizzaCheese cheese;
 	@Column(name="cheese")
 	private String cheese;
 	
-//	@OneToOne(cascade=CascadeType.ALL)
-//	@JoinColumn(name="pizza_veggie_id")
-//	private PizzaVeggie veggie;
 	@Column(name="veggies")
 	private String veggies;
 	
-//	@OneToOne(cascade=CascadeType.ALL)
-//	@JoinColumn(name="pizza_meat_id")
-//	private PizzaMeat meat;
 	@Column(name="meats")
 	private String meats;
 	
-//	@OneToOne(cascade=CascadeType.ALL)
-//	@JoinColumn(name="pizza_finish_id")
-//	private PizzaFinish finish;
 	@Column(name="finishes")
 	private String finishes;
 	
@@ -122,14 +106,6 @@ public class Pizza {
 	public void setSauce(String sauce) {
 		this.sauce = sauce;
 	}
-
-//	public PastOrder getPastOrder() {
-//		return pastOrder;
-//	}
-//
-//	public void setPastOrder(PastOrder pastOrder) {
-//		this.pastOrder = pastOrder;
-//	}
 
 	public String getCheese() {
 		return cheese;

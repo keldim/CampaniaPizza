@@ -11,7 +11,6 @@ import { OrderOnlineRoutingModule } from './order-online-routing.module';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { WebStorageModule } from 'ngx-store';
 import { ThankYouComponent } from './thank-you/thank-you.component';
-import { FavoritesComponent } from './favorites/favorites.component';
 import { PastOrdersComponent } from './past-orders/past-orders.component';
 import { PastOrderDetailComponent } from './past-orders/past-order-detail/past-order-detail/past-order-detail.component';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
@@ -32,7 +31,6 @@ import { UserRegistrationComponent } from './user-registration/user-registration
     OrderOnlineComponent,
     CheckoutComponent,
     ThankYouComponent,
-    FavoritesComponent,
     PastOrdersComponent,
     CurrentOrderComponent,
     PastOrderDetailComponent,

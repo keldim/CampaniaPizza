@@ -114,7 +114,7 @@ export class CheckoutComponent implements OnInit {
     this.http.post(this.backendService.getBackendURL() + 'form-input/cancel', {}).subscribe(resp => {
       console.log(resp);
     });
-    this.router.navigate(['/cart']);
+    this.router.navigate(['/order-online/current-order']);
   }
 
   addEmailDisplay(items, type) {

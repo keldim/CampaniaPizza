@@ -8,10 +8,6 @@
       <a class="nav-link linkColor" href="#" [routerLink]="['/order-online/past-orders']"
         routerLinkActive="clicked-link">Past Orders</a>
     </li>
-    <li class="nav-item submenu-button-tweak" *ngIf="isLoggedIn">
-      <a class="nav-link linkColor" href="#" [routerLink]="['/order-online/favorites']"
-        routerLinkActive="clicked-link">Favorites</a>
-    </li>
     <li class="nav-item submenu-button-tweak">
       <button type="button" class="btn btn-outline-danger" *ngIf="!isLoggedIn" (click)="login()">Login</button>
       <button type="button" class="btn btn-outline-danger" *ngIf="isLoggedIn" (click)="logout()">Logout</button>

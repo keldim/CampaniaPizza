@@ -178,7 +178,7 @@
 
 
 
-  <span class="d-flex justify-content-center" *ngIf="contactInfoAndPaymentData != null">
+  <span class="d-flex justify-content-center space-for-bottom" *ngIf="contactInfoAndPaymentData != null">
     <button class="btn btn-danger btn-lg left-button" type="submit" (click)="cancelAndCleanUp()">Cancel</button>
     <button class="btn btn-primary btn-lg right-button" type="submit"
     [disabled]="contactInfoAndPaymentData['cardNumber'] == '' || contactInfoAndPaymentData['firstName'] == '' || currentOrderComponent.showTotal() == 0"

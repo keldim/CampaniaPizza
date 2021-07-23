@@ -68,7 +68,6 @@ public class PastOrderServiceImpl implements PastOrderService {
 	}
 
 	private PastOrder saveArraysToPastOrder(HttpServletRequest request) throws Exception {
-		// what if there are no pizzas at all?
 					PastOrder newPastOrder = new PastOrder();
 					JSONParser parser = new JSONParser();
 					JSONArray pizzaItems = (JSONArray) parser.parse(request.getHeader("pizzaItems"));

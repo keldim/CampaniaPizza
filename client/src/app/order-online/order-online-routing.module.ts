@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { ThankYouComponent } from './thank-you/thank-you.component';
 import { PastOrdersComponent } from './past-orders/past-orders.component';
-import { FavoritesComponent } from './favorites/favorites.component';
 import { PastOrderDetailComponent } from './past-orders/past-order-detail/past-order-detail/past-order-detail.component';
 import { OrderOnlineComponent } from './order-online.component';
 import { CurrentOrderComponent } from './current-order.component';
@@ -22,8 +21,7 @@ import { ContactInfoAndPaymentComponent } from './contact-info-and-payment/conta
         { path: '', redirectTo: 'current-order', pathMatch: 'full'},
         { path: 'past-orders', component: PastOrdersComponent},
         { path: 'past-order-detail/:id', component: PastOrderDetailComponent},
-        { path: 'thank-you', component: ThankYouComponent },
-        { path: 'favorites', component: FavoritesComponent}
+        { path: 'thank-you', component: ThankYouComponent }
       ] },
       { path: 'checkout', component: CheckoutComponent },
       { path: 'signin-callback', component: SigninRedirectCallbackComponent },

@@ -115,3 +115,7 @@
 .subheader {
   font-weight: normal;
 }
+
+.space-for-bottom {
+  margin-bottom: 1.5rem;
+}

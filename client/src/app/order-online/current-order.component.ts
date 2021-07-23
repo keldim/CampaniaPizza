@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { User } from '../models/user';
 import { PizzaModalComponent } from './pizza-modal/pizza-modal.component';
 import { DessertModalComponent } from './dessert-modal/dessert-modal.component';
 import { SaladModalComponent } from './salad-modal/salad-modal.component';
@@ -16,7 +15,6 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CurrentOrderComponent implements OnInit {
   closeResult: string;
-  selectedUser: User;
   clickedMenu: string = "Build Your Own Pizza";
   orderOnlineForm: FormGroup;
   pizzaItems: any[] = this.storageService.getPizzaItems();
