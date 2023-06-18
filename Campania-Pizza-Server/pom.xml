@@ -171,7 +171,7 @@
 									overwrite="false">
 									<fileset dir="./" includes=".ebextensions/**" />
 								</copy>
-								<!-- <jar jarfile="${project.build.directory}/${project.build.finalName}.jar" 
+								<!-- <jar jarfile="${project.build.directory}/${project.build.finalName}.jar"
 									basedir="${project.build.directory}/${project.build.finalName}"/> -->
 								<zip compress="false"
 									destfile="${project.build.directory}/${project.build.finalName}.jar"

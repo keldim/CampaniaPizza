@@ -31,7 +31,7 @@ import { ErrorPageComponent } from './error-page/error-page.component';
     ReactiveFormsModule,
     AppRoutingModule,
     AgmCoreModule.forRoot({
-      apiKey: ''
+      apiKey: 'AIzaSyB44fvrKeRgRazsgBCAmemzdtH9qo9ebS4'
     })
   ],
   bootstrap: [AppComponent]
